@@ -305,22 +305,6 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
            <string>ID del mensaje:</string>
           </property>
          </widget>
-         <widget class="QLabel" name="label_5">
-          <property name="geometry">
-           <rect>
-            <x>70</x>
-            <y>150</y>
-            <width>151</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">font: 9pt &quot;Arial&quot;;</string>
-          </property>
-          <property name="text">
-           <string>Fecha:</string>
-          </property>
-         </widget>
          <widget class="QLabel" name="label_6">
           <property name="geometry">
            <rect>
@@ -341,7 +325,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
           <property name="geometry">
            <rect>
             <x>70</x>
-            <y>210</y>
+            <y>150</y>
             <width>191</width>
             <height>16</height>
            </rect>
@@ -377,7 +361,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
           <property name="geometry">
            <rect>
             <x>280</x>
-            <y>330</y>
+            <y>310</y>
             <width>91</width>
             <height>31</height>
            </rect>
@@ -400,49 +384,13 @@ background-color:rgb(0, 101, 148);
            <string>Enviar</string>
           </property>
          </widget>
-         <widget class="QLabel" name="label_10">
-          <property name="geometry">
-           <rect>
-            <x>360</x>
-            <y>140</y>
-            <width>191</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">font: 9pt &quot;Arial&quot;;</string>
-          </property>
-          <property name="text">
-           <string>Hora:</string>
-          </property>
-         </widget>
          <widget class="QLineEdit" name="txtContenido">
           <property name="geometry">
            <rect>
             <x>70</x>
-            <y>230</y>
+            <y>170</y>
             <width>501</width>
             <height>51</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QDateEdit" name="dtFecha">
-          <property name="geometry">
-           <rect>
-            <x>70</x>
-            <y>170</y>
-            <width>211</width>
-            <height>22</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QTimeEdit" name="tmHora">
-          <property name="geometry">
-           <rect>
-            <x>360</x>
-            <y>170</y>
-            <width>211</width>
-            <height>22</height>
            </rect>
           </property>
          </widget>

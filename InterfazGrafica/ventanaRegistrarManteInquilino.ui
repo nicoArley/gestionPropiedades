@@ -343,22 +343,6 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
            <string>Estado:</string>
           </property>
          </widget>
-         <widget class="QLabel" name="label_9">
-          <property name="geometry">
-           <rect>
-            <x>70</x>
-            <y>300</y>
-            <width>191</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">font: 9pt &quot;Arial&quot;;</string>
-          </property>
-          <property name="text">
-           <string>Fecha de solicitud:</string>
-          </property>
-         </widget>
          <widget class="QLineEdit" name="txtIDSolicitudMante">
           <property name="geometry">
            <rect>
@@ -445,7 +429,7 @@ background-color:rgb(0, 101, 148);
          <widget class="QLabel" name="label_12">
           <property name="geometry">
            <rect>
-            <x>370</x>
+            <x>70</x>
             <y>300</y>
             <width>191</width>
             <height>16</height>
@@ -461,8 +445,8 @@ background-color:rgb(0, 101, 148);
          <widget class="QRadioButton" name="rbPlomero">
           <property name="geometry">
            <rect>
-            <x>400</x>
-            <y>350</y>
+            <x>290</x>
+            <y>320</y>
             <width>82</width>
             <height>17</height>
            </rect>
@@ -474,7 +458,7 @@ background-color:rgb(0, 101, 148);
          <widget class="QRadioButton" name="rbElectricista">
           <property name="geometry">
            <rect>
-            <x>370</x>
+            <x>70</x>
             <y>320</y>
             <width>82</width>
             <height>17</height>
@@ -487,8 +471,8 @@ background-color:rgb(0, 101, 148);
          <widget class="QRadioButton" name="rbCarpitero">
           <property name="geometry">
            <rect>
-            <x>480</x>
-            <y>350</y>
+            <x>360</x>
+            <y>320</y>
             <width>82</width>
             <height>17</height>
            </rect>
@@ -500,7 +484,7 @@ background-color:rgb(0, 101, 148);
          <widget class="QRadioButton" name="rbPintor">
           <property name="geometry">
            <rect>
-            <x>530</x>
+            <x>230</x>
             <y>320</y>
             <width>82</width>
             <height>17</height>
@@ -513,7 +497,7 @@ background-color:rgb(0, 101, 148);
          <widget class="QRadioButton" name="rbJardinero">
           <property name="geometry">
            <rect>
-            <x>450</x>
+            <x>150</x>
             <y>320</y>
             <width>82</width>
             <height>17</height>
@@ -521,16 +505,6 @@ background-color:rgb(0, 101, 148);
           </property>
           <property name="text">
            <string>Jardinero</string>
-          </property>
-         </widget>
-         <widget class="QDateEdit" name="date">
-          <property name="geometry">
-           <rect>
-            <x>70</x>
-            <y>320</y>
-            <width>211</width>
-            <height>22</height>
-           </rect>
           </property>
          </widget>
          <widget class="QLineEdit" name="txtPrioridad">

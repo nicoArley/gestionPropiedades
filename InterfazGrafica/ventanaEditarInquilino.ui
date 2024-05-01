@@ -413,33 +413,6 @@ background-color:rgb(0, 101, 148);
            <string>ID de la propiedad:</string>
           </property>
          </widget>
-         <widget class="QLabel" name="label_15">
-          <property name="geometry">
-           <rect>
-            <x>100</x>
-            <y>210</y>
-            <width>161</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">font: 9pt &quot;Arial&quot;;
-</string>
-          </property>
-          <property name="text">
-           <string>Fecha de inicio del alquiler:</string>
-          </property>
-         </widget>
-         <widget class="QDateEdit" name="dateEdit_2">
-          <property name="geometry">
-           <rect>
-            <x>100</x>
-            <y>230</y>
-            <width>181</width>
-            <height>22</height>
-           </rect>
-          </property>
-         </widget>
          <widget class="QLineEdit" name="lineEdit_16">
           <property name="geometry">
            <rect>
@@ -463,8 +436,8 @@ background-color:rgb(0, 101, 148);
          <widget class="QLineEdit" name="lineEdit_2">
           <property name="geometry">
            <rect>
-            <x>320</x>
-            <y>290</y>
+            <x>100</x>
+            <y>230</y>
             <width>181</width>
             <height>20</height>
            </rect>
@@ -517,8 +490,8 @@ background-color:rgb(0, 101, 148);
          <widget class="QLabel" name="label_18">
           <property name="geometry">
            <rect>
-            <x>320</x>
-            <y>270</y>
+            <x>100</x>
+            <y>210</y>
             <width>161</width>
             <height>16</height>
            </rect>
