@@ -97,7 +97,7 @@ def insertarPropietario(cedulaPropietario):
     cnxn = conectarBD()
     cursor = cnxn.cursor()
     try:
-        statement_insertar_usuario = 'INSERT INTO Propietario (idPropietario) VALUES (?);'
+        statement_insertar_usuario = 'INSERT INTO Propietario (cedula) VALUES (?);'
         cursor.execute(statement_insertar_usuario, cedulaPropietario) 
         desconectarBD(cnxn, cursor)
         return True
@@ -156,14 +156,14 @@ def existePropiedad(idPropiedad):
 
 
 # usa el statement de insercion y execute para guardar el cambio en la base de datos
-def insertarPropiedad(nuevoPropiedad):
+def insertarPropiedad(nuevaPropiedad):
     global cursor
     cnxn = conectarBD()
     cursor = cnxn.cursor()
     try:
         
-        statement = 'INSERT INTO Propiedad (idPropiedad, direccion, tipoPropiedad, numeroHabitaciones, tamanoMetros, cedulaPropietario, descripcion, estadoActual, precioAlquiler, gastosAdicionales) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
-        cursor.execute(statement, nuevoPropiedad) 
+        statement = 'INSERT INTO Propiedad (idPropiedad, direccion, tipoPropiedad, numeroHabitaciones, tamanoMetros, cedulaPropietario, descripcion, estadoActual, precioAlquiler, gastosAdicionales) VALUES (?,?,?,?,?,?,?,?,?,?)'
+        cursor.execute(statement, nuevaPropiedad) 
         desconectarBD(cnxn, cursor)
         return True
     except: 
@@ -192,8 +192,19 @@ def obtenerPropiedades(cedulaPropietario):
 
 #EDITAR MODULO PROPIEDAD(revisar si es asi) (Propietario)
 
+def obtenerPropiedad(idPropiedad): 
+    if(existePropiedad(idPropiedad)):
+        try:
+            #informacion = execute.... 
+            return #informacion
+        except: 
+            return []
+    else:
+        return []
+
+
 def editarPropiedad(idPropiedad, direccion, tipoPropiedad, numeroHabitaciones, tamanoMetros,cedulaPropietario,descripcion, estadoActual, precioAlquiler,gastosAdicionales):
-    
+
     try:
         nuevosDatos = (direccion, tipoPropiedad, numeroHabitaciones, tamanoMetros,cedulaPropietario,descripcion, estadoActual, precioAlquiler,gastosAdicionales)
         cambiarPropiedadBD(nuevosDatos)
@@ -202,7 +213,7 @@ def editarPropiedad(idPropiedad, direccion, tipoPropiedad, numeroHabitaciones, t
         return False      
 
 
-#Acá se hace la accion en la BD con el execute  
+#Acá se hace la accion en la BD con el execute, hace el update   
 def cambiarPropiedadBD(nuevosDatos):
     pass
 
@@ -213,7 +224,7 @@ def cambiarPropiedadBD(nuevosDatos):
 def eliminarPropiedad(idPropiedad):
     if(existePropiedad(idPropiedad)):
         try:
-            #execute 
+            #execute delete
             return True
         except: 
             return False 
@@ -280,7 +291,6 @@ def insertarInquilino(cedulaInquilino):
     except: 
         desconectarBD(cnxn, cursor)
         return False
-
 
 
 #VISUALIZAR MODULO INQUILINOS (Propietario)
