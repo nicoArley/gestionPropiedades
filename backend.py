@@ -79,7 +79,6 @@ def existeUsuario(cedula):
         desconectarBD(cnxn, cursor)
         return True
 
-
 #valida que los datos tengan las caracteristicas necesarias
 def existePropietario(cedula):
     cnxn = conectarBD()
@@ -117,7 +116,6 @@ def insertarUsuario(nuevoUsuario):
         statement_insertar_usuario = 'INSERT INTO Usuario (cedula, nombre, apellido1, apellido2, telefono, correo) VALUES (?, ?, ?, ?, ?, ?);'
         cursor.execute(statement_insertar_usuario, nuevoUsuario) 
         desconectarBD(cnxn, cursor)
-        print('3')
         return True
     except: 
         desconectarBD(cnxn, cursor)
@@ -132,7 +130,6 @@ def insertarUsuario(nuevoUsuario):
 def crearPropiedad(idPropiedad, direccion, tipoPropiedad, numeroHabitaciones, tamanoMetros,descripcion, estadoActual, precioAlquiler,gastosAdicionales): 
     
     if(existePropiedad(idPropiedad) == False) :
-        #Hay que revisar si la lista tiene el orden de la base de datos
         nuevaPropiedad = (idPropiedad, direccion, tipoPropiedad, numeroHabitaciones, tamanoMetros, cedulaUsuario, descripcion, estadoActual, precioAlquiler, gastosAdicionales)
         
         try: 
@@ -160,14 +157,14 @@ def existePropiedad(idPropiedad):
 
 
 # usa el statement de insercion y execute para guardar el cambio en la base de datos
-def insertarPropiedad(nuevoPropietario):
+def insertarPropiedad(nuevoPropiedad):
     global cursor
     cnxn = conectarBD()
     cursor = cnxn.cursor()
     try:
         
         statement = 'INSERT INTO Propiedad (idPropiedad, direccion, tipoPropiedad, numeroHabitaciones, tamanoMetros, cedulaPropietario, descripcion, estadoActual, precioAlquiler, gastosAdicionales) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
-        cursor.execute(statement, nuevoPropietario) 
+        cursor.execute(statement, nuevoPropiedad) 
         desconectarBD(cnxn, cursor)
         return True
     except: 
@@ -534,34 +531,34 @@ def obtenerReportesInquilino(periodo):
 
 #Esta es la funcion que la interfaz llama luego de validar los datos atrapados y asignarlos a variables 
 
-def enviarMensaje(idMensaje,cedulaReceptor, fecha, contenido, hora):
+def enviarMensaje(cedulaReceptor, contenido):
     global cedulaUsuario
     #preguntar a emi como hizo lo de los estados del mensaje
     if(existeUsuario(cedulaReceptor)): 
         try:
             estado = 'No Leido'
-            agregarComunicacion(idMensaje, cedulaReceptor, contenido, estado)
+            agregarComunicacion(cedulaReceptor, contenido, estado)
             return True
         except:
             return False
 
 #Esta funcion utiliza el stament y manda el insert a la base de datos
-def agregarComunicacion(idMensaje, cedulaReceptor, contenido, estado): 
+def agregarComunicacion(cedulaReceptor, contenido, estado): 
     global cursor,cedulaUsuario
     cnxn = conectarBD()
     cursor = cnxn.cursor()
     try:
-        fecha_mensaje = datetime.now().date()
-        hora_mensaje = datetime.now().time()
-        valores = (idMensaje,cedulaUsuario,cedulaReceptor,fecha_mensaje,hora_mensaje,contenido, estado)
-        statement = 'INSERT INTO Comunicacion (idMensaje, idEmisor, idReceptor, fechaMensaje, horaMensaje, contenido, estado) VALUES (?)'
-        cursor.execute(statement, valores,) 
+        fechaMensaje = datetime.now().date()
+        horaMensaje = datetime.now().time()
+        valores = (cedulaUsuario,cedulaReceptor,fechaMensaje,horaMensaje,contenido, estado)
+        statement = 'INSERT INTO Comunicacion (idEmisor, idReceptor, fechaMensaje, horaMensaje, contenido, estado) VALUES (?)'
+        cursor.execute(statement, valores) 
         desconectarBD(cnxn, cursor)
         return True
     except: 
         desconectarBD(cnxn, cursor)
         return False
-    
+
 
 #RECIBIDOS MODULO COMUNICACION (Propietario, inquilino (es el mismo))
 
@@ -583,10 +580,8 @@ def existeMsjRecibidos():
     global cedulaUsuario
     cnxn = conectarBD()
     cursor = cnxn.cursor()
-    #---------------------
-    statement = 'SELECT * FROM Comunicacion WHERE cedulaReceptor = (SELECT cedula FROM Usuario WHERE cedula = ?)'
-    cursor.execute(statement, (cedulaUsuario))
-    #---------------------
+    statement = 'SELECT * FROM Comunicacion WHERE cedulaReceptor = ?'
+    cursor.execute(statement, cedulaUsuario)
     checkReportesP = cursor.fetchone()
     if (checkReportesP == None):
         desconectarBD(cnxn, cursor)
@@ -622,7 +617,7 @@ def existeMsjEnviados():
     cnxn = conectarBD()
     cursor = cnxn.cursor()
     #---------------------
-    statement = 'SELECT * FROM Comunicacion WHERE cedulaEmisor = (SELECT cedula FROM Usuario WHERE cedula = ?)'
+    statement = 'SELECT * FROM Comunicacion WHERE cedulaEmisor = ?'
     cursor.execute(statement, (cedulaUsuario))
     #---------------------
     checkMsjE = cursor.fetchone()
@@ -731,7 +726,7 @@ def existeAlquiler(idPropiedad):
     global cedulaUsuario
     cnxn = conectarBD()
     cursor = cnxn.cursor()
-    cursor.execute('SELECT * FROM Alquiler WHERE idPropiedad=?', (idPropiedad))
+    cursor.execute('SELECT * FROM Alquiler WHERE idPropiedad=? AND cedulaInquilino = ?', idPropiedad, cedulaUsuario)
     checkAlquiler = cursor.fetchone()
     if (checkAlquiler == None):
         desconectarBD(cnxn, cursor)
