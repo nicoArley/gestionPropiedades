@@ -475,7 +475,7 @@ def obtenerReportesPropietario(inquilinos):
 def definirTiempo(periodo):
     fechaInicial = datetime.now()
     if (periodo == 'mensual'):
-        fechaInicial = datetime.now.()
+        fechaInicial = datetime.now()
 
 from datetime import datetime, timedelta
 
