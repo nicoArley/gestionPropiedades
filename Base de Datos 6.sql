@@ -100,27 +100,16 @@ CREATE TABLE Propiedad (
     FOREIGN KEY (cedulaPropietario) REFERENCES Propietario(cedula)
 );
 
--- Tabla para la relación entre Propiedad y Propietario
-CREATE TABLE Propiedad_Propietario (
-    idPropiedad INT,
-    cedulaPropietario INT,
-    PRIMARY KEY (idPropiedad, cedulaPropietario),
-    FOREIGN KEY (idPropiedad) REFERENCES Propiedad(idPropiedad),
-    FOREIGN KEY (cedulaPropietario) REFERENCES Propietario(cedula)
-);
-
 -- Tabla para la entidad Documento
 CREATE TABLE Documento (
     cedulaInquilino INT, 
     tipo VARCHAR(10),
     archivo VARBINARY(MAX),
-    PRIMARY KEY (cedulaInquilino, tipo), 
     FOREIGN KEY (cedulaInquilino) REFERENCES Inquilino(cedula)
 );
 
 -- Tabla para la entidad Alquiler
 CREATE TABLE Alquiler (
-    idAlquiler INT PRIMARY KEY,
     cedulaInquilino INT,
     idPropiedad INT,
     fechaInicio DATE,
@@ -137,7 +126,7 @@ CREATE TABLE Pagos (
     monto INT,
     tipoPago INT,
     estadoPago INT, 
-    MetodoPago VARCHAR(20),
+    metodoPago VARCHAR(20),
     FOREIGN KEY (cedulaInquilino) REFERENCES Inquilino(cedula),
     FOREIGN KEY (tipoPago) REFERENCES TiposPagoPermitidos(idTipoPago),
     FOREIGN KEY (estadoPago) REFERENCES EstadosPagoPermitidos(idEstadoPago) 
@@ -171,7 +160,6 @@ CREATE TABLE SolicitudMantenimiento (
 
 -- Tabla para la entidad FotoPropiedad
 CREATE TABLE FotoPropiedad (
-    idFoto INT PRIMARY KEY,
     idPropiedad INT,
     tipo VARCHAR(10),
     archivo VARBINARY(MAX),
@@ -180,7 +168,6 @@ CREATE TABLE FotoPropiedad (
 
 -- Tabla para la entidad Comunicacion
 CREATE TABLE Comunicacion (
-    idMensaje INT PRIMARY KEY,
     cedulaEmisor INT,
     cedulaReceptor INT,
     fechaMensaje DATE,
@@ -203,15 +190,15 @@ CREATE TABLE Trabajos (
 
 -- Tabla para la entidad FotosProblema
 CREATE TABLE FotosProblema (
-    idFoto INT PRIMARY KEY,
+    idSolicitud INT,
     foto VARBINARY(MAX),
-    FOREIGN KEY (idFoto) REFERENCES SolicitudMantenimiento(idSolicitud)
+    FOREIGN KEY (idSolicitud) REFERENCES SolicitudMantenimiento(idSolicitud)
 );
 
 -- Tabla para la entidad ComentariosInquilino
 CREATE TABLE ComentariosInquilino (
     idComentario INT PRIMARY KEY,
     comentario VARCHAR(300),
-    cedulaInquilino INT, 
-    FOREIGN KEY (cedulaInquilino) REFERENCES Inquilino(cedula) 
+    idSolicitud INT, 
+    FOREIGN KEY (idSolicitud) REFERENCES SolicitudMantenimiento(idSolicitud) 
 );
