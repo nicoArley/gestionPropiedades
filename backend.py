@@ -79,7 +79,7 @@ def existeUsuario(cedula):
         desconectarBD(cnxn, cursor)
         return True
 
-#--Terminada
+
 #valida que los datos tengan las caracteristicas necesarias
 def existePropietario(cedula):
     cnxn = conectarBD()
@@ -93,7 +93,6 @@ def existePropietario(cedula):
         desconectarBD(cnxn, cursor)
         return True
        
-
 # usa el statement de insercion y execute para guardar el cambio en la base de datos
 def insertarPropietario(cedulaPropietario):
     global cursor
@@ -107,7 +106,6 @@ def insertarPropietario(cedulaPropietario):
     except: 
         desconectarBD(cnxn, cursor)
         return False
-
 
 #usa el statement de insercion y execute para guardar el cambio en la base de datos
 
@@ -125,8 +123,6 @@ def insertarUsuario(nuevoUsuario):
         desconectarBD(cnxn, cursor)
         return False
  
-
-
 #CREAR MODULO PROPIEDAD (Propietario)
 
 #Esta es la funcion que llama la base de datos luego de atrapar los datos de la interfaz (Al darle la opcion de crear propiedad)
