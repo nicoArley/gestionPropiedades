@@ -122,7 +122,7 @@ background-color:rgb(0, 101, 148);
        </property>
        <property name="icon">
         <iconset>
-         <normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/casa (2).png</normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/casa (2).png</iconset>
+         <normaloff>./Imagenes/casa.png</normaloff>./Imagenes/casa.png</iconset>
        </property>
       </widget>
       <widget class="QPushButton" name="btnINQUILINOS">
