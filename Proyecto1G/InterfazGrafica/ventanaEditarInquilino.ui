@@ -303,8 +303,8 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
          <widget class="QPushButton" name="btnAceptar">
           <property name="geometry">
            <rect>
-            <x>330</x>
-            <y>390</y>
+            <x>260</x>
+            <y>370</y>
             <width>75</width>
             <height>23</height>
            </rect>
@@ -531,37 +531,6 @@ background-color:rgb(0, 101, 148);
            <string>Télefono:</string>
           </property>
          </widget>
-         <widget class="QPushButton" name="btnRegistrar_8">
-          <property name="geometry">
-           <rect>
-            <x>290</x>
-            <y>350</y>
-            <width>41</width>
-            <height>21</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QPushButton{
-font: 87 9pt &quot;Arial&quot;;
-background-color: rgb(0, 68, 100);
-color:white;
-border:1px solid white;
-border-radius: 10px;
-}
-
-
-QPushButton:hover {
-background-color:rgb(0, 101, 148);
-}</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset>
-            <normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/subir.png</normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/subir.png</iconset>
-          </property>
-         </widget>
          <widget class="QLabel" name="label_19">
           <property name="geometry">
            <rect>
@@ -579,23 +548,6 @@ background-color:rgb(0, 101, 148);
            <string>Correo:</string>
           </property>
          </widget>
-         <widget class="QLabel" name="label_66">
-          <property name="geometry">
-           <rect>
-            <x>100</x>
-            <y>330</y>
-            <width>191</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">font: 9pt &quot;Arial&quot;;
-</string>
-          </property>
-          <property name="text">
-           <string>Documento:</string>
-          </property>
-         </widget>
          <widget class="QLineEdit" name="txtDireccion_4">
           <property name="geometry">
            <rect>
@@ -611,16 +563,6 @@ background-color:rgb(0, 101, 148);
            <rect>
             <x>320</x>
             <y>170</y>
-            <width>181</width>
-            <height>20</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_18">
-          <property name="geometry">
-           <rect>
-            <x>100</x>
-            <y>350</y>
             <width>181</width>
             <height>20</height>
            </rect>

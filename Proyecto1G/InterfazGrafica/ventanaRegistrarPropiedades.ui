@@ -392,27 +392,11 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
            <string>Tamaño:</string>
           </property>
          </widget>
-         <widget class="QLabel" name="label_8">
-          <property name="geometry">
-           <rect>
-            <x>330</x>
-            <y>320</y>
-            <width>47</width>
-            <height>13</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">font: 9pt &quot;Arial&quot;;</string>
-          </property>
-          <property name="text">
-           <string>Fotos:</string>
-          </property>
-         </widget>
          <widget class="QLabel" name="label_9">
           <property name="geometry">
            <rect>
             <x>60</x>
-            <y>260</y>
+            <y>270</y>
             <width>81</width>
             <height>16</height>
            </rect>
@@ -444,7 +428,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
           <property name="geometry">
            <rect>
             <x>60</x>
-            <y>320</y>
+            <y>330</y>
             <width>131</width>
             <height>16</height>
            </rect>
@@ -460,7 +444,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
           <property name="geometry">
            <rect>
             <x>330</x>
-            <y>260</y>
+            <y>270</y>
             <width>121</width>
             <height>16</height>
            </rect>
@@ -526,7 +510,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
           <property name="geometry">
            <rect>
             <x>60</x>
-            <y>280</y>
+            <y>290</y>
             <width>181</width>
             <height>20</height>
            </rect>
@@ -536,7 +520,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
           <property name="geometry">
            <rect>
             <x>60</x>
-            <y>340</y>
+            <y>350</y>
             <width>181</width>
             <height>20</height>
            </rect>
@@ -546,65 +530,17 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
           <property name="geometry">
            <rect>
             <x>330</x>
-            <y>280</y>
+            <y>290</y>
             <width>181</width>
             <height>20</height>
            </rect>
           </property>
          </widget>
-         <widget class="QRadioButton" name="rbDisponible">
-          <property name="geometry">
-           <rect>
-            <x>330</x>
-            <y>220</y>
-            <width>82</width>
-            <height>17</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">font: 8pt &quot;Arial&quot;;</string>
-          </property>
-          <property name="text">
-           <string>Disponible</string>
-          </property>
-         </widget>
-         <widget class="QRadioButton" name="rbOcupado">
-          <property name="geometry">
-           <rect>
-            <x>410</x>
-            <y>220</y>
-            <width>82</width>
-            <height>17</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">font: 8pt &quot;Arial&quot;;</string>
-          </property>
-          <property name="text">
-           <string>Ocupado</string>
-          </property>
-         </widget>
-         <widget class="QRadioButton" name="rbMantenimiento">
-          <property name="geometry">
-           <rect>
-            <x>490</x>
-            <y>220</y>
-            <width>121</width>
-            <height>17</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">font: 8pt &quot;Arial&quot;;</string>
-          </property>
-          <property name="text">
-           <string>En mantenimiento</string>
-          </property>
-         </widget>
          <widget class="QPushButton" name="btnREGISTRAR">
           <property name="geometry">
            <rect>
-            <x>280</x>
-            <y>390</y>
+            <x>360</x>
+            <y>340</y>
             <width>91</width>
             <height>31</height>
            </rect>
@@ -643,45 +579,30 @@ background-color:rgb(0, 101, 148);
            <string>metros cuadrados</string>
           </property>
          </widget>
-         <widget class="QLineEdit" name="lineEdit">
+         <widget class="QLineEdit" name="txtEstado">
           <property name="geometry">
            <rect>
             <x>330</x>
-            <y>340</y>
+            <y>220</y>
             <width>181</width>
             <height>20</height>
            </rect>
           </property>
          </widget>
-         <widget class="QPushButton" name="btnSubirFoto">
+         <widget class="QLabel" name="label_15">
           <property name="geometry">
            <rect>
-            <x>520</x>
-            <y>340</y>
-            <width>41</width>
-            <height>21</height>
+            <x>330</x>
+            <y>240</y>
+            <width>281</width>
+            <height>20</height>
            </rect>
           </property>
           <property name="styleSheet">
-           <string notr="true">QPushButton{
-font: 87 9pt &quot;Arial&quot;;
-background-color: rgb(0, 68, 100);
-color:white;
-border:1px solid white;
-border-radius: 10px;
-}
-
-
-QPushButton:hover {
-background-color:rgb(0, 101, 148);
-}</string>
+           <string notr="true">font: 8pt &quot;Arial&quot;;</string>
           </property>
           <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset>
-            <normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/subir.png</normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/subir.png</iconset>
+           <string>1: Disponible   2: Ocupado   3:En mantenimiento</string>
           </property>
          </widget>
         </widget>

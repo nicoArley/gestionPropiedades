@@ -426,7 +426,7 @@ background-color:rgb(0, 101, 148);
            </rect>
           </property>
          </widget>
-         <widget class="QDateEdit" name="dateEdit">
+         <widget class="QDateEdit" name="dtFecha">
           <property name="geometry">
            <rect>
             <x>70</x>
@@ -436,7 +436,7 @@ background-color:rgb(0, 101, 148);
            </rect>
           </property>
          </widget>
-         <widget class="QTimeEdit" name="timeEdit">
+         <widget class="QTimeEdit" name="tmHora">
           <property name="geometry">
            <rect>
             <x>360</x>

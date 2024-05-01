@@ -356,7 +356,7 @@ background-color:rgb(0, 101, 148);
            <string>Ingrese el ID de la propiedad que desea actualizar:</string>
           </property>
          </widget>
-         <widget class="QLineEdit" name="txtID">
+         <widget class="QLineEdit" name="txtIDpropiedad">
           <property name="geometry">
            <rect>
             <x>330</x>
@@ -576,7 +576,7 @@ background-color:rgb(0, 101, 148);
            </rect>
           </property>
          </widget>
-         <widget class="QLineEdit" name="txtDireccion_2">
+         <widget class="QLineEdit" name="txtDireccion">
           <property name="geometry">
            <rect>
             <x>50</x>
@@ -627,32 +627,6 @@ background-color:rgb(0, 101, 148);
           </property>
           <property name="text">
            <string>metros cuadrados</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_27">
-          <property name="geometry">
-           <rect>
-            <x>50</x>
-            <y>350</y>
-            <width>47</width>
-            <height>13</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">font: 9pt &quot;Arial&quot;;</string>
-          </property>
-          <property name="text">
-           <string>Fotos:</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="txtEstado_2">
-          <property name="geometry">
-           <rect>
-            <x>50</x>
-            <y>370</y>
-            <width>161</width>
-            <height>20</height>
-           </rect>
           </property>
          </widget>
         </widget>

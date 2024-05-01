@@ -347,7 +347,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
           <property name="geometry">
            <rect>
             <x>70</x>
-            <y>230</y>
+            <y>300</y>
             <width>191</width>
             <height>16</height>
            </rect>
@@ -399,21 +399,11 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
            </rect>
           </property>
          </widget>
-         <widget class="QLineEdit" name="txtFechaSoli">
-          <property name="geometry">
-           <rect>
-            <x>70</x>
-            <y>250</y>
-            <width>211</width>
-            <height>20</height>
-           </rect>
-          </property>
-         </widget>
          <widget class="QPushButton" name="btnRegistrar">
           <property name="geometry">
            <rect>
-            <x>430</x>
-            <y>350</y>
+            <x>290</x>
+            <y>390</y>
             <width>91</width>
             <height>31</height>
            </rect>
@@ -436,50 +426,11 @@ background-color:rgb(0, 101, 148);
            <string>Registrar</string>
           </property>
          </widget>
-         <widget class="QRadioButton" name="rbPendiente">
-          <property name="geometry">
-           <rect>
-            <x>360</x>
-            <y>250</y>
-            <width>82</width>
-            <height>17</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Pendiente</string>
-          </property>
-         </widget>
-         <widget class="QRadioButton" name="rbProceso">
-          <property name="geometry">
-           <rect>
-            <x>440</x>
-            <y>250</y>
-            <width>82</width>
-            <height>17</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>En proceso</string>
-          </property>
-         </widget>
-         <widget class="QRadioButton" name="rbResuelto">
-          <property name="geometry">
-           <rect>
-            <x>520</x>
-            <y>250</y>
-            <width>82</width>
-            <height>17</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Resuelto</string>
-          </property>
-         </widget>
          <widget class="QLabel" name="label_10">
           <property name="geometry">
            <rect>
             <x>70</x>
-            <y>280</y>
+            <y>230</y>
             <width>191</width>
             <height>16</height>
            </rect>
@@ -491,107 +442,11 @@ background-color:rgb(0, 101, 148);
            <string>Prioridad:</string>
           </property>
          </widget>
-         <widget class="QRadioButton" name="rbAlta">
-          <property name="geometry">
-           <rect>
-            <x>70</x>
-            <y>300</y>
-            <width>82</width>
-            <height>17</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Alta</string>
-          </property>
-         </widget>
-         <widget class="QRadioButton" name="rbMedia">
-          <property name="geometry">
-           <rect>
-            <x>120</x>
-            <y>300</y>
-            <width>82</width>
-            <height>17</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Media</string>
-          </property>
-         </widget>
-         <widget class="QRadioButton" name="rbBaja">
-          <property name="geometry">
-           <rect>
-            <x>180</x>
-            <y>300</y>
-            <width>82</width>
-            <height>17</height>
-           </rect>
-          </property>
-          <property name="text">
-           <string>Baja</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_11">
-          <property name="geometry">
-           <rect>
-            <x>370</x>
-            <y>280</y>
-            <width>191</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">font: 9pt &quot;Arial&quot;;</string>
-          </property>
-          <property name="text">
-           <string>Fotos:</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="txtFile">
-          <property name="geometry">
-           <rect>
-            <x>370</x>
-            <y>300</y>
-            <width>211</width>
-            <height>20</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="btnCargarFoto">
-          <property name="geometry">
-           <rect>
-            <x>590</x>
-            <y>300</y>
-            <width>31</width>
-            <height>21</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QPushButton{
-font: 87 9pt &quot;Arial&quot;;
-background-color: rgb(0, 68, 100);
-color:white;
-border:1px solid white;
-border-radius: 10px;
-}
-
-
-QPushButton:hover {
-background-color:rgb(0, 101, 148);
-}</string>
-          </property>
-          <property name="text">
-           <string/>
-          </property>
-          <property name="icon">
-           <iconset>
-            <normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/subir.png</normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/subir.png</iconset>
-          </property>
-         </widget>
          <widget class="QLabel" name="label_12">
           <property name="geometry">
            <rect>
-            <x>70</x>
-            <y>340</y>
+            <x>370</x>
+            <y>300</y>
             <width>191</width>
             <height>16</height>
            </rect>
@@ -603,11 +458,11 @@ background-color:rgb(0, 101, 148);
            <string>Proveedor:</string>
           </property>
          </widget>
-         <widget class="QRadioButton" name="radioButton">
+         <widget class="QRadioButton" name="rbPlomero">
           <property name="geometry">
            <rect>
-            <x>70</x>
-            <y>360</y>
+            <x>400</x>
+            <y>350</y>
             <width>82</width>
             <height>17</height>
            </rect>
@@ -616,11 +471,11 @@ background-color:rgb(0, 101, 148);
            <string>Plomero</string>
           </property>
          </widget>
-         <widget class="QRadioButton" name="radioButton_2">
+         <widget class="QRadioButton" name="rbElectricista">
           <property name="geometry">
            <rect>
-            <x>140</x>
-            <y>360</y>
+            <x>370</x>
+            <y>320</y>
             <width>82</width>
             <height>17</height>
            </rect>
@@ -629,11 +484,11 @@ background-color:rgb(0, 101, 148);
            <string>Electricista</string>
           </property>
          </widget>
-         <widget class="QRadioButton" name="radioButton_3">
+         <widget class="QRadioButton" name="rbCarpitero">
           <property name="geometry">
            <rect>
-            <x>220</x>
-            <y>360</y>
+            <x>480</x>
+            <y>350</y>
             <width>82</width>
             <height>17</height>
            </rect>
@@ -642,11 +497,11 @@ background-color:rgb(0, 101, 148);
            <string>Carpintero</string>
           </property>
          </widget>
-         <widget class="QRadioButton" name="radioButton_4">
+         <widget class="QRadioButton" name="rbPintor">
           <property name="geometry">
            <rect>
-            <x>110</x>
-            <y>390</y>
+            <x>530</x>
+            <y>320</y>
             <width>82</width>
             <height>17</height>
            </rect>
@@ -655,17 +510,79 @@ background-color:rgb(0, 101, 148);
            <string>Pintor</string>
           </property>
          </widget>
-         <widget class="QRadioButton" name="radioButton_5">
+         <widget class="QRadioButton" name="rbJardinero">
           <property name="geometry">
            <rect>
-            <x>180</x>
-            <y>390</y>
+            <x>450</x>
+            <y>320</y>
             <width>82</width>
             <height>17</height>
            </rect>
           </property>
           <property name="text">
            <string>Jardinero</string>
+          </property>
+         </widget>
+         <widget class="QDateEdit" name="date">
+          <property name="geometry">
+           <rect>
+            <x>70</x>
+            <y>320</y>
+            <width>211</width>
+            <height>22</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="txtPrioridad">
+          <property name="geometry">
+           <rect>
+            <x>70</x>
+            <y>250</y>
+            <width>211</width>
+            <height>20</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_13">
+          <property name="geometry">
+           <rect>
+            <x>90</x>
+            <y>270</y>
+            <width>191</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font: 9pt &quot;Arial&quot;;</string>
+          </property>
+          <property name="text">
+           <string>1: Baja     2: Media    3:Alta</string>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="txtEstado">
+          <property name="geometry">
+           <rect>
+            <x>370</x>
+            <y>250</y>
+            <width>211</width>
+            <height>20</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_14">
+          <property name="geometry">
+           <rect>
+            <x>370</x>
+            <y>270</y>
+            <width>251</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font: 9pt &quot;Arial&quot;;</string>
+          </property>
+          <property name="text">
+           <string>1: Pendiente     2: En proceso    3: Resuelto</string>
           </property>
          </widget>
         </widget>
