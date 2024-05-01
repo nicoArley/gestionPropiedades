@@ -75,7 +75,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.039
        <widget class="QLabel" name="label">
         <property name="geometry">
          <rect>
-          <x>20</x>
+          <x>50</x>
           <y>10</y>
           <width>181</width>
           <height>21</height>
@@ -86,10 +86,10 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.039
 color: white;</string>
         </property>
         <property name="text">
-         <string>COMUNICACIÓN</string>
+         <string>REPORTE</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="btnMenu">
+       <widget class="QPushButton" name="pushButton_5">
         <property name="geometry">
          <rect>
           <x>200</x>
@@ -117,7 +117,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/menu.png</normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/menu.png</iconset>
+          <normaloff>./Imagenes/menu.png</normaloff>./Imagenes/menu.png</iconset>
         </property>
        </widget>
       </widget>
@@ -155,57 +155,11 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
        <property name="frameShadow">
         <enum>QFrame::Raised</enum>
        </property>
-       <widget class="QPushButton" name="btnRecibidos">
+       <widget class="QPushButton" name="btnVOLVER">
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>110</y>
-          <width>161</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="layoutDirection">
-         <enum>Qt::RightToLeft</enum>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-        <property name="text">
-         <string>RECIBIDOS </string>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/recibidos.png</normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/recibidos.png</iconset>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="btnEnviados">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>170</y>
-          <width>161</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="layoutDirection">
-         <enum>Qt::RightToLeft</enum>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-        <property name="text">
-         <string>ENVIADOS </string>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/enviados.png</normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/enviados.png</iconset>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="btnVolver">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>230</y>
+          <y>40</y>
           <width>161</width>
           <height>41</height>
          </rect>
@@ -221,27 +175,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/volver.png</normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/volver.png</iconset>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="btnEnviar_2">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>50</y>
-          <width>161</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="layoutDirection">
-         <enum>Qt::RightToLeft</enum>
-        </property>
-        <property name="text">
-         <string>ENVIAR </string>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/enviar.png</normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/enviar.png</iconset>
+          <normaloff>./Imagenes/volver.png</normaloff>./Imagenes/volver.png</iconset>
         </property>
        </widget>
       </widget>
@@ -272,70 +206,14 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
         <property name="currentIndex">
          <number>0</number>
         </property>
-        <widget class="QWidget" name="pageEnviados">
-         <widget class="QLabel" name="label_8">
+        <widget class="QWidget" name="pageVisulizar">
+         <widget class="QPushButton" name="btnMensual">
           <property name="geometry">
            <rect>
-            <x>250</x>
-            <y>50</y>
-            <width>231</width>
-            <height>31</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">font: 11pt &quot;Arial&quot;;</string>
-          </property>
-          <property name="text">
-           <string>Mensajes Enviados</string>
-          </property>
-         </widget>
-         <widget class="QTableWidget" name="tableEnviados">
-          <property name="geometry">
-           <rect>
-            <x>20</x>
+            <x>200</x>
             <y>100</y>
-            <width>611</width>
-            <height>161</height>
-           </rect>
-          </property>
-          <column>
-           <property name="text">
-            <string>ID del mensaje</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Cédula del receptor</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Fecha</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Hora</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Contenido</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Estado</string>
-           </property>
-          </column>
-         </widget>
-         <widget class="QPushButton" name="btnConsultarEnviados">
-          <property name="geometry">
-           <rect>
-            <x>300</x>
-            <y>300</y>
-            <width>81</width>
-            <height>31</height>
+            <width>241</width>
+            <height>41</height>
            </rect>
           </property>
           <property name="styleSheet">
@@ -353,7 +231,77 @@ background-color:rgb(0, 101, 148);
 }</string>
           </property>
           <property name="text">
-           <string>Consultar</string>
+           <string>Mensual</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_2">
+          <property name="geometry">
+           <rect>
+            <x>190</x>
+            <y>60</y>
+            <width>381</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font: 10pt &quot;Arial&quot;;</string>
+          </property>
+          <property name="text">
+           <string>Seleccione el periodo que desea consultar:</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="btnTrimestral">
+          <property name="geometry">
+           <rect>
+            <x>200</x>
+            <y>160</y>
+            <width>241</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton{
+font: 87 9pt &quot;Arial&quot;;
+background-color: rgb(0, 68, 100);
+color:white;
+border:1px solid white;
+border-radius: 10px;
+}
+
+
+QPushButton:hover {
+background-color:rgb(0, 101, 148);
+}</string>
+          </property>
+          <property name="text">
+           <string>Trimestral</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="btnAnual">
+          <property name="geometry">
+           <rect>
+            <x>200</x>
+            <y>220</y>
+            <width>241</width>
+            <height>41</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton{
+font: 87 9pt &quot;Arial&quot;;
+background-color: rgb(0, 68, 100);
+color:white;
+border:1px solid white;
+border-radius: 10px;
+}
+
+
+QPushButton:hover {
+background-color:rgb(0, 101, 148);
+}</string>
+          </property>
+          <property name="text">
+           <string>Anual</string>
           </property>
          </widget>
         </widget>

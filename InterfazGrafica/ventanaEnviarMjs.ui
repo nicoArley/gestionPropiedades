@@ -75,7 +75,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.039
        <widget class="QLabel" name="label">
         <property name="geometry">
          <rect>
-          <x>30</x>
+          <x>20</x>
           <y>10</y>
           <width>181</width>
           <height>21</height>
@@ -86,13 +86,13 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.039
 color: white;</string>
         </property>
         <property name="text">
-         <string>PROPIEDADES</string>
+         <string>COMUNICACIÓN</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="pushButton_5">
+       <widget class="QPushButton" name="btnMenu">
         <property name="geometry">
          <rect>
-          <x>210</x>
+          <x>200</x>
           <y>10</y>
           <width>41</width>
           <height>31</height>
@@ -117,7 +117,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/menu.png</normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/menu.png</iconset>
+          <normaloff>./Imagenes/menu.png</normaloff>./Imagenes/menu.png</iconset>
         </property>
        </widget>
       </widget>
@@ -126,8 +126,8 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
         <rect>
          <x>0</x>
          <y>40</y>
-         <width>241</width>
-         <height>461</height>
+         <width>231</width>
+         <height>451</height>
         </rect>
        </property>
        <property name="styleSheet">
@@ -155,12 +155,12 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
        <property name="frameShadow">
         <enum>QFrame::Raised</enum>
        </property>
-       <widget class="QPushButton" name="pushButton">
+       <widget class="QPushButton" name="btnRecibidos">
         <property name="geometry">
          <rect>
-          <x>40</x>
-          <y>50</y>
-          <width>151</width>
+          <x>30</x>
+          <y>110</y>
+          <width>161</width>
           <height>41</height>
          </rect>
         </property>
@@ -171,19 +171,19 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
          <string notr="true"/>
         </property>
         <property name="text">
-         <string>REGISTRAR  </string>
+         <string>RECIBIDOS </string>
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/registrar.png</normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/registrar.png</iconset>
+          <normaloff>./Imagenes/recibidos.png</normaloff>./Imagenes/recibidos.png</iconset>
         </property>
        </widget>
-       <widget class="QPushButton" name="pushButton_2">
+       <widget class="QPushButton" name="btnEnviados">
         <property name="geometry">
          <rect>
-          <x>40</x>
-          <y>120</y>
-          <width>151</width>
+          <x>30</x>
+          <y>170</y>
+          <width>161</width>
           <height>41</height>
          </rect>
         </property>
@@ -194,19 +194,19 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
          <string notr="true"/>
         </property>
         <property name="text">
-         <string>VISUALIZAR  </string>
+         <string>ENVIADOS </string>
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/buscar.png</normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/buscar.png</iconset>
+          <normaloff>./Imagenes/enviados.png</normaloff>./Imagenes/enviados.png</iconset>
         </property>
        </widget>
-       <widget class="QPushButton" name="pushButton_3">
+       <widget class="QPushButton" name="btnVolver">
         <property name="geometry">
          <rect>
-          <x>40</x>
-          <y>190</y>
-          <width>151</width>
+          <x>30</x>
+          <y>230</y>
+          <width>161</width>
           <height>41</height>
          </rect>
         </property>
@@ -215,56 +215,33 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
         </property>
         <property name="styleSheet">
          <string notr="true"/>
-        </property>
-        <property name="text">
-         <string>EDITAR  </string>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/actualizar.png</normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/actualizar.png</iconset>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_4">
-        <property name="geometry">
-         <rect>
-          <x>40</x>
-          <y>260</y>
-          <width>151</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="layoutDirection">
-         <enum>Qt::RightToLeft</enum>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-        <property name="text">
-         <string>ELIMINAR  </string>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/eliminar.png</normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/eliminar.png</iconset>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="pushButton_11">
-        <property name="geometry">
-         <rect>
-          <x>40</x>
-          <y>330</y>
-          <width>151</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="layoutDirection">
-         <enum>Qt::RightToLeft</enum>
         </property>
         <property name="text">
          <string>VOLVER </string>
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/volver.png</normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/volver.png</iconset>
+          <normaloff>./Imagenes/volver.png</normaloff>./Imagenes/volver.png</iconset>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="btnENVIAR">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>50</y>
+          <width>161</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::RightToLeft</enum>
+        </property>
+        <property name="text">
+         <string>ENVIAR </string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>./Imagenes/enviar.png</normaloff>./Imagenes/enviar.png</iconset>
         </property>
        </widget>
       </widget>
@@ -286,99 +263,123 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="geometry">
          <rect>
-          <x>-10</x>
+          <x>0</x>
           <y>0</y>
-          <width>671</width>
-          <height>431</height>
+          <width>681</width>
+          <height>451</height>
          </rect>
         </property>
         <property name="currentIndex">
          <number>0</number>
         </property>
-        <widget class="QWidget" name="pageVisualizar">
-         <widget class="QLabel" name="label_13">
+        <widget class="QWidget" name="pageEnviar">
+         <widget class="QLabel" name="label_2">
           <property name="geometry">
            <rect>
-            <x>250</x>
-            <y>50</y>
-            <width>181</width>
+            <x>270</x>
+            <y>30</y>
+            <width>301</width>
             <height>21</height>
            </rect>
           </property>
           <property name="styleSheet">
-           <string notr="true">font: 12pt &quot;Arial&quot;;</string>
+           <string notr="true">font: 11pt &quot;Arial&quot;;</string>
           </property>
           <property name="text">
-           <string>Visualizar Propiedades</string>
+           <string>Enviar mensaje</string>
           </property>
          </widget>
-         <widget class="QTableWidget" name="tableVisualizar">
+         <widget class="QLabel" name="label_3">
           <property name="geometry">
            <rect>
-            <x>50</x>
-            <y>110</y>
-            <width>561</width>
-            <height>192</height>
+            <x>70</x>
+            <y>80</y>
+            <width>121</width>
+            <height>16</height>
            </rect>
           </property>
-          <column>
-           <property name="text">
-            <string>ID Propiedad</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Tipo</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Tamaño</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Descripción</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Precio</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Dirección</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Num Habitaciones</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Estado</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Gatos adicionales</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Fotos</string>
-           </property>
-          </column>
+          <property name="styleSheet">
+           <string notr="true">font: 9pt &quot;Arial&quot;;</string>
+          </property>
+          <property name="text">
+           <string>ID del mensaje:</string>
+          </property>
          </widget>
-         <widget class="QPushButton" name="btnConsultar">
+         <widget class="QLabel" name="label_5">
           <property name="geometry">
            <rect>
-            <x>300</x>
-            <y>340</y>
-            <width>75</width>
-            <height>23</height>
+            <x>70</x>
+            <y>150</y>
+            <width>151</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font: 9pt &quot;Arial&quot;;</string>
+          </property>
+          <property name="text">
+           <string>Fecha:</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_6">
+          <property name="geometry">
+           <rect>
+            <x>360</x>
+            <y>80</y>
+            <width>131</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font: 9pt &quot;Arial&quot;;</string>
+          </property>
+          <property name="text">
+           <string>Cedula del receptor:</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_9">
+          <property name="geometry">
+           <rect>
+            <x>70</x>
+            <y>210</y>
+            <width>191</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font: 9pt &quot;Arial&quot;;</string>
+          </property>
+          <property name="text">
+           <string>Contenido:</string>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="txtIDmjs">
+          <property name="geometry">
+           <rect>
+            <x>70</x>
+            <y>100</y>
+            <width>211</width>
+            <height>20</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="txtReceptor">
+          <property name="geometry">
+           <rect>
+            <x>360</x>
+            <y>100</y>
+            <width>211</width>
+            <height>21</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="btnEnviar">
+          <property name="geometry">
+           <rect>
+            <x>280</x>
+            <y>330</y>
+            <width>91</width>
+            <height>31</height>
            </rect>
           </property>
           <property name="styleSheet">
@@ -396,7 +397,53 @@ background-color:rgb(0, 101, 148);
 }</string>
           </property>
           <property name="text">
-           <string>Consultar</string>
+           <string>Enviar</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_10">
+          <property name="geometry">
+           <rect>
+            <x>360</x>
+            <y>140</y>
+            <width>191</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font: 9pt &quot;Arial&quot;;</string>
+          </property>
+          <property name="text">
+           <string>Hora:</string>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="txtContenido">
+          <property name="geometry">
+           <rect>
+            <x>70</x>
+            <y>230</y>
+            <width>501</width>
+            <height>51</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QDateEdit" name="dtFecha">
+          <property name="geometry">
+           <rect>
+            <x>70</x>
+            <y>170</y>
+            <width>211</width>
+            <height>22</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QTimeEdit" name="tmHora">
+          <property name="geometry">
+           <rect>
+            <x>360</x>
+            <y>170</y>
+            <width>211</width>
+            <height>22</height>
+           </rect>
           </property>
          </widget>
         </widget>

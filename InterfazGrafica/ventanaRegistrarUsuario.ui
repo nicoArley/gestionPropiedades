@@ -93,8 +93,8 @@ color: white;</string>
       <widget class="QPushButton" name="btnRegistrar">
        <property name="geometry">
         <rect>
-         <x>510</x>
-         <y>310</y>
+         <x>400</x>
+         <y>380</y>
          <width>111</width>
          <height>31</height>
         </rect>
@@ -137,62 +137,17 @@ background-color:rgb(0, 101, 148);
         <string/>
        </property>
       </widget>
-      <widget class="QLabel" name="label_3">
-       <property name="geometry">
-        <rect>
-         <x>190</x>
-         <y>150</y>
-         <width>221</width>
-         <height>191</height>
-        </rect>
-       </property>
-       <property name="layoutDirection">
-        <enum>Qt::RightToLeft</enum>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="pixmap">
-        <pixmap>./Imagenes/inicio.png</pixmap>
-       </property>
-       <property name="scaledContents">
-        <bool>true</bool>
-       </property>
-      </widget>
-      <widget class="QRadioButton" name="rbInquilino">
-       <property name="geometry">
-        <rect>
-         <x>470</x>
-         <y>170</y>
-         <width>82</width>
-         <height>17</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Inquilino</string>
-       </property>
-      </widget>
-      <widget class="QRadioButton" name="rbPropietario">
-       <property name="geometry">
-        <rect>
-         <x>570</x>
-         <y>170</y>
-         <width>82</width>
-         <height>17</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string>Propietario</string>
-       </property>
-      </widget>
       <widget class="QLabel" name="label_4">
        <property name="geometry">
         <rect>
-         <x>470</x>
-         <y>200</y>
+         <x>240</x>
+         <y>130</y>
          <width>181</width>
          <height>16</height>
         </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 9pt &quot;Arial&quot;;</string>
        </property>
        <property name="text">
         <string>Ingrese su cédula:</string>
@@ -201,45 +156,157 @@ background-color:rgb(0, 101, 148);
       <widget class="QLineEdit" name="txtCedula">
        <property name="geometry">
         <rect>
-         <x>470</x>
+         <x>240</x>
+         <y>150</y>
+         <width>191</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_5">
+       <property name="geometry">
+        <rect>
+         <x>500</x>
+         <y>130</y>
+         <width>181</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 9pt &quot;Arial&quot;;</string>
+       </property>
+       <property name="text">
+        <string>Nombre:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="txtNombre">
+       <property name="geometry">
+        <rect>
+         <x>500</x>
+         <y>150</y>
+         <width>191</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_6">
+       <property name="geometry">
+        <rect>
+         <x>240</x>
+         <y>200</y>
+         <width>181</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 9pt &quot;Arial&quot;;</string>
+       </property>
+       <property name="text">
+        <string>Apellido 1:</string>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_7">
+       <property name="geometry">
+        <rect>
+         <x>500</x>
+         <y>200</y>
+         <width>181</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 9pt &quot;Arial&quot;;</string>
+       </property>
+       <property name="text">
+        <string>Apellido 2:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="txtApellido1">
+       <property name="geometry">
+        <rect>
+         <x>240</x>
          <y>220</y>
          <width>191</width>
          <height>20</height>
         </rect>
        </property>
       </widget>
-      <widget class="QPushButton" name="btnIngresar">
+      <widget class="QLineEdit" name="txtApellido2">
        <property name="geometry">
         <rect>
-         <x>510</x>
-         <y>260</y>
-         <width>111</width>
-         <height>31</height>
+         <x>500</x>
+         <y>220</y>
+         <width>191</width>
+         <height>20</height>
         </rect>
        </property>
-       <property name="layoutDirection">
-        <enum>Qt::RightToLeft</enum>
+      </widget>
+      <widget class="QLabel" name="label_8">
+       <property name="geometry">
+        <rect>
+         <x>240</x>
+         <y>280</y>
+         <width>181</width>
+         <height>16</height>
+        </rect>
        </property>
        <property name="styleSheet">
-        <string notr="true">QPushButton{
-font: 87 9pt &quot;Arial&quot;;
-background-color: rgb(0, 68, 100);
-color:white;
-
-border-radius: 10px;
-}
-
-
-QPushButton:hover {
-background-color:rgb(0, 101, 148);
-}</string>
+        <string notr="true">font: 9pt &quot;Arial&quot;;</string>
        </property>
        <property name="text">
-        <string>Ingresar</string>
+        <string>Télefono:</string>
        </property>
-       <property name="icon">
-        <iconset>
-         <normaloff>../../../../../Downloads/image-removebg-preview (4).png</normaloff>../../../../../Downloads/image-removebg-preview (4).png</iconset>
+      </widget>
+      <widget class="QLineEdit" name="txtTelefono">
+       <property name="geometry">
+        <rect>
+         <x>240</x>
+         <y>300</y>
+         <width>191</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_9">
+       <property name="geometry">
+        <rect>
+         <x>500</x>
+         <y>280</y>
+         <width>181</width>
+         <height>16</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 9pt &quot;Arial&quot;;</string>
+       </property>
+       <property name="text">
+        <string>Correo:</string>
+       </property>
+      </widget>
+      <widget class="QLineEdit" name="txtCorreo">
+       <property name="geometry">
+        <rect>
+         <x>500</x>
+         <y>300</y>
+         <width>191</width>
+         <height>20</height>
+        </rect>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_3">
+       <property name="geometry">
+        <rect>
+         <x>390</x>
+         <y>70</y>
+         <width>261</width>
+         <height>41</height>
+        </rect>
+       </property>
+       <property name="styleSheet">
+        <string notr="true">font: 12pt &quot;Arial&quot;;</string>
+       </property>
+       <property name="text">
+        <string>Registrar nuevo usuario</string>
        </property>
       </widget>
      </widget>

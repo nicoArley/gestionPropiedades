@@ -22,7 +22,7 @@ def desconectarBD(cnxn, cursor):
 cedulaUsuario = ''
 rolUsuario = ''
 
-#--Terminada
+
 def ingresarSistema(rol, cedula):
     global cedulaUsuario, rolUsuario
 
@@ -65,8 +65,7 @@ def crearPropietario(cedula, nombre, apellido1, apellido2, telefono,correo):
             return False
     else: 
         return False
-    
-#--Terminada
+
 def existeUsuario(cedula):
     cnxn = conectarBD()
     cursor = cnxn.cursor()
@@ -187,6 +186,7 @@ def visualizarPropiedades(cedulaPropietario):
 #usa Execute y llama a la base de datos usando el statement, lo guarda en una lista, esta misma funcion se puede usar
 # cuando hay que pasarle al sistema las propiedades disponibles para ese propietario
 def obtenerPropiedades(cedulaPropietario):
+    #debe retornar una []
     pass
 
 

@@ -12,7 +12,7 @@ from PyQt5.uic import loadUi
 class VentanaInicio(QMainWindow):
     def __init__(self):
         super().__init__()
-        loadUi('InterfazGrafica/ventanaLogin.ui', self)
+        loadUi('./InterfazGrafica/ventanaLogin.ui', self)
         self.btnIngresar.clicked.connect(self.validar_ingreso)
         self.btnRegistrar.clicked.connect(self.abrir_ventana_Registro)
         self.txtCedula.textChanged.connect(self.validar_cedula)  # Conectar la señal textChanged a la función validar_cedula
@@ -390,9 +390,7 @@ class VentanaMantenimientoInq(QMainWindow):
 # ACA VA FUNCION BACKEND ----  INQUILINOS MODULO MANTENIMIENTO REGISTRAR
                                                             #aca no se ingresa ningun idProveedor desde la interfaz (revisar)
 def registrarMantenimiento(idSolicitud,idPropiedad,descripcionProblema,idProveedor,fechaSolicitud):
-    if(existeIdSolicitud(idSolicitud) == False):
-        if(existeAlquiler(idPropiedad)):
-            try: 
+    pass
    
 
 

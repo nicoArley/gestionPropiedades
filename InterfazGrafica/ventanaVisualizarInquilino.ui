@@ -75,7 +75,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.039
        <widget class="QLabel" name="label">
         <property name="geometry">
          <rect>
-          <x>20</x>
+          <x>50</x>
           <y>10</y>
           <width>181</width>
           <height>21</height>
@@ -86,10 +86,10 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.039
 color: white;</string>
         </property>
         <property name="text">
-         <string>MANTENIMIENTO</string>
+         <string>INQUILINOS</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="btnMenu">
+       <widget class="QPushButton" name="pushButton_5">
         <property name="geometry">
          <rect>
           <x>200</x>
@@ -117,7 +117,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/menu.png</normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/menu.png</iconset>
+          <normaloff>./Imagenes/menu.png</normaloff>./Imagenes/menu.png</iconset>
         </property>
        </widget>
       </widget>
@@ -155,12 +155,12 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
        <property name="frameShadow">
         <enum>QFrame::Raised</enum>
        </property>
-       <widget class="QPushButton" name="btnVolver">
+       <widget class="QPushButton" name="btnRegistrar_2">
         <property name="geometry">
          <rect>
           <x>30</x>
-          <y>200</y>
-          <width>161</width>
+          <y>40</y>
+          <width>151</width>
           <height>41</height>
          </rect>
         </property>
@@ -171,51 +171,77 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
          <string notr="true"/>
         </property>
         <property name="text">
+         <string>REGISTRAR  </string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>./Imagenes/registrar.png</normaloff>./Imagenes/registrar.png</iconset>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="btnVisualizar">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>110</y>
+          <width>151</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::RightToLeft</enum>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>VISUALIZAR  </string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>./Imagenes/buscar.png</normaloff>./Imagenes/buscar.png</iconset>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="btnEditar">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>180</y>
+          <width>151</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::RightToLeft</enum>
+        </property>
+        <property name="styleSheet">
+         <string notr="true"/>
+        </property>
+        <property name="text">
+         <string>EDITAR  </string>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>./Imagenes/actualizar.png</normaloff>./Imagenes/actualizar.png</iconset>
+        </property>
+       </widget>
+       <widget class="QPushButton" name="btnVolver">
+        <property name="geometry">
+         <rect>
+          <x>30</x>
+          <y>250</y>
+          <width>151</width>
+          <height>41</height>
+         </rect>
+        </property>
+        <property name="layoutDirection">
+         <enum>Qt::RightToLeft</enum>
+        </property>
+        <property name="text">
          <string>VOLVER </string>
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/volver.png</normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/volver.png</iconset>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="btnRegisSolicitud">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>60</y>
-          <width>161</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="layoutDirection">
-         <enum>Qt::RightToLeft</enum>
-        </property>
-        <property name="text">
-         <string>REGISTRAR SOLICITUD </string>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/reporte.png</normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/reporte.png</iconset>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="btnVizualizarSolicitud">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>130</y>
-          <width>161</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="layoutDirection">
-         <enum>Qt::RightToLeft</enum>
-        </property>
-        <property name="text">
-         <string>VISUALIZAR SOLICITUD </string>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/buscar.png</normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/buscar.png</iconset>
+          <normaloff>./Imagenes/volver.png</normaloff>./Imagenes/volver.png</iconset>
         </property>
        </widget>
       </widget>
@@ -237,87 +263,87 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="geometry">
          <rect>
-          <x>0</x>
+          <x>-10</x>
           <y>0</y>
-          <width>681</width>
-          <height>451</height>
+          <width>661</width>
+          <height>461</height>
          </rect>
         </property>
         <property name="currentIndex">
          <number>0</number>
         </property>
-        <widget class="QWidget" name="pageVisulizar">
-         <widget class="QTableWidget" name="tablePagosInquilino">
+        <widget class="QWidget" name="pageVisualizar">
+         <widget class="QLabel" name="label_13">
           <property name="geometry">
            <rect>
-            <x>10</x>
-            <y>100</y>
-            <width>631</width>
-            <height>192</height>
-           </rect>
-          </property>
-          <column>
-           <property name="text">
-            <string>ID Solicitud</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>ID Propiedad</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Descripción problema</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Comentarios</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Fecha solicitud</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Estado</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Prioridad</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Proveedor</string>
-           </property>
-          </column>
-         </widget>
-         <widget class="QLabel" name="label_7">
-          <property name="geometry">
-           <rect>
-            <x>260</x>
-            <y>50</y>
-            <width>231</width>
-            <height>31</height>
+            <x>280</x>
+            <y>40</y>
+            <width>201</width>
+            <height>21</height>
            </rect>
           </property>
           <property name="styleSheet">
-           <string notr="true">font: 11pt &quot;Arial&quot;;</string>
+           <string notr="true">font: 12pt &quot;Arial&quot;;</string>
           </property>
           <property name="text">
-           <string>Visualizar solicitudes</string>
+           <string>Visualizar Inquilinos</string>
           </property>
          </widget>
-         <widget class="QPushButton" name="btnConsultar">
+         <widget class="QTableWidget" name="tableVizualizarInquilinos">
           <property name="geometry">
            <rect>
-            <x>290</x>
-            <y>340</y>
+            <x>30</x>
+            <y>70</y>
+            <width>621</width>
+            <height>191</height>
+           </rect>
+          </property>
+          <column>
+           <property name="text">
+            <string>Cédula inquilino</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Nombre</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Apellido 1</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Apellido 2</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Télefono</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Correo</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>ID propiedad</string>
+           </property>
+          </column>
+          <column>
+           <property name="text">
+            <string>Fecha Inicio</string>
+           </property>
+          </column>
+         </widget>
+         <widget class="QPushButton" name="btnConsultarInq">
+          <property name="geometry">
+           <rect>
+            <x>330</x>
+            <y>280</y>
             <width>75</width>
             <height>23</height>
            </rect>
@@ -338,6 +364,59 @@ background-color:rgb(0, 101, 148);
           </property>
           <property name="text">
            <string>Consultar</string>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="btnEliminarInq">
+          <property name="geometry">
+           <rect>
+            <x>540</x>
+            <y>350</y>
+            <width>75</width>
+            <height>23</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">QPushButton{
+font: 87 9pt &quot;Arial&quot;;
+background-color: rgb(0, 68, 100);
+color:white;
+border:1px solid white;
+border-radius: 10px;
+}
+
+
+QPushButton:hover {
+background-color:rgb(0, 101, 148);
+}</string>
+          </property>
+          <property name="text">
+           <string>Eliminar</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_24">
+          <property name="geometry">
+           <rect>
+            <x>50</x>
+            <y>350</y>
+            <width>281</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font: 9pt &quot;Arial&quot;;</string>
+          </property>
+          <property name="text">
+           <string>Ingrese la cedula del inquilino que desea eliminar:</string>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="lineEdit_19">
+          <property name="geometry">
+           <rect>
+            <x>340</x>
+            <y>350</y>
+            <width>191</width>
+            <height>20</height>
+           </rect>
           </property>
          </widget>
         </widget>

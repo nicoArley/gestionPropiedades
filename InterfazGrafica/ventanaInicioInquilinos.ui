@@ -86,25 +86,20 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.039
 color: white;</string>
         </property>
         <property name="text">
-         <string>PROPIETARIOS</string>
+         <string>INQUILINOS</string>
         </property>
        </widget>
-      </widget>
-      <widget class="QPushButton" name="btnPropiedades">
-       <property name="geometry">
-        <rect>
-         <x>480</x>
-         <y>80</y>
-         <width>241</width>
-         <height>61</height>
-        </rect>
-       </property>
-       <property name="layoutDirection">
-        <enum>Qt::RightToLeft</enum>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">
-QPushButton{
+       <widget class="QPushButton" name="btnRegresar">
+        <property name="geometry">
+         <rect>
+          <x>20</x>
+          <y>10</y>
+          <width>51</width>
+          <height>31</height>
+         </rect>
+        </property>
+        <property name="styleSheet">
+         <string notr="true">QPushButton{
 font: 87 9pt &quot;Arial&quot;;
 background-color: rgb(0, 68, 100);
 color:white;
@@ -114,22 +109,23 @@ border-radius: 10px;
 
 
 QPushButton:hover {
-background-color:rgb(0, 101, 148);
+background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.039548 rgba(0, 67, 109, 255), stop:1 rgba(203, 203, 203, 255))
 }</string>
-       </property>
-       <property name="text">
-        <string>PROPIEDADES </string>
-       </property>
-       <property name="icon">
-        <iconset>
-         <normaloff>./Imagenes/casa.png</normaloff>./Imagenes/casa.png</iconset>
-       </property>
+        </property>
+        <property name="text">
+         <string/>
+        </property>
+        <property name="icon">
+         <iconset>
+          <normaloff>./Imagenes/volver.png</normaloff>./Imagenes/volver.png</iconset>
+        </property>
+       </widget>
       </widget>
-      <widget class="QPushButton" name="btnINQUILINOS">
+      <widget class="QPushButton" name="btnPagos">
        <property name="geometry">
         <rect>
          <x>480</x>
-         <y>150</y>
+         <y>130</y>
          <width>241</width>
          <height>61</height>
         </rect>
@@ -152,46 +148,14 @@ background-color:rgb(0, 101, 148);
 }</string>
        </property>
        <property name="text">
-        <string>INQUILINOS </string>
+        <string>PAGOS </string>
        </property>
        <property name="icon">
         <iconset>
-         <normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/inquilino.png</normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/inquilino.png</iconset>
+         <normaloff>./Imagenes/pago.png</normaloff>./Imagenes/pago.png</iconset>
        </property>
       </widget>
-      <widget class="QLabel" name="label_2">
-       <property name="geometry">
-        <rect>
-         <x>420</x>
-         <y>180</y>
-         <width>47</width>
-         <height>13</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-      </widget>
-      <widget class="QLabel" name="label_3">
-       <property name="geometry">
-        <rect>
-         <x>220</x>
-         <y>160</y>
-         <width>201</width>
-         <height>191</height>
-        </rect>
-       </property>
-       <property name="text">
-        <string/>
-       </property>
-       <property name="pixmap">
-        <pixmap>../../PROYECTO 1/Interfaz Grafica/Imagenes/propietarios.png</pixmap>
-       </property>
-       <property name="scaledContents">
-        <bool>true</bool>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="btnMANTENIMIENTO">
+      <widget class="QPushButton" name="btnManteInquilinos">
        <property name="geometry">
         <rect>
          <x>480</x>
@@ -222,14 +186,46 @@ background-color:rgb(0, 101, 148);
        </property>
        <property name="icon">
         <iconset>
-         <normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/mantenimiento.png</normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/mantenimiento.png</iconset>
+         <normaloff>./Imagenes/mantenimiento.png</normaloff>./Imagenes/mantenimiento.png</iconset>
        </property>
       </widget>
-      <widget class="QPushButton" name="btnCOMUNICACION">
+      <widget class="QLabel" name="label_2">
+       <property name="geometry">
+        <rect>
+         <x>420</x>
+         <y>180</y>
+         <width>47</width>
+         <height>13</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+      </widget>
+      <widget class="QLabel" name="label_3">
+       <property name="geometry">
+        <rect>
+         <x>190</x>
+         <y>160</y>
+         <width>201</width>
+         <height>191</height>
+        </rect>
+       </property>
+       <property name="text">
+        <string/>
+       </property>
+       <property name="pixmap">
+        <pixmap>./Imagenes/inquilinos.png</pixmap>
+       </property>
+       <property name="scaledContents">
+        <bool>true</bool>
+       </property>
+      </widget>
+      <widget class="QPushButton" name="btnComunicacion">
        <property name="geometry">
         <rect>
          <x>480</x>
-         <y>290</y>
+         <y>310</y>
          <width>241</width>
          <height>61</height>
         </rect>
@@ -256,41 +252,7 @@ background-color:rgb(0, 101, 148);
        </property>
        <property name="icon">
         <iconset>
-         <normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/mjs.png</normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/mjs.png</iconset>
-       </property>
-      </widget>
-      <widget class="QPushButton" name="btnREPORTE">
-       <property name="geometry">
-        <rect>
-         <x>480</x>
-         <y>360</y>
-         <width>241</width>
-         <height>61</height>
-        </rect>
-       </property>
-       <property name="layoutDirection">
-        <enum>Qt::RightToLeft</enum>
-       </property>
-       <property name="styleSheet">
-        <string notr="true">QPushButton{
-font: 87 9pt &quot;Arial&quot;;
-background-color: rgb(0, 68, 100);
-color:white;
-
-border-radius: 10px;
-}
-
-
-QPushButton:hover {
-background-color:rgb(0, 101, 148);
-}</string>
-       </property>
-       <property name="text">
-        <string>REPORTE </string>
-       </property>
-       <property name="icon">
-        <iconset>
-         <normaloff>Imagenes/reporte.png</normaloff>Imagenes/reporte.png</iconset>
+         <normaloff>./Imagenes/mjs.png</normaloff>./Imagenes/mjs.png</iconset>
        </property>
       </widget>
      </widget>

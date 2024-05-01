@@ -117,7 +117,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/menu.png</normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/menu.png</iconset>
+          <normaloff>./Imagenes/menu.png</normaloff>./Imagenes/menu.png</iconset>
         </property>
        </widget>
       </widget>
@@ -175,7 +175,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/volver.png</normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/volver.png</iconset>
+          <normaloff>./Imagenes/volver.png</normaloff>./Imagenes/volver.png</iconset>
         </property>
        </widget>
        <widget class="QPushButton" name="btnRegisSolicitud">
@@ -195,7 +195,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/reporte.png</normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/reporte.png</iconset>
+          <normaloff>./Imagenes/reporte.png</normaloff>./Imagenes/reporte.png</iconset>
         </property>
        </widget>
        <widget class="QPushButton" name="btnVizualizarSolicitud">
@@ -215,7 +215,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/buscar.png</normaloff>../../PROYECTO 1/Interfaz Grafica/Imagenes/buscar.png</iconset>
+          <normaloff>./Imagenes/buscar.png</normaloff>./Imagenes/buscar.png</iconset>
         </property>
        </widget>
       </widget>
