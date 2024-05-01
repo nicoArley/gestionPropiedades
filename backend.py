@@ -358,13 +358,13 @@ def visualizarSolicitudesP(cedulaPropietario):
         return[]
 #--Pendiente
 #Valida que existan solicitudes en sus propiedades con la cedula del propietario 
-def existeSolicitudesPropietario():
-    global cedulaUsuario
+def existeSolicitudesPropietario(cedulaUsuario):
+    # global cedulaUsuario
     cnxn = conectarBD()
     cursor = cnxn.cursor()
     
-    statement = 'SELECT COUNT(*) FROM Propiedad p JOIN SolicitudMantenimiento s ON p.idPropiedad = s.idPropiedad WHERE p.cedulaPropietario = '
-    cursor.execute(statement, (cedulaUsuario))
+    statement = 'SELECT * FROM SolicitudMantenimiento JOIN Propiedad ON Propiedad.idPropiedad = SolicitudMantenimiento.idPropiedad WHERE cedulaPropietario = ?; '
+    cursor.execute(statement, cedulaUsuario)
     #---------------------
     checkSolicitudesP = cursor.fetchone()
     if (checkSolicitudesP == None):
@@ -698,6 +698,8 @@ def registrarMantenimiento(idSolicitud,idPropiedad,descripcionProblema,idProveed
     if(existeIdSolicitud(idSolicitud) == False):
         if(existeAlquiler(idPropiedad)):
             try: 
+
+                #hay que buscar como formatear la fecha a año/mes/dia
                 fechaSolicitud = datetime.now()
                 estado = 1
                 mantenimiento = (idSolicitud,idPropiedad,descripcionProblema,idProveedor,fechaSolicitud, estado, idPropiedad)
@@ -774,7 +776,8 @@ def existeSolicitudesInquilino(cedulaInquilino):
     cnxn = conectarBD()
     cursor = cnxn.cursor()
     #---------------------
-    cursor.execute('SELECT * FROM Inquilino WHERE cedulaPropietario=?', (cedulaInquilino))
+    statement = 'SELECT * FROM SolicitudMantenimiento JOIN Alquiler ON Alquiler.idPropiedad = SolicitudMantenimiento.idPropiedad WHERE Alquiler.cedulaInquilino = ?; '
+    cursor.execute(statement, cedulaInquilino)
     #---------------------
     checkSolicitudI = cursor.fetchone()
     if (checkSolicitudI == None):
