@@ -1,17 +1,18 @@
 import pyodbc
-from datetime import datetime
+from datetime import datetime, timedelta
 import sys
 from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QTableWidgetItem
 from PyQt5.uic import loadUi
 
 cedulaUsuario = ''
 rolUsuario = ''
+periodo = ''
 
 #-----------------------------------------BACKEND-------------------------------------------------#
 
 def conectarBD():
     SERVER = 'localhost'
-    DATABASE = 'Proyecto1' #aqui va el nombre
+    DATABASE = 'Proyecto1'
     USERNAME = 'NewSA'
     PASSWORD = 'mypassword'
 
@@ -392,7 +393,6 @@ def existeInquilinosPropietario():
     global cedulaUsuario
     cnxn = conectarBD()
     cursor = cnxn.cursor()
-    #---------------------
     statement = 'SELECT Inquilino.cedula, Usuario.nombre, Usuario.apellido1, Usuario.apellido2, Usuario.telefono, Usuario.correo, Propiedad.idPropiedad, Alquiler.fechaInicio, Alquiler.fechaFin FROM Inquilino  JOIN Usuario ON Inquilino.cedula = Usuario.cedula JOIN Alquiler ON Alquiler.cedulaInquilino = Inquilino.cedula JOIN Propiedad ON Alquiler.idPropiedad = Propiedad.idPropiedad WHERE Propiedad.cedulaPropietario = ?'
     cursor.execute(statement, (cedulaUsuario))
     checkInquilinoP = cursor.fetchone()
@@ -457,7 +457,213 @@ def cambiarInquilino(cedulaInquilino,nombre, apellido1, apellido2, telefono, cor
     except: 
         desconectarBD(cnxn, cursor)
         return False
+
+#MODULO MANTENIMIENTO (Propietario)
+
+#MODULO MANTENIMIENTO VISUALIZAR SOLICITUDES (Propietario)
+
+# Esta funcion es la que se llama luego de presionar el boton de visualizar 
+def visualizarSolicitudesP():
+    if(existeInquilinosPropietario()):
+        if(existeSolicitudesPropietario()):
+            try:
+                tablaSolicitudes = obtenerSolicitudesP()
+                
+                #enviar datos a la interfaz
+                return tablaSolicitudes
+            except: 
+                return []
+        else: 
+            return[]
+    else: 
+        return[]
+
+#Valida que existan solicitudes en sus propiedades con la cedula del propietario 
+def existeSolicitudesPropietario():
+    global cedulaUsuario
+    cnxn = conectarBD()
+    cursor = cnxn.cursor()
     
+    statement = 'SELECT * FROM SolicitudMantenimiento JOIN Propiedad ON Propiedad.idPropiedad = SolicitudMantenimiento.idPropiedad WHERE cedulaPropietario = ?;'
+    cursor.execute(statement, cedulaUsuario)
+    checkSolicitudesP = cursor.fetchone()
+    if (checkSolicitudesP == None):
+        desconectarBD(cnxn, cursor)
+        return False
+    else:
+        desconectarBD(cnxn, cursor)
+        return True
+
+#usa Execute y llama a la base de datos usando el statement, lo guarda en una lista, esta misma funcion se puede usar
+def obtenerSolicitudesP():
+    global cedulaUsuario
+    cnxn = conectarBD()
+    cursor = cnxn.cursor()
+    statement = 'SELECT idSolicitud, Propiedad.idPropiedad, descripcionProblema, fechaSolicitud, estado, prioridad, nombre, primerApellido, segundoApellido, especialidad, telefono FROM SolicitudMantenimiento JOIN Propiedad ON SolicitudMantenimiento.idPropiedad = Propiedad.idPropiedad JOIN PrioridadesPermitidas ON SolicitudMantenimiento.idPrioridad = PrioridadesPermitidas.idPrioridad JOIN Proveedores ON SolicitudMantenimiento.idProveedor = Proveedores.idProveedor WHERE Propiedad.cedulaPropietario = ?'
+    cursor.execute(statement, cedulaUsuario) 
+    listaSolicitudes = []
+    listaSolicitudes = cursor.fetchall()
+    for solicitud in listaSolicitudes:
+        solicitud[3] = solicitud[3].strftime("%Y/%m/%d")
+    desconectarBD(cnxn, cursor)
+    return listaSolicitudes
+
+
+#MODULO MANTENIMIENTO ACTUALIZAR ESTADO SOLICITUD (Propietario)
+
+def actualizarSolicitud(idSolicitud, estado):
+    global cedulaUsuario
+    if(existeSolicitudesPropietario()):
+        if(existeSolicitud(idSolicitud)):
+            try:
+                #solicitud = obtenerSolicitud(idSolicitud)
+                cambiarEstadoSolicitud(idSolicitud,estado)
+                return True
+            except: 
+                return False 
+        else: return False     
+    else: return False 
+
+
+#comprueba que el id si exista en la base de datos y que pertenezca a una propiedad del propietario
+def existeSolicitud(idSolicitud):
+    global cedulaUsuario
+    cnxn = conectarBD()
+    cursor = cnxn.cursor()
+    cursor.execute('SELECT * FROM SolicitudMantenimiento WHERE idSolicitud=?', (idSolicitud))
+    checkSolicitudesP = cursor.fetchone()
+    if (checkSolicitudesP == None):
+        desconectarBD(cnxn, cursor)
+        return False
+    else:
+        desconectarBD(cnxn, cursor)
+        return True
+
+#aqui
+#Acá se hace la accion en la BD con el execute  
+def cambiarEstadoSolicitud(idSolicitud, estado):
+
+    cnxn = conectarBD()
+    cursor = cnxn.cursor()
+    try:
+        statement = 'UPDATE SolicitudMantenimiento SET estado = ? WHERE idSolicitud = ?'
+        cursor.execute(statement, estado, idSolicitud) 
+        desconectarBD(cnxn, cursor)
+        return True
+    except: 
+        desconectarBD(cnxn, cursor)
+        return False
+
+
+#MODULO DE REPORTES (Propietario, inquilino (es el mismo))
+
+def mostrarReporte(periodo):
+    global cedulaUsuario, rolUsuario
+    if(rolUsuario == "Propietario"):
+        try:
+            reportes = obtenerReportesPropietario(periodo)
+            return reportes
+        except:
+            return []
+    else: 
+        try: 
+            reportes = obtenerReportesInquilino(periodo)
+            return reportes
+        except: 
+            return []
+
+# Revisa en la base de datos  que la tabla de pagos existan inquilinos relacionados con las propiedades del propietario (esta consulta es anidada y feita) en el periodo especifico
+def existenReportesPropietario(periodo):
+    global cedulaUsuario 
+    cnxn = conectarBD()
+    cursor = cnxn.cursor()
+    fechaFinal = datetime.now()
+    fechaInicial = definirFechaInicial(periodo)
+    statement = 'SELECT * FROM Pagos JOIN Alquiler ON Pagos.cedulaInquilino = Alquiler.cedulaInquilino JOIN Propiedad ON Alquiler.idPropiedad = Propiedad.idPropiedad WHERE (Propiedad.cedulaPropietario = ?) AND (Pagos.fechaPago BETWEEN ? AND ?);'
+    cursor.execute(statement, cedulaUsuario, fechaInicial, fechaFinal )
+
+    checkReportesP = cursor.fetchone()
+    if (checkReportesP == None):
+        desconectarBD(cnxn, cursor)
+        return False
+    else:
+        desconectarBD(cnxn, cursor)
+        return True
+
+#obtiene solo los las cedulas de todos los inquilinos relacionados con una propiedad del propietario en login
+def obtenerIdsInquilinos(cedulaPropietario):
+    pass
+
+# compara los inquilinos  tomados del metodo obtenerIdsInquilinos(cedulaPropietario) con los reportes existentes para mostrar solo los que cumplen,
+# puede ser un select con un Where cedula IN (SELECT cedula ....)
+# luego obtiene por medio de uan consulta a la en la base de datos las tuplas
+
+def obtenerReportesPropietario(periodo):
+    global cedulaUsuario
+    cnxn = conectarBD()
+    cursor = cnxn.cursor()
+
+    fechaFinal = datetime.now()
+    fechaInicial = definirFechaInicial(periodo)
+    statement = 'SELECT idPago, Alquiler.cedulaInquilino, Pagos.fechaPago, Pagos.monto, TiposPagoPermitidos.tipoPago, EstadosPagoPermitidos.estadoPago, Pagos.metodoPago FROM Pagos JOIN TiposPagoPermitidos ON Pagos.tipoPago = TiposPagoPermitidos.idTipoPago JOIN EstadosPagoPermitidos ON EstadosPagoPermitidos.idEstadoPago  = Pagos.estadoPago JOIN Alquiler ON Pagos.cedulaInquilino = Alquiler.cedulaInquilino JOIN Propiedad ON Alquiler.idPropiedad = Propiedad.idPropiedad  WHERE (Propiedad.cedulaPropietario = ?) AND (Pagos.fechaPago BETWEEN ? AND ?);'
+    cursor.execute(statement, cedulaUsuario, fechaInicial, fechaFinal ) 
+    listaReportes = []
+    listaReportes = cursor.fetchall()
+    for reporte in listaReportes:
+        reporte[2] = reporte[2].strftime("%Y/%m/%d")
+    desconectarBD(cnxn, cursor)
+    return listaReportes
+
+
+def definirFechaInicial(periodo):
+    fechaActual = datetime.now()
+    if (periodo == 'Trimestral'):
+        # Suma 3 meses a la fecha actual para obtener la fecha final del trimestre
+        fechaInicial = fechaActual - timedelta(days=90)
+        return fechaInicial
+    elif (periodo == 'Mensual'):
+        # Suma 1 mes a la fecha actual para obtener la fecha final del mes siguiente
+        fechaInicial = fechaActual - timedelta(days=30)
+        return fechaInicial
+    else:
+        # Resta 1 año a la fecha actual para obtener la fecha final del año siguiente
+        fechaInicial = fechaActual - timedelta(days=365)
+        return fechaInicial
+
+# Cuando es un inquilino revisa en la base de datos que el inquilino haya registrado reportes en el periodo solicitado
+def existeReportesInquilino(cedulaUsuario,periodo):
+    #global cedulaUsuario
+    cnxn = conectarBD()
+    cursor = cnxn.cursor()
+    fechaFinal = datetime.now()
+    fechaInicial = definirFechaInicial(periodo)
+    statement = 'SELECT * FROM Pagos WHERE (Pagos.cedulaInquilino = ?) AND (Pagos.fechaPago BETWEEN ? AND ?);'
+    cursor.execute(statement, cedulaUsuario, fechaInicial, fechaFinal )
+    checkReportesI = cursor.fetchone()
+    if (checkReportesI == None):
+        desconectarBD(cnxn, cursor)
+        return False
+    else:
+        desconectarBD(cnxn, cursor)
+        return True
+
+#Pendiente
+# Obtiene los reportes del inquilino en el perido usa la cedula usuario
+def obtenerReportesInquilino(periodo):
+    global cedulaUsuario
+    cnxn = conectarBD()
+    cursor = cnxn.cursor()
+    statement = 'SELECT idPago, Alquiler.cedulaInquilino, Pagos.fechaPago, Pagos.monto, TiposPagoPermitidos.tipoPago, EstadosPagoPermitidos.estadoPago, Pagos.metodoPago FROM Pagos JOIN TiposPagoPermitidos ON Pagos.tipoPago = TiposPagoPermitidos.idTipoPago JOIN EstadosPagoPermitidos ON EstadosPagoPermitidos.idEstadoPago  = Pagos.estadoPago JOIN Alquiler ON Pagos.cedulaInquilino = Alquiler.cedulaInquilino JOIN Propiedad ON Alquiler.idPropiedad = Propiedad.idPropiedad  WHERE (Pagos.cedulaInquilino = ?) AND (Pagos.fechaPago BETWEEN ? AND ?);'
+    fechaFinal = datetime.now()
+    fechaInicial = definirFechaInicial(periodo)
+    cursor.execute(statement, cedulaUsuario, fechaInicial, fechaFinal ) 
+    listaReportes = []
+    listaReportes = cursor.fetchall()
+    for reporte in listaReportes:
+        reporte[2] = reporte[2].strftime("%Y/%m/%d")
+    desconectarBD(cnxn, cursor)
+    return listaReportes
+
 #MODULO COMUNICACION (Propietario, inquilino (es el mismo))
 
 #ENVIAR MODULO COMUNICACION (Propietario, inquilino (es el mismo))
@@ -841,7 +1047,7 @@ class VentanaEnviar(QMainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
         loadUi('InterfazGrafica/ventanaEnviarMjs.ui', self)
-        #aqui
+
         self.btnEnviar.clicked.connect(self.enviar_mensaje)
         self.btnRecibidos.clicked.connect(self.abrir_ventana_comunicacion)
         self.btnEnviados.clicked.connect(self.abrir_ventana_comunicacion)
@@ -1015,13 +1221,14 @@ class VentanaReportePagos(QMainWindow):
 
 class VentanaVisualizarPago(QMainWindow):
     def __init__(self, parent):
-        super().__init__()
-        self.parent = parent
-        loadUi('InterfazGrafica/ventanaVisualizarPago.ui',self.parent)
-        self.parent.show()
+        super().__init__(parent)
+        loadUi('InterfazGrafica/ventanaVisualizarPago.ui', self)
+        # Datos a insertar en la tabla
+        self.btnConsultar.clicked.connect(self.consultar)
 
-    #TODO
-    #No encontre la funcion en el backend para visualizar pagos
+    def consultar(self):
+        global periodo
+        agregar_filas_a_tabla(self.tablePagos, mostrarReporte(periodo))  
 
 # ---------------------------------------------- PROPIETARIOS --------------------------------------- #
 
@@ -1070,14 +1277,20 @@ class VentanaReporte(QMainWindow):
         self.btnVolver.clicked.connect(self.abrir_ventana_Reporte)
 
     def abrir_ventana_Reporte(self):
+        global periodo
         sender_button = self.sender()  # Obtener el botón que envió la señal
         if sender_button == self.btnMensual:
+            periodo = 'Mensual'
             # Abre ventana para mostrar pagos mensuales
             ventana_visualizar_pago = VentanaVisualizarReporte(self)
+            ventana_visualizar_pago.show()
         elif sender_button == self.btnTrimestral:
+            periodo = 'Trimestral'
             # Abre ventana para mostrar pagos trimestrales
             ventana_visualizar_pago = VentanaVisualizarReporte(self)
+            ventana_visualizar_pago.show()
         elif sender_button == self.btnAnual:
+            periodo = 'anual'
             # Abre ventana para mostrar pagos anuales
             ventana_visualizar_pago = VentanaVisualizarReporte(self)
             ventana_visualizar_pago.show()
@@ -1093,13 +1306,8 @@ class VentanaVisualizarReporte(QMainWindow):
         self.btnConsultar.clicked.connect(self.consultar)
 
     def consultar(self):
-        # Obtener datos de mostrarReporte
-     #   data = visualizarMsjRecibidos() prueba
-
-        # Agregar filas a la tablaMjsRecibidos con los datos obtenidos
-     #   agregar_filas_a_tabla(self.tablePagos, data)  prueba
-        # Insertar filas en la tabla CON LA FUNCIÓN DE BRI
-        agregar_filas_a_tabla(self.tablePagos, mostrarReporte())  
+        global periodo
+        agregar_filas_a_tabla(self.tablePagos, mostrarReporte(periodo))  
 
 #-- VENTANA PROPIEDADES
 class VentanaRegistrarPropiedades(QMainWindow):
@@ -1376,29 +1584,29 @@ class VentanaMantenimiento(QMainWindow):
     def validar_actualizacion(self):
        idsolicitud = self.txtIDsolicitud.text()
        estado = self.txtEstado.text()
-       comentario = self.txtAgregarComentario.text()
+
 
        if not idsolicitud.isnumeric() or not estado.isnumeric():
              QMessageBox.critical(self, "Error", "Los campos ID Solicitud y Estado deben ser numéricos")
              return
 
-       if not idsolicitud or not estado or not comentario:
+       if not idsolicitud or not estado:
               QMessageBox.critical(self, "Error", "Complete todos los campos")
               return
 
        cedula_propietario = '...'  # Aquí deberías obtener la cédula del propietario
-       if actualizarSolicitud(idsolicitud, estado, comentario, cedula_propietario):
+       if actualizarSolicitud(idsolicitud, estado):
            QMessageBox.information(self, "Éxito", "La solicitud se actualizó correctamente")
        else:
            QMessageBox.critical(self, "Error", "No se pudo actualizar la solicitud")
 
     def consultar_solicitudes(self):
-        cedula_propietario = '...'  # aquí obtener la cédula del propietario
-        tabla_solicitudes = visualizarSolicitudesP(cedula_propietario)
+        tabla_solicitudes = visualizarSolicitudesP()
 
         if tabla_solicitudes:
-            # Mostrar los datos en la tabla visualizarSolicitudes
-            pass
+
+            agregar_filas_a_tabla(self.tableSolicitudes, tabla_solicitudes)  
+
         else:
             QMessageBox.information(self, "Información", "No hay solicitudes para mostrar")
 

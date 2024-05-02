@@ -577,6 +577,8 @@ def obtenerReportesInquilino(periodo):
     pass
 
 
+
+
 # INQUILINOS
 
 #MODULO COMUNICACION (Propietario, inquilino (es el mismo))
