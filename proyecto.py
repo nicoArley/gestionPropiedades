@@ -197,7 +197,7 @@ def insertarPropiedad(nuevaPropiedad):
 def visualizarPropiedades():
     global cedulaUsuario
     try:
-        tablaPropiedades = obtenerPropiedades(cedulaUsuario)
+        tablaPropiedades = obtenerPropiedades()
         return tablaPropiedades
     except: 
         return []
@@ -208,7 +208,7 @@ def obtenerPropiedades():
     global cedulaUsuario
     cnxn = conectarBD()
     cursor = cnxn.cursor()
-    statement = 'SELECT * FROM Propiedad WHERE cedulaPropietario = ?;'
+    statement = 'SELECT idPropiedad, tipoPropiedad, tamanoMetros, descripcion, precioAlquiler, direccion, numeroHabitaciones, estado, gastosAdicionales FROM Propiedad JOIN EstadosPermitidos ON estadoActual = idEstado WHERE cedulaPropietario = ?;'
     cursor.execute(statement, cedulaUsuario) 
     listaPropiedades = []
     listaPropiedades = cursor.fetchall()
@@ -382,7 +382,8 @@ def visualizarInquilinos():
             return tablaInquilinos
         except: 
             return []
-    return[]
+    else:
+        return []
 
 
 #Valida que existan inquilinos en sus propiedades con la cedula del propietario 
@@ -1017,12 +1018,10 @@ class VentanaVisualizarPropiedades(QMainWindow):
         self.btnConsultar.clicked.connect(self.mostrar_datos)
 
     def mostrar_datos(self):
-        # Obtener la cédula del propietario
-        cedulaPropietario = self.parent.cedula_propietario   # Asegúrate de tener esta variable disponible en tu ventana principal
+        global cedulaUsuario
 
         # Llamar a la función visualizarPropiedades para obtener los datos
-        datosPropiedades = visualizarPropiedades(cedulaPropietario)
-
+        datosPropiedades = visualizarPropiedades()
         # Limpia la tabla antes de agregar nuevos datos
         self.tableVisualizar.setRowCount(0)
 
@@ -1136,6 +1135,7 @@ class VentanaRegistrarInquilino(QMainWindow):
             ventana_visualizar = VentanaRegistrar(self)
         elif sender_button == self.btnVisualizar:
             ventana_visualizar = VentanaVisualizar(self)
+            ventana_visualizar.show()
         elif sender_button == self.btnEditar:
             ventana_visualizar = VentanaEditar(self)
             ventana_visualizar.show()
@@ -1158,7 +1158,7 @@ class VentanaVisualizar(QMainWindow):
         super().__init__(parent)
         loadUi('InterfazGrafica/ventanaVisualizarInquilino.ui',self)
         
-        # self.btnConsultar.clicked.connect(self.consultar)
+        self.btnConsultarInq.clicked.connect(self.consultar)
 
     def consultar(self):
         # Insertar filas en la tabla CON LA FUNCIÓN DE BRI

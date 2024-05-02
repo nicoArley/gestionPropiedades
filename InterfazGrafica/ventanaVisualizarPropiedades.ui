@@ -340,12 +340,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
           </column>
           <column>
            <property name="text">
-            <string>Gatos adicionales</string>
-           </property>
-          </column>
-          <column>
-           <property name="text">
-            <string>Fotos</string>
+            <string>Gastos adicionales</string>
            </property>
           </column>
          </widget>
