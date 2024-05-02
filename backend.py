@@ -583,34 +583,37 @@ def obtenerReportesInquilino(periodo):
 
 #Esta es la funcion que la interfaz llama luego de validar los datos atrapados y asignarlos a variables 
 
-def enviarMensaje(cedulaReceptor, contenido):
+
+
+def enviarMensaje(cedulaReceptor,contenido):
     global cedulaUsuario
-    #preguntar a emi como hizo lo de los estados del mensaje
     if(existeUsuario(cedulaReceptor)): 
         try:
             estado = 'No Leido'
-            agregarComunicacion(cedulaReceptor, contenido, estado)
+            fechaMensaje = datetime.now().date()
+            horaMensaje = datetime.now().time()
+            valores = (cedulaUsuario,cedulaReceptor,fechaMensaje,horaMensaje,contenido, estado)
+            agregarComunicacion(valores)
             return True
         except:
             return False
+    else: 
+        return False
 
 #Esta funcion utiliza el stament y manda el insert a la base de datos
-def agregarComunicacion(cedulaReceptor, contenido, estado): 
-    global cursor,cedulaUsuario
+def agregarComunicacion(valores): 
+    global cursor
+    #cedulaUsuario
     cnxn = conectarBD()
     cursor = cnxn.cursor()
     try:
-        fechaMensaje = datetime.now().date()
-        horaMensaje = datetime.now().time()
-        valores = (cedulaUsuario,cedulaReceptor,fechaMensaje,horaMensaje,contenido, estado)
-        statement = 'INSERT INTO Comunicacion (idEmisor, idReceptor, fechaMensaje, horaMensaje, contenido, estado) VALUES (?)'
+        statement = 'INSERT INTO Comunicacion (cedulaEmisor, cedulaReceptor, fechaMensaje, horaMensaje, contenido, estado) VALUES (?,?,?,?,?,?)'
         cursor.execute(statement, valores) 
         desconectarBD(cnxn, cursor)
         return True
     except: 
         desconectarBD(cnxn, cursor)
         return False
-
 
 #RECIBIDOS MODULO COMUNICACION (Propietario, inquilino (es el mismo))
 
@@ -642,7 +645,6 @@ def existeMsjRecibidos():
         desconectarBD(cnxn, cursor)
         return True
     
-
 #Esta funcion utiliza el stament y manda el select con execute a la base de datos
 def obtenerMsjRecibidos(): 
     global cedulaUsuario, rolUsuario
@@ -680,7 +682,6 @@ def existeMsjEnviados():
         desconectarBD(cnxn, cursor)
         return True
 
- 
 #Esta funcion utiliza el stament y manda el select con execute a la base de datos
 def obtenerMsjEnviados():
     global cedulaUsuario
@@ -692,13 +693,13 @@ def obtenerMsjEnviados():
  
 #INQUILINOS MODULO PAGOS REGISTRAR PAGOS 
 
-def registrarPago (idPago,cedulaInquilino, fechaPago, monto, tipoPago, estadoPago, metodoPago): 
-    
+def registrarPago (idPago, monto, tipoPago, estadoPago, metodoPago): 
+    global cedulaUsuario
     if(existePagoId(idPago) == False):
+        fechaPago = datetime.now()
         nuevoPago = (idPago,cedulaUsuario, fechaPago, monto, tipoPago, estadoPago, metodoPago)
-
         try: 
-            insertarPago(idPago, monto, tipoPago, estadoPago, metodoPago)
+            insertarPago(nuevoPago)
             return True
         except: 
             return False
@@ -719,19 +720,14 @@ def existePagoId(idPago):
         desconectarBD(cnxn, cursor)
         return True
 
-
-
 # usa el statement de insercion y execute para guardar el cambio en la base de datos
-def insertarPago(idPago, monto, tipoPago, estadoPago, metodoPago):
+def insertarPago(nuevoPago):
     global cursor,cedulaUsuario
     cnxn = conectarBD()
     cursor = cnxn.cursor()
-    
     try:
-        fecha_mensaje = datetime.now()
-        valores = (idPago,cedulaUsuario,fecha_mensaje,monto,tipoPago, estadoPago, metodoPago)
-        statement = 'INSERT INTO Comunicacion (idPago,cedulaInquilino,fechaPago,monto,tipoPago,estadoPago, MetodoPago) VALUES (?)'
-        cursor.execute(statement, valores,) 
+        statement = 'INSERT INTO Pagos (idPago,cedulaInquilino,fechaPago,monto,tipoPago,estadoPago, metodoPago) VALUES (?,?,?,?,?,?,?)'
+        cursor.execute(statement, nuevoPago,) 
         desconectarBD(cnxn, cursor)
         return True
     except: 
@@ -741,15 +737,13 @@ def insertarPago(idPago, monto, tipoPago, estadoPago, metodoPago):
 
 # INQUILINOS MODULO MANTENIMIENTO REGISTRAR
 
-def registrarMantenimiento(idSolicitud,idPropiedad,descripcionProblema,idProveedor):
+def registrarMantenimiento(idSolicitud,idPropiedad,descripcionProblema,idProveedor,idPrioridad):
     if(existeSolicitud(idSolicitud) == False):
         if(existeAlquiler(idPropiedad)):
             try: 
-
-                #hay que buscar como formatear la fecha a año/mes/dia
                 fechaSolicitud = datetime.now()
                 estado = 1
-                mantenimiento = (idSolicitud,idPropiedad,descripcionProblema,idProveedor,fechaSolicitud, estado, idPropiedad)
+                mantenimiento = (idSolicitud,idPropiedad,descripcionProblema,idProveedor,fechaSolicitud, estado, idPrioridad)
                 insertarMantenimiento(mantenimiento)
                 return True
             except: 
@@ -758,11 +752,7 @@ def registrarMantenimiento(idSolicitud,idPropiedad,descripcionProblema,idProveed
             return False
     else: 
         return False
-#--Terminada
-# Busca que en la base de datos no exista una solicitud con ese id ya 
 
-
-#Terminada
 #Comprueba que el usuario se refiera a una propiedad que alquila, no puede solicitar mantenimiento para una propiedad que no alquile
 def existeAlquiler(idPropiedad):
     global cedulaUsuario
@@ -785,7 +775,7 @@ def insertarMantenimiento(mantenimiento):
     cursor = cnxn.cursor()
     
     try:
-        statement = 'INSERT INTO SolicitudMantenimiento (idSolicitud, idPropiedad, descripcionProblema, idProveedor, fechaSolicitud, estado, idPrioridad) VALUES (?)'
+        statement = 'INSERT INTO SolicitudMantenimiento (idSolicitud, idPropiedad, descripcionProblema, idProveedor, fechaSolicitud, estado, idPrioridad) VALUES (?,?,?,?,?,?,?)'
         cursor.execute(statement, mantenimiento,) 
         desconectarBD(cnxn, cursor)
         return True
@@ -823,6 +813,7 @@ def existeSolicitudesInquilino(cedulaInquilino):
     else:
         desconectarBD(cnxn, cursor)
         return True 
+
 
 #usa Execute y llama a la base de datos usando el statement, lo guarda en una lista, esta misma funcion se puede usar
 def obtenerSolicitudesI(cedulaPropietario):
