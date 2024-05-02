@@ -117,7 +117,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>./Imagenes/menu.png</normaloff>./Imagenes/menu.png</iconset>
+          <normaloff>Imagenes/menu.png</normaloff>Imagenes/menu.png</iconset>
         </property>
        </widget>
       </widget>
@@ -175,7 +175,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>./Imagenes/registrar.png</normaloff>./Imagenes/registrar.png</iconset>
+          <normaloff>Imagenes/registrar.png</normaloff>Imagenes/registrar.png</iconset>
         </property>
        </widget>
        <widget class="QPushButton" name="btnVisualizar">
@@ -198,7 +198,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>./Imagenes/buscar.png</normaloff>./Imagenes/buscar.png</iconset>
+          <normaloff>Imagenes/buscar.png</normaloff>Imagenes/buscar.png</iconset>
         </property>
        </widget>
        <widget class="QPushButton" name="btnEditar">
@@ -221,37 +221,14 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>./Imagenes/actualizar.png</normaloff>./Imagenes/actualizar.png</iconset>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="btnEliminar">
-        <property name="geometry">
-         <rect>
-          <x>40</x>
-          <y>260</y>
-          <width>151</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="layoutDirection">
-         <enum>Qt::RightToLeft</enum>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-        <property name="text">
-         <string>ELIMINAR  </string>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>./Imagenes/eliminar.png</normaloff>./Imagenes/eliminar.png</iconset>
+          <normaloff>Imagenes/actualizar.png</normaloff>Imagenes/actualizar.png</iconset>
         </property>
        </widget>
        <widget class="QPushButton" name="btnVolver">
         <property name="geometry">
          <rect>
           <x>40</x>
-          <y>330</y>
+          <y>260</y>
           <width>151</width>
           <height>41</height>
          </rect>
@@ -264,7 +241,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>./Imagenes/volver.png</normaloff>./Imagenes/volver.png</iconset>
+          <normaloff>Imagenes/volver.png</normaloff>Imagenes/volver.png</iconset>
         </property>
        </widget>
       </widget>

@@ -117,7 +117,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>./Imagenes/menu.png</normaloff>./Imagenes/menu.png</iconset>
+          <normaloff>Imagenes/menu.png</normaloff>Imagenes/menu.png</iconset>
         </property>
        </widget>
       </widget>
@@ -175,7 +175,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>./Imagenes/registrar.png</normaloff>./Imagenes/registrar.png</iconset>
+          <normaloff>Imagenes/registrar.png</normaloff>Imagenes/registrar.png</iconset>
         </property>
        </widget>
        <widget class="QPushButton" name="btnVisualizar">
@@ -198,7 +198,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>./Imagenes/buscar.png</normaloff>./Imagenes/buscar.png</iconset>
+          <normaloff>Imagenes/buscar.png</normaloff>Imagenes/buscar.png</iconset>
         </property>
        </widget>
        <widget class="QPushButton" name="btnEditar">
@@ -221,7 +221,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>./Imagenes/actualizar.png</normaloff>./Imagenes/actualizar.png</iconset>
+          <normaloff>Imagenes/actualizar.png</normaloff>Imagenes/actualizar.png</iconset>
         </property>
        </widget>
        <widget class="QPushButton" name="btnVolver">
@@ -241,7 +241,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>./Imagenes/volver.png</normaloff>./Imagenes/volver.png</iconset>
+          <normaloff>Imagenes/volver.png</normaloff>Imagenes/volver.png</iconset>
         </property>
        </widget>
       </widget>
@@ -303,8 +303,8 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
          <widget class="QPushButton" name="btnAceptar">
           <property name="geometry">
            <rect>
-            <x>260</x>
-            <y>370</y>
+            <x>310</x>
+            <y>310</y>
             <width>75</width>
             <height>23</height>
            </rect>
@@ -353,7 +353,7 @@ background-color:rgb(0, 101, 148);
           </property>
           <property name="icon">
            <iconset>
-            <normaloff>./Imagenes/buscar.png</normaloff>./Imagenes/buscar.png</iconset>
+            <normaloff>Imagenes/buscar.png</normaloff>Imagenes/buscar.png</iconset>
           </property>
          </widget>
          <widget class="QLabel" name="label_14">
@@ -396,38 +396,11 @@ background-color:rgb(0, 101, 148);
            <string>Registrar</string>
           </property>
          </widget>
-         <widget class="QLabel" name="label_65">
-          <property name="geometry">
-           <rect>
-            <x>100</x>
-            <y>270</y>
-            <width>191</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">font: 9pt &quot;Arial&quot;;
-</string>
-          </property>
-          <property name="text">
-           <string>ID de la propiedad:</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_16">
-          <property name="geometry">
-           <rect>
-            <x>100</x>
-            <y>290</y>
-            <width>181</width>
-            <height>20</height>
-           </rect>
-          </property>
-         </widget>
          <widget class="QLineEdit" name="lineEdit_17">
           <property name="geometry">
            <rect>
             <x>320</x>
-            <y>230</y>
+            <y>120</y>
             <width>181</width>
             <height>20</height>
            </rect>
@@ -438,16 +411,6 @@ background-color:rgb(0, 101, 148);
            <rect>
             <x>100</x>
             <y>230</y>
-            <width>181</width>
-            <height>20</height>
-           </rect>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="txtIDpropiedad_4">
-          <property name="geometry">
-           <rect>
-            <x>100</x>
-            <y>110</y>
             <width>181</width>
             <height>20</height>
            </rect>
@@ -473,8 +436,8 @@ background-color:rgb(0, 101, 148);
          <widget class="QLabel" name="label_17">
           <property name="geometry">
            <rect>
-            <x>320</x>
-            <y>90</y>
+            <x>100</x>
+            <y>100</y>
             <width>151</width>
             <height>16</height>
            </rect>
@@ -508,7 +471,7 @@ background-color:rgb(0, 101, 148);
           <property name="geometry">
            <rect>
             <x>320</x>
-            <y>210</y>
+            <y>100</y>
             <width>47</width>
             <height>13</height>
            </rect>
@@ -524,8 +487,8 @@ background-color:rgb(0, 101, 148);
          <widget class="QLineEdit" name="txtDireccion_4">
           <property name="geometry">
            <rect>
-            <x>320</x>
-            <y>110</y>
+            <x>100</x>
+            <y>120</y>
             <width>181</width>
             <height>20</height>
            </rect>
@@ -539,23 +502,6 @@ background-color:rgb(0, 101, 148);
             <width>181</width>
             <height>20</height>
            </rect>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_21">
-          <property name="geometry">
-           <rect>
-            <x>100</x>
-            <y>90</y>
-            <width>121</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">font: 9pt &quot;Arial&quot;;
-</string>
-          </property>
-          <property name="text">
-           <string>Cedula del inquilino:</string>
           </property>
          </widget>
          <widget class="QLabel" name="label_22">

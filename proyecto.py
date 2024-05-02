@@ -1,7 +1,7 @@
 import pyodbc
 from datetime import datetime
 import sys
-from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox
+from PyQt5.QtWidgets import QApplication, QMainWindow, QMessageBox, QTableWidgetItem
 from PyQt5.uic import loadUi
 
 cedulaUsuario = ''
@@ -666,6 +666,7 @@ class VentanaInicioInquilinos(QMainWindow):
         self.btnPagos.clicked.connect(self.abrir_ventana_Pagos)
         self.btnManteInquilinos.clicked.connect(self.abrir_ventana_mantenimiento)
         self.btnComunicacion.clicked.connect(self.abrir_ventana_comunicacion_enviar)
+        self.btnReporte.clicked.connect(self.abrir_ventana_reporte)
 
     def abrir_ventana_comunicacion_enviar(self):
         ventana_comunicacion = VentanaComunicacionInq(self)
@@ -678,6 +679,10 @@ class VentanaInicioInquilinos(QMainWindow):
     def abrir_ventana_mantenimiento(self):
         ventana_mantenimiento = VentanaMantenimientoInq(self)
         ventana_mantenimiento.show()
+
+    def abrir_ventana_reporte(self):
+        ventana_reporte = VentanaReportePagos(self)
+        ventana_reporte.show()
 
 class VentanaComunicacionInq(QMainWindow):
     def __init__(self, parent=None):
@@ -728,23 +733,47 @@ class VentanaEnviar(QMainWindow):
 
 class VentanaRecibidos(QMainWindow):
     def __init__(self, parent):
-        super().__init__()
-        self.parent = parent
-        loadUi('InterfazGrafica/ventanaMjsRecibidos.ui', self.parent)
-        self.parent.show()
+        super().__init__(parent)
+        loadUi('InterfazGrafica/ventanaMjsRecibidos.ui', self)
+        # Datos a insertar en la tabla
+        self.btnConsultar.clicked.connect(self.consultar)
 
-        self.btnConsultar.clicked.connect(self.visualizarMsjRecibidos)
-               #Aca nose como mostrar los datos en la tabla :(
+    def consultar(self):
+        # Obtener datos de visualizarMsjRecibidos
+     #   data = visualizarMsjRecibidos() prueba
+
+        # Agregar filas a la tablaMjsRecibidos con los datos obtenidos
+     #   agregar_filas_a_tabla(self.tableMjsRecibidos, data)  prueba
+        # Insertar filas en la tabla CON LA FUNCIÓN DE BRI
+        agregar_filas_a_tabla(self.tableMjsRecibidos, visualizarMsjRecibidos())  
+
+#PARA AGREGAR INFORMACIÓN A TODAS LAS TABLAS HECHAS DE DUPLAS
+def agregar_filas_a_tabla(table_widget, data):
+    for row_data in data:
+        current_row = table_widget.rowCount()
+        table_widget.insertRow(current_row)
+            
+        # Insertar datos en cada celda de la fila
+        for column, value in enumerate(row_data):
+            item = QTableWidgetItem(str(value))
+            table_widget.setItem(current_row, column, item)        
+
 
 class VentanaEnviados(QMainWindow):
     def __init__(self, parent):
-        super().__init__()
-        self.parent = parent
-        loadUi('InterfazGrafica/ventanaMjsRecibidos.ui', self.parent)
-        self.parent.show()
+        super().__init__(parent)
+        loadUi('InterfazGrafica/ventanaMjsEnviados.ui', self)
+        # Datos a insertar en la tabla
+        self.btnConsultarEnviados.clicked.connect(self.consultar)
 
-        self.btnConsultarEnviados.clicked.connect(self.existeMsjEnviados)
-               #Aca nose como mostrar los datos en la tabla :(
+    def consultar(self):
+        # Obtener datos de visualizarMsjRecibidos
+     #   data = visualizarMsjRecibidos() prueba
+
+        # Agregar filas a la tablaMjsRecibidos con los datos obtenidos
+     #   agregar_filas_a_tabla(self.tableMjsRecibidos, data)  prueba
+        # Insertar filas en la tabla CON LA FUNCIÓN DE BRI
+        agregar_filas_a_tabla(self.tableEnviados, visualizarMsjEnviados())
                
 class VentanaMantenimientoInq(QMainWindow):
     def __init__(self, parent=None):
@@ -752,20 +781,12 @@ class VentanaMantenimientoInq(QMainWindow):
         loadUi('InterfazGrafica/ventanaRegistrarManteInquilino.ui', self)
 
         # Conectar los botones a los métodos correspondientes
-        self.btnVizualizarSolicitud.clicked.connect(self.abrir_ventana_visualizar_mante)
-        self.btnRegistrar.clicked.connect(self.validar_registro_solicitud)
         self.btnVolver.clicked.connect(self.abrir_ventana_visualizar_mante)
 
     def abrir_ventana_visualizar_mante(self):
         # Aquí se abre la ventana 'ventanaVisualizarPago' dependiendo del botón que se haya presionado
         sender_button = self.sender()  # Obtener el botón que envió la señal
-        if sender_button == self.btnVizualizarSolicitud:
-            ventana_mante = VentanaVisualizarMante(self)
-            ventana_mante.show()
-        elif sender_button == self.btnRegisSolicitud:
-            ventana_registrar = VentanaRegistrarMante(self)
-            ventana_registrar.show()
-        elif sender_button == self.btnVolver:
+        if sender_button == self.btnVolver:
             self.close()
 
     def validar_registro_solicitud(self):
@@ -795,12 +816,30 @@ class VentanaMantenimientoInq(QMainWindow):
         else:
             QMessageBox.critical(self, "Error", "No se pudo registrar el mantenimiento")
 
-class VentanaRegistrarMante(QMainWindow):
+class VentanaRegistrarPago(QMainWindow):
     def __init__(self, parent):
-        super().__init__()
-        self.parent = parent
-        loadUi('InterfazGrafica/ventanaRegistrarManteInquilino.ui',self.parent)
-        self.parent.show()
+        super().__init__(parent)
+        loadUi('InterfazGrafica/ventanaRegistrarPago.ui', self)
+
+        self.btnRegistrar.clicked.connect(self.enviar_datos)
+
+    def enviar_datos(self):
+        idPago = self.txtIDpago.text()
+        monto = self.txtMonto.text()
+        tipoPago = self.txtTipoPago.text()
+        estadoPago = self.txtEstadoPago.text()
+        metodoPago = self.txtMetodoPago.text()
+
+        # Valida que los campos sean numéricos y no estén vacíos
+        if not idPago.isnumeric() or not monto.isnumeric()  or not tipoPago.isnumeric() or not estadoPago.isnumeric()  or not metodoPago:
+            QMessageBox.critical(self, "Error", "Verifique que todos los campos se encuentren completos")
+            return
+
+        # Llama a la función enviarMensaje con los datos de los campos
+        if registrarPago(idPago, monto, tipoPago, estadoPago, metodoPago):
+            QMessageBox.information(self, "Éxito", "Registro exitoso")
+        else:
+            QMessageBox.critical(self, "Error", "Verifique sus datos")
 
 class VentanaReportePagos(QMainWindow):
     def __init__(self, parent=None):
@@ -836,12 +875,8 @@ class VentanaVisualizarPago(QMainWindow):
         loadUi('InterfazGrafica/ventanaVisualizarPago.ui',self.parent)
         self.parent.show()
 
-    #     self.btnVOLVER.clicked.connect(self.cerrar)
-    # def cerrar(self):
-    #     sender_button = self.sender()  # Obtener el botón que envió la señal
-    #     if sender_button == self.btnVOLVER:
-    #        self.close()
-
+    #TODO
+    #No encontre la funcion en el backend para visualizar pagos
 
 # ---------------------------------------------- PROPIETARIOS --------------------------------------- #
 
@@ -877,13 +912,6 @@ class VentanaInicioPropietarios(QMainWindow):
         ventana_consultar_mantenimiento = VentanaReporte(self)
         ventana_consultar_mantenimiento.show()
 
-# class VentanaReporte(QMainWindow):
-#     def __init__(self, parent):
-#         super().__init__()
-#         self.parent = parent
-#         loadUi('InterfazGrafica/ventanaReportePagosProp.ui',self.parent)
-#         self.parent.show()
-
 # VENTANA REPORTE - PAGOS  
 class VentanaReporte(QMainWindow):
     def __init__(self, parent=None):
@@ -914,22 +942,19 @@ class VentanaReporte(QMainWindow):
 
 class VentanaVisualizarReporte(QMainWindow):
     def __init__(self, parent):
-        super().__init__()
-        self.parent = parent
-        loadUi('InterfazGrafica/ventanaVisualizarPago.ui',self.parent)
-        self.parent.show() 
-        
-        self.btnConsultar.clicked.connect(self.mostrar_reporte)
+        super().__init__(parent)
+        loadUi('InterfazGrafica/ventanaVisualizarPago.ui', self)
+        # Datos a insertar en la tabla
+        self.btnConsultar.clicked.connect(self.consultar)
 
-    def mostrar_reporte(self):
-        # Llama a la función mostrarReporte 
-        per = periodo 
-        reportes = mostrarReporte(periodo)
-        if reportes:
-            # Mostrar los reportes en la interfaz gráfica
-            pass
-        else:
-            QMessageBox.information(self, "Información", "No hay reportes para mostrar")
+    def consultar(self):
+        # Obtener datos de mostrarReporte
+     #   data = visualizarMsjRecibidos() prueba
+
+        # Agregar filas a la tablaMjsRecibidos con los datos obtenidos
+     #   agregar_filas_a_tabla(self.tablePagos, data)  prueba
+        # Insertar filas en la tabla CON LA FUNCIÓN DE BRI
+        agregar_filas_a_tabla(self.tablePagos, mostrarReporte())  
 
 #-- VENTANA PROPIEDADES
 class VentanaRegistrarPropiedades(QMainWindow):
@@ -939,6 +964,20 @@ class VentanaRegistrarPropiedades(QMainWindow):
 
         # Conectar los botones a los métodos correspondientes
         self.btnREGISTRAR.clicked.connect(self.validar_registro)
+        self.btnVisualizar.clicked.connect(self.abrir_ventana_)
+        self.btnEditar.clicked.connect(self.abrir_ventana_)
+        self.btnVolver.clicked.connect(self.abrir_ventana_)
+
+    def abrir_ventana_(self):
+        sender_button = self.sender()  # Obtener el botón que envió la señal
+        if sender_button == self.btnVisualizar:
+            ventana_visualizar = VentanaVisualizarPropiedades(self)
+            ventana_visualizar.show()
+        elif sender_button == self.btnEditar:
+            ventana_visualizar = VentanaEditarPropiedades(self)
+            ventana_visualizar.show()
+        elif sender_button == self.btnVolver:
+             self.close()
 
     def validar_registro(self):
         # Obtener los valores de los campos
@@ -968,20 +1007,11 @@ class VentanaRegistrarPropiedades(QMainWindow):
         else:
             QMessageBox.critical(self, "Error", "No se pudo registrar la propiedad")
 
-# class VentanaRegistrar(QMainWindow):
-#     def __init__(self, parent):
-#         super().__init__()
-#         self.parent = parent
-#         loadUi('InterfazGrafica/ventanaRegistrarPropiedades.ui',self.parent)
-#         self.parent.show()
-
 #---------------VENTANA VISUALIZAR PROPIEDADES
-class VentanaVisualizar(QMainWindow):
+class VentanaVisualizarPropiedades(QMainWindow):
     def __init__(self, parent):
-        super().__init__()
-        self.parent = parent
-        loadUi('InterfazGrafica/ventanaVisualizarPropiedades.ui',self.parent)
-        self.parent.show()   
+        super().__init__(parent)
+        loadUi('InterfazGrafica/ventanaVisualizarPropiedades.ui',self)
 
         # Conectar el botón btnConsultar a la función mostrar_datos
         self.btnConsultar.clicked.connect(self.mostrar_datos)
@@ -1003,12 +1033,10 @@ class VentanaVisualizar(QMainWindow):
                 self.tableVisualizar.setItem(row_num, col_num, QTableWidgetItem(str(data)))
 
 #--------------- EDITAR PROPIEDAD--------------       
-class VentanaEditar(QMainWindow):
+class VentanaEditarPropiedades(QMainWindow):
     def __init__(self, parent):
-        super().__init__()
-        self.parent = parent
-        loadUi('InterfazGrafica/ventanaEditarPropiedades.ui', self.parent)
-        self.parent.show()
+        super().__init__(parent)
+        loadUi('InterfazGrafica/ventanaEditarPropiedades.ui', self)
 
         # Conectar los botones a las funciones correspondientes
         self.btnbuscar.clicked.connect(self.cargar_datos)
@@ -1058,26 +1086,18 @@ class VentanaEditar(QMainWindow):
         else:
             QMessageBox.critical(self, "Error", "No se pudo guardar los cambios")
 
-class VentanaEliminar(QMainWindow):
-    def __init__(self, parent):
-        super().__init__()
-        self.parent = parent
-        loadUi('InterfazGrafica/ventanaEliminarPropiedades.ui',self.parent)
-        self.parent.show()
-
-#----------------
-
 # -----------------------VENTANA INQUILINOS - PROPIETARIOS
 
 #--------VENTANA REGISTRAR INQUILINOS-------------------------
 class VentanaRegistrarInquilino(QMainWindow):
-    def __init__(self, parent=None):
+    def __init__(self, parent):
         super().__init__(parent)
         loadUi('InterfazGrafica/ventanaRegistrarInquilino.ui', self)
 
         # Conectar los botones a los métodos correspondientes
         self.btnREGISTRAR.clicked.connect(self.validar_registro)
         self.btnVisualizar.clicked.connect(self.abrir_ventana_Registrar)
+        self.btnRegistrar.clicked.connect(self.abrir_ventana_Registrar)
         self.btnEditar.clicked.connect(self.abrir_ventana_Registrar)
         self.btnVolver.clicked.connect(self.abrir_ventana_Registrar)
 
@@ -1135,10 +1155,14 @@ class VentanaRegistrar(QMainWindow):
 #En esta ventana tambien esta eliminar
 class VentanaVisualizar(QMainWindow):
     def __init__(self, parent):
-        super().__init__()
-        self.parent = parent
-        loadUi('InterfazGrafica/ventanaVisualizarInquilino.ui',self.parent)
-        self.parent.show()
+        super().__init__(parent)
+        loadUi('InterfazGrafica/ventanaVisualizarInquilino.ui',self)
+        
+        # self.btnConsultar.clicked.connect(self.consultar)
+
+    def consultar(self):
+        # Insertar filas en la tabla CON LA FUNCIÓN DE BRI
+        agregar_filas_a_tabla(self.tableVizualizarInquilinos, visualizarInquilinos())  
        
 
 class VentanaEditar(QMainWindow):
@@ -1196,8 +1220,8 @@ class VentanaMantenimiento(QMainWindow):
             QMessageBox.information(self, "Información", "No hay solicitudes para mostrar")
 
 
-# if __name__ == '__main__':
-#     app = QApplication(sys.argv)
-#     ventana_inicio = VentanaInicio()
-#     ventana_inicio.show()
-#     sys.exit(app.exec_())
+if __name__ == '__main__':
+    app = QApplication(sys.argv)
+    ventana_inicio = VentanaInicio()
+    ventana_inicio.show()
+    sys.exit(app.exec_())

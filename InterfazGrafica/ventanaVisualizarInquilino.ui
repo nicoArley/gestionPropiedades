@@ -117,7 +117,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>./Imagenes/menu.png</normaloff>./Imagenes/menu.png</iconset>
+          <normaloff>Imagenes/menu.png</normaloff>Imagenes/menu.png</iconset>
         </property>
        </widget>
       </widget>
@@ -175,7 +175,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>./Imagenes/registrar.png</normaloff>./Imagenes/registrar.png</iconset>
+          <normaloff>Imagenes/registrar.png</normaloff>Imagenes/registrar.png</iconset>
         </property>
        </widget>
        <widget class="QPushButton" name="btnVisualizar">
@@ -198,7 +198,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>./Imagenes/buscar.png</normaloff>./Imagenes/buscar.png</iconset>
+          <normaloff>Imagenes/buscar.png</normaloff>Imagenes/buscar.png</iconset>
         </property>
        </widget>
        <widget class="QPushButton" name="btnEditar">
@@ -221,7 +221,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>./Imagenes/actualizar.png</normaloff>./Imagenes/actualizar.png</iconset>
+          <normaloff>Imagenes/actualizar.png</normaloff>Imagenes/actualizar.png</iconset>
         </property>
        </widget>
        <widget class="QPushButton" name="btnVolver">
@@ -241,7 +241,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>./Imagenes/volver.png</normaloff>./Imagenes/volver.png</iconset>
+          <normaloff>Imagenes/volver.png</normaloff>Imagenes/volver.png</iconset>
         </property>
        </widget>
       </widget>
@@ -338,6 +338,11 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
             <string>Fecha Inicio</string>
            </property>
           </column>
+          <column>
+           <property name="text">
+            <string>Fecha Final</string>
+           </property>
+          </column>
          </widget>
          <widget class="QPushButton" name="btnConsultarInq">
           <property name="geometry">
@@ -364,59 +369,6 @@ background-color:rgb(0, 101, 148);
           </property>
           <property name="text">
            <string>Consultar</string>
-          </property>
-         </widget>
-         <widget class="QPushButton" name="btnEliminarInq">
-          <property name="geometry">
-           <rect>
-            <x>540</x>
-            <y>350</y>
-            <width>75</width>
-            <height>23</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">QPushButton{
-font: 87 9pt &quot;Arial&quot;;
-background-color: rgb(0, 68, 100);
-color:white;
-border:1px solid white;
-border-radius: 10px;
-}
-
-
-QPushButton:hover {
-background-color:rgb(0, 101, 148);
-}</string>
-          </property>
-          <property name="text">
-           <string>Eliminar</string>
-          </property>
-         </widget>
-         <widget class="QLabel" name="label_24">
-          <property name="geometry">
-           <rect>
-            <x>50</x>
-            <y>350</y>
-            <width>281</width>
-            <height>16</height>
-           </rect>
-          </property>
-          <property name="styleSheet">
-           <string notr="true">font: 9pt &quot;Arial&quot;;</string>
-          </property>
-          <property name="text">
-           <string>Ingrese la cedula del inquilino que desea eliminar:</string>
-          </property>
-         </widget>
-         <widget class="QLineEdit" name="lineEdit_19">
-          <property name="geometry">
-           <rect>
-            <x>340</x>
-            <y>350</y>
-            <width>191</width>
-            <height>20</height>
-           </rect>
           </property>
          </widget>
         </widget>
