@@ -409,16 +409,16 @@ def visualizarSolicitudesP(cedulaPropietario):
             return[]
     else: 
         return[]
-#--Pendiente
+
+
 #Valida que existan solicitudes en sus propiedades con la cedula del propietario 
 def existeSolicitudesPropietario(cedulaUsuario):
     # global cedulaUsuario
     cnxn = conectarBD()
     cursor = cnxn.cursor()
     
-    statement = 'SELECT * FROM SolicitudMantenimiento JOIN Propiedad ON Propiedad.idPropiedad = SolicitudMantenimiento.idPropiedad WHERE cedulaPropietario = ?; '
+    statement = 'SELECT * FROM SolicitudMantenimiento JOIN Propiedad ON Propiedad.idPropiedad = SolicitudMantenimiento.idPropiedad WHERE cedulaPropietario = ?;'
     cursor.execute(statement, cedulaUsuario)
-    #---------------------
     checkSolicitudesP = cursor.fetchone()
     if (checkSolicitudesP == None):
         desconectarBD(cnxn, cursor)
@@ -426,7 +426,6 @@ def existeSolicitudesPropietario(cedulaUsuario):
     else:
         desconectarBD(cnxn, cursor)
         return True
-
 
 #usa Execute y llama a la base de datos usando el statement, lo guarda en una lista, esta misma funcion se puede usar
 def obtenerSolicitudesP():
@@ -440,7 +439,7 @@ def actualizarSolicitud(idSolicitud, estado, comentario,cedulaPropietario):
         if(existeSolicitud(idSolicitud)):
             try:
                 solicitud = obtenerSolicitud(idSolicitud)
-                cambiarEstado(solicitud,idSolicitud,estado,comentario)
+                cambiarEstadoSolicitud(solicitud,idSolicitud,estado,comentario)
                 return True
             except: 
                 return False 
@@ -466,9 +465,8 @@ def existeSolicitud(idSolicitud):
         return True
 
 
-
 #Acá se hace la accion en la BD con el execute  
-def cambiarEstado(solicitud, idSolicitud, estado, comentario):
+def cambiarEstadoSolicitud(solicitud, idSolicitud, estado, comentario):
     pass
 
 #MODULO DE REPORTES (Propietario, inquilino (es el mismo))
@@ -746,7 +744,7 @@ def insertarPago(idPago, monto, tipoPago, estadoPago, metodoPago):
 # INQUILINOS MODULO MANTENIMIENTO REGISTRAR
 
 def registrarMantenimiento(idSolicitud,idPropiedad,descripcionProblema,idProveedor):
-    if(existeIdSolicitud(idSolicitud) == False):
+    if(existeSolicitud(idSolicitud) == False):
         if(existeAlquiler(idPropiedad)):
             try: 
 
@@ -764,17 +762,7 @@ def registrarMantenimiento(idSolicitud,idPropiedad,descripcionProblema,idProveed
         return False
 #--Terminada
 # Busca que en la base de datos no exista una solicitud con ese id ya 
-def existeIdSolicitud(idSolicitud): 
-    cnxn = conectarBD()
-    cursor = cnxn.cursor()
-    cursor.execute('SELECT * FROM Inquilino WHERE cedulaPropietario=?', (idSolicitud))
-    checkSolicitud = cursor.fetchone()
-    if (checkSolicitud == None):
-        desconectarBD(cnxn, cursor)
-        return False
-    else:
-        desconectarBD(cnxn, cursor)
-        return True
+
 
 #Terminada
 #Comprueba que el usuario se refiera a una propiedad que alquila, no puede solicitar mantenimiento para una propiedad que no alquile
