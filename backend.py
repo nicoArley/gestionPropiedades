@@ -128,7 +128,7 @@ def insertarUsuario(nuevoUsuario):
 
 
 def crearPropiedad(idPropiedad, direccion, tipoPropiedad, numeroHabitaciones, tamanoMetros, descripcion, estadoActual, precioAlquiler, gastosAdicionales): 
-    
+
     if(existePropiedad(idPropiedad) == False) :
         nuevaPropiedad = (idPropiedad, direccion, tipoPropiedad, numeroHabitaciones, tamanoMetros, cedulaUsuario, descripcion, estadoActual, precioAlquiler, gastosAdicionales)
         
@@ -570,10 +570,12 @@ def existeReportesInquilino(cedulaUsuario,periodo):
         desconectarBD(cnxn, cursor)
         return True
 
+#Pendiente
 # Obtiene los reportes del inquilino en el perido usa la cedula usuario
 def obtenerReportesInquilino(periodo):
     global cedulaUsuario
     pass
+
 
 # INQUILINOS
 

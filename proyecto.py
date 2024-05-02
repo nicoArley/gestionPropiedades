@@ -240,7 +240,6 @@ def editarPropiedad(idPropiedad, direccion, tipoPropiedad, numeroHabitaciones, t
     except: 
         return False      
 
-
 #Acá se hace la accion en la BD con el execute, hace el update   
 def cambiarPropiedadBD(idPropiedad, direccion, tipoPropiedad, numeroHabitaciones, tamanoMetros,descripcion, estadoActual, precioAlquiler,gastosAdicionales):
     global cedulaUsuario
@@ -255,18 +254,6 @@ def cambiarPropiedadBD(idPropiedad, direccion, tipoPropiedad, numeroHabitaciones
         desconectarBD(cnxn, cursor)
         return False
 
-# ELIMINAR MODULO PROPIEDAD (Propietario)
-
-# Esta funcion es la que se llama luego de atrapar el id del sistema 
-def eliminarPropiedad(idPropiedad):
-    if(existePropiedad(idPropiedad)):
-        try:
-            #execute delete
-            return True
-        except: 
-            return False 
-    else:
-        return False
 
 #MODULO INQUILINOS (Propietario)
 #CREAR MODULO INQUILINOS (Propietario)
@@ -383,7 +370,55 @@ def actualizarPropiedadAlquiler(idPropiedad):
     except: 
         desconectarBD(cnxn, cursor)
         return False
-    
+
+#VISUALIZAR MODULO INQUILINOS (Propietario)
+
+# Esta funcion es la que se llama luego de presionar el boton de visualizar 
+def visualizarInquilinos():
+    if(existeInquilinosPropietario()):
+        try:
+            tablaInquilinos = obtenerInquilinos()
+            #enviar datos a la interfaz
+            return tablaInquilinos
+        except: 
+            return []
+    return[]
+
+
+#Valida que existan inquilinos en sus propiedades con la cedula del propietario 
+#cambiar el statement
+def existeInquilinosPropietario():
+    global cedulaUsuario
+    cnxn = conectarBD()
+    cursor = cnxn.cursor()
+    #---------------------
+    statement = 'SELECT Inquilino.cedula, Usuario.nombre, Usuario.apellido1, Usuario.apellido2, Usuario.telefono, Usuario.correo, Propiedad.idPropiedad, Alquiler.fechaInicio, Alquiler.fechaFin FROM Inquilino  JOIN Usuario ON Inquilino.cedula = Usuario.cedula JOIN Alquiler ON Alquiler.cedulaInquilino = Inquilino.cedula JOIN Propiedad ON Alquiler.idPropiedad = Propiedad.idPropiedad WHERE Propiedad.cedulaPropietario = ?'
+    cursor.execute(statement, (cedulaUsuario))
+    checkInquilinoP = cursor.fetchone()
+    if (checkInquilinoP == None):
+        desconectarBD(cnxn, cursor)
+        return False
+    else:
+        desconectarBD(cnxn, cursor)
+        return True
+
+
+#usa Execute y llama a la base de datos usando el statement, lo guarda en una lista, esta misma funcion se puede usar
+# cuando hay que pasarle al sistema las propiedades disponibles para ese propietario
+def obtenerInquilinos():
+    global cedulaUsuario
+    cnxn = conectarBD()
+    cursor = cnxn.cursor()
+    statement = 'SELECT Inquilino.cedula, Usuario.nombre, Usuario.apellido1, Usuario.apellido2, Usuario.telefono, Usuario.correo, Propiedad.idPropiedad, Alquiler.fechaInicio, Alquiler.fechaFin FROM Inquilino  JOIN Usuario ON Inquilino.cedula = Usuario.cedula JOIN Alquiler ON Alquiler.cedulaInquilino = Inquilino.cedula JOIN Propiedad ON Alquiler.idPropiedad = Propiedad.idPropiedad WHERE Propiedad.cedulaPropietario = ?'
+    cursor.execute(statement, cedulaUsuario) 
+    listaInquilinos = []
+    listaInquilinos = cursor.fetchall()
+    for inquilino in listaInquilinos:
+        inquilino[7] = inquilino[7].strftime("%Y/%m/%d")
+        inquilino[8] = inquilino[8].strftime("%Y/%m/%d")
+    desconectarBD(cnxn, cursor)
+    return listaInquilinos
+ 
 #MODULO COMUNICACION (Propietario, inquilino (es el mismo))
 
 #ENVIAR MODULO COMUNICACION (Propietario, inquilino (es el mismo))
