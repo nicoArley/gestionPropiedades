@@ -240,30 +240,35 @@ def eliminarPropiedad(idPropiedad):
 #y se los pasa con esas variables
 #El idPropiedad debe ser mostrado los disponibles, preguntar como hacerlo si es necesario una tabla intermedia
 
-def crearInquilino(idInquilino, nombre, primerApellido, segundoApellido, cedula, telefono, correo): 
-    if(existeUsuario(cedula) == False):
-        if (existeInquilinoBD(idInquilino) == False) :
-            
-            nuevoUsuario = (cedula, nombre, primerApellido, segundoApellido, telefono,correo)
+def crearInquilino(nombre, primerApellido, segundoApellido, cedula, telefono, correo,idPropiedad, fechaInicio, fechaFinal): 
+    if(existePropiedad(idPropiedad) == True and propiedadDisponible(idPropiedad) == True):
+        if(existeUsuario(cedula) == False):
+            if (existeInquilinoBD(cedula) == False) :
+                nuevoUsuario = (cedula, nombre, primerApellido, segundoApellido, telefono,correo)
+                try: 
+                    insertarUsuario(nuevoUsuario)
+                    insertarInquilino(cedula)
+                    insertarAlquiler(cedula,idPropiedad,fechaInicio, fechaFinal)
+                    return True
+                except: 
+                    return False
+            else: 
+                return False
+        elif(existeInquilinoBD(cedula) == False):
             try: 
-                insertarUsuario(nuevoUsuario)
-                insertarInquilino(cedula)
+                nuevoInquilino = (cedula)
+                insertarInquilino(nuevoInquilino)
+                nuevoAlquiler = (cedula,idPropiedad,fechaInicio, fechaFinal)
+                insertarAlquiler(nuevoAlquiler)
                 return True
             except: 
                 return False
         else: 
             return False
-    elif(existeInquilinoBD(idInquilino) == False):
-        try: 
-            nuevoInquilino = (cedula)
-            insertarInquilino(nuevoInquilino)
-            return True
-        except: 
-            return False
     else: 
-        return False
+        False
 
-#--Terminada
+
 #Ver que no exista ningun otro inquilino con esa cédula
 def existeInquilinoBD(cedulaInquilino):
     cnxn = conectarBD()
@@ -286,6 +291,33 @@ def insertarInquilino(cedulaInquilino):
     try:
         statement = 'INSERT INTO Inquilino (cedula) VALUES (?)'
         cursor.execute(statement, cedulaInquilino) 
+        desconectarBD(cnxn, cursor)
+        return True
+    except: 
+        desconectarBD(cnxn, cursor)
+        return False
+
+def propiedadDisponible(idPropiedad): 
+    global cursor
+    cnxn = conectarBD()
+    cursor = cnxn.cursor()
+    try:
+        statement = 'SELECT * FROM Propiedad JOIN EstadosPermitidos ON Propiedad.estadoActual = EstadosPermitidos.idEstado WHERE estado = \'disponible\' and idPropiedad = ?; '
+        cursor.execute(statement, idPropiedad) 
+        desconectarBD(cnxn, cursor)
+        return True
+    except: 
+        desconectarBD(cnxn, cursor)
+        return False
+
+
+def insertarAlquiler(nuevoAlquiler):
+    global cursor
+    cnxn = conectarBD()
+    cursor = cnxn.cursor()
+    try:
+        statement = 'INSERT INTO Alquiler (cedulaInquilino,idPropiedad,fechaInicio,fechaFin) VALUES (?,?,?,?)'
+        cursor.execute(statement, nuevoAlquiler) 
         desconectarBD(cnxn, cursor)
         return True
     except: 
