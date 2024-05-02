@@ -222,7 +222,7 @@ def obtenerPropiedad(idPropiedad):
         try:
             cnxn = conectarBD()
             cursor = cnxn.cursor()
-            statement = 'SELECT * FROM Propiedad WHERE idPropiedad = ?;'
+            statement = 'SELECT idPropiedad, tipoPropiedad, tamanoMetros, descripcion, precioAlquiler, direccion, numeroHabitaciones, estadoActual, gastosAdicionales FROM Propiedad WHERE idPropiedad = ?;'
             cursor.execute(statement, idPropiedad) 
             listaPropiedades = []
             listaPropiedades = cursor.fetchall()
@@ -233,9 +233,9 @@ def obtenerPropiedad(idPropiedad):
     else:
         return []
 
-def editarPropiedad(idPropiedad, direccion, tipoPropiedad, numeroHabitaciones, tamanoMetros,cedulaPropietario,descripcion, estadoActual, precioAlquiler,gastosAdicionales):
+def editarPropiedad(idPropiedad, direccion, tipoPropiedad, numeroHabitaciones, tamanoMetros, descripcion, estadoActual, precioAlquiler,gastosAdicionales):
     try: 
-        cambiarPropiedadBD(idPropiedad, direccion, tipoPropiedad, numeroHabitaciones, tamanoMetros,descripcion, estadoActual, precioAlquiler,gastosAdicionales)
+        cambiarPropiedadBD(idPropiedad, direccion, tipoPropiedad, numeroHabitaciones, tamanoMetros, descripcion, estadoActual, precioAlquiler, gastosAdicionales)
         return True
     except: 
         return False      
@@ -419,7 +419,45 @@ def obtenerInquilinos():
         inquilino[8] = inquilino[8].strftime("%Y/%m/%d")
     desconectarBD(cnxn, cursor)
     return listaInquilinos
- 
+
+#EDITAR MODULO PROPIEDAD(revisar si es asi) (Propietario)
+
+def obtenerInquilino(cedulaInquilino): 
+    if(existeInquilinoBD(cedulaInquilino)):
+        try:
+            cnxn = conectarBD()
+            cursor = cnxn.cursor()
+            statement = 'SELECT nombre, apellido1, apellido2, telefono, correo FROM Usuario WHERE cedula = ?'
+            cursor.execute(statement, cedulaInquilino) 
+            listaPropiedades = []
+            listaPropiedades = cursor.fetchall()
+            desconectarBD(cnxn, cursor)
+            return listaPropiedades
+        except: 
+            return []
+    else:
+        return []
+
+def editarInquilino(cedulaInquilino,nombre, apellido1, apellido2, telefono, correo):
+    try: 
+        cambiarInquilino(cedulaInquilino,nombre, apellido1, apellido2, telefono, correo)
+        return True
+    except: 
+        return False      
+
+#Acá se hace la accion en la BD con el execute, hace el update   
+def cambiarInquilino(cedulaInquilino,nombre, apellido1, apellido2, telefono, correo):
+    cnxn = conectarBD()
+    cursor = cnxn.cursor()
+    try:
+        statement = 'UPDATE Usuario SET nombre = ?, apellido1= ?, apellido2 = ?, telefono = ?, correo = ? WHERE cedula = ?;'
+        cursor.execute(statement,nombre, apellido1, apellido2, telefono, correo, cedulaInquilino) 
+        desconectarBD(cnxn, cursor)
+        return True
+    except: 
+        desconectarBD(cnxn, cursor)
+        return False
+    
 #MODULO COMUNICACION (Propietario, inquilino (es el mismo))
 
 #ENVIAR MODULO COMUNICACION (Propietario, inquilino (es el mismo))
@@ -695,6 +733,7 @@ class VentanaComunicacionInq(QMainWindow):
         self.btnRecibidos.clicked.connect(self.abrir_ventana_comunicacion)
         self.btnEnviados.clicked.connect(self.abrir_ventana_comunicacion)
         self.btnVolver.clicked.connect(self.abrir_ventana_comunicacion)
+        self.btnEnviar.clicked.connect(self.enviar_mensaje)
 
     def abrir_ventana_comunicacion(self):
         sender_button = self.sender()  # Obtener el botón que envió la señal
@@ -709,13 +748,45 @@ class VentanaComunicacionInq(QMainWindow):
             ventana_enviados.show()
         elif sender_button == self.btnVolver:
              self.close()
+
+    def enviar_mensaje(self):
+        cedulaReceptor = self.txtReceptor.text()
+        contenido = self.txtContenido.text()
+
+        # Valida que los campos sean numéricos y no estén vacíos
+        if not cedulaReceptor.isnumeric() or not contenido:
+            QMessageBox.critical(self, "Error", "Los campos ID Mensaje, Receptor y Contenido son obligatorios y deben ser numéricos")
+            return
+
+        # Llama a la función enviarMensaje con los datos de los campos
+        if enviarMensaje(cedulaReceptor, contenido):
+            QMessageBox.information(self, "Éxito", "Mensaje enviado correctamente")
+        else:
+            QMessageBox.critical(self, "Error", "Error al enviar el mensaje")
    
 class VentanaEnviar(QMainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)
         loadUi('InterfazGrafica/ventanaEnviarMjs.ui', self)
-        
+        #aqui
         self.btnEnviar.clicked.connect(self.enviar_mensaje)
+        self.btnRecibidos.clicked.connect(self.abrir_ventana_comunicacion)
+        self.btnEnviados.clicked.connect(self.abrir_ventana_comunicacion)
+        self.btnVolver.clicked.connect(self.abrir_ventana_comunicacion)
+    
+    def abrir_ventana_comunicacion(self):
+        sender_button = self.sender()  # Obtener el botón que envió la señal
+        if sender_button == self.btnENVIAR:
+            ventana_enviar = VentanaEnviar(self)
+            ventana_enviar.show()
+        elif sender_button == self.btnRecibidos:
+            ventana_recibidos = VentanaRecibidos(self)
+            ventana_recibidos.show()
+        elif sender_button == self.btnEnviados:
+            ventana_enviados = VentanaEnviados(self)
+            ventana_enviados.show()
+        elif sender_button == self.btnVolver:
+             self.close()
 
     def enviar_mensaje(self):
         cedulaReceptor = self.txtReceptor.text()
@@ -1042,23 +1113,22 @@ class VentanaEditarPropiedades(QMainWindow):
         self.btnAceptar.clicked.connect(self.guardar_cambios)
 
     def cargar_datos(self):
-        # Obtener la cédula del propietario
-        idPropiedad = self.parent.cedula_propietario   
-
         # Buscar la propiedad y cargar los datos 
-        id_propiedad = self.txtIDpropiedad.text()  # Obtener el ID de la propiedad a editar
-        datos_propiedad = obtenerDatosPropiedad(id_propiedad, idPropiedad)  # Implementa esta función para obtener los datos de la propiedad
+        idPropiedad = self.txtIDpropiedad.text()  # Obtener el ID de la propiedad a editar
+        datos_propiedad = obtenerPropiedad(idPropiedad)  # Implementa esta función para obtener los datos de la propiedad
 
-        if datos_propiedad:
+        if len(datos_propiedad) == 1:
+            
             # Si se encontraron datos, cargarlos en los campos correspondientes
-            self.txtTipo.setText(datos_propiedad['tipo'])
-            self.txtTam.setText(datos_propiedad['tamano'])
-            self.txtDescripcion.setText(datos_propiedad['descripcion'])
-            self.Txtprecio.setText(datos_propiedad['precio'])
-            self.txtDireccion.setText(datos_propiedad['direccion'])
-            self.txtNumH.setText(datos_propiedad['num_habitaciones'])
-            self.txtEstado.setText(datos_propiedad['estado'])
-            self.txtGastosA.setText(datos_propiedad['gastos_adicionales'])
+            #idPropiedad, tipoPropiedad, tamanoMetros, descripcion, precioAlquiler, direccion, numeroHabitaciones, estado, gastosAdicionales
+            self.txtTipo.setText(str(datos_propiedad[0][1]))
+            self.txtTam.setText(str(datos_propiedad[0][2]))
+            self.txtDescripcion.setText(str(datos_propiedad[0][3]))
+            self.Txtprecio.setText(str(datos_propiedad[0][4]))
+            self.txtDireccion.setText(str(datos_propiedad[0][5]))
+            self.txtNumH.setText(str(datos_propiedad[0][6]))
+            self.txtEstado.setText(str(datos_propiedad[0][7]))
+            self.txtGastosA.setText(str(datos_propiedad[0][8]))
         else:
             QMessageBox.critical(self, "Error", "La propiedad no se encontró")
 
@@ -1167,10 +1237,50 @@ class VentanaVisualizar(QMainWindow):
 
 class VentanaEditar(QMainWindow):
     def __init__(self, parent):
-        super().__init__()
-        self.parent = parent
-        loadUi('InterfazGrafica/ventanaEditarInquilino.ui',self.parent)
-        self.parent.show()
+        super().__init__(parent)
+        loadUi('InterfazGrafica/ventanaEditarInquilino.ui', self)
+        
+        # Conectar los botones a las funciones correspondientes
+        self.btnBuscar.clicked.connect(self.cargar_datos)
+        self.btnAceptar.clicked.connect(self.guardar_cambios)
+
+    def cargar_datos(self):
+        # Buscar la propiedad y cargar los datos 
+        cedulaInquilino = self.txtIDinquilino.text()  # Obtener el ID de la propiedad a editar
+        datos_inquilino = obtenerInquilino(cedulaInquilino)  # Implementa esta función para obtener los datos de la propiedad
+
+        if len(datos_inquilino) == 1:
+            # Si se encontraron datos, cargarlos en los campos correspondientes
+            #nombre, apellido1, apellido2, telefono, correo
+            self.txtNombre.setText(str(datos_inquilino[0][0]))
+            self.txtApellido1.setText(str(datos_inquilino[0][1]))
+            self.txtApellido2.setText(str(datos_inquilino[0][2]))
+            self.txtTelefono.setText(str(datos_inquilino[0][3]))
+            self.txtCorreo.setText(str(datos_inquilino[0][4]))
+        else:
+            QMessageBox.critical(self, "Error", "La propiedad no se encontró")
+
+    def guardar_cambios(self):
+        # Obtener los datos de los campos
+        cedulaInquilino = self.txtIDinquilino.text()
+        nombre = self.txtNombre.text()
+        apellido1 = self.txtApellido1.text()
+        apellido2 = self.txtApellido2.text()
+        telefono = self.txtTelefono.text()
+        correo = self.txtCorreo.text()
+
+        # Verificar que ningún campo esté vacío
+        if not nombre or not apellido1 or not apellido2 or not telefono or not correo or not cedulaInquilino:
+            QMessageBox.critical(self, "Error", "Complete todos los campos")
+            return
+
+        # Llamar a la función editarPropiedad para guardar los cambios
+        if editarInquilino(cedulaInquilino, nombre, apellido1, apellido2, telefono, correo):
+            QMessageBox.information(self, "Éxito", "Los cambios se guardaron correctamente")
+        else:
+            QMessageBox.critical(self, "Error", "No se pudo guardar los cambios")
+
+
 
 #////
 
