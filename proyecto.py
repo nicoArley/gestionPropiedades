@@ -785,7 +785,7 @@ class VentanaInicioInquilinos(QMainWindow):
         ventana_comunicacion.show()
 
     def abrir_ventana_Pagos(self):
-        ventana_registrar_propiedades = VentanaReportePagos(self)
+        ventana_registrar_propiedades = VentanaRegistrarPago(self)
         ventana_registrar_propiedades.show()
 
     def abrir_ventana_mantenimiento(self):
