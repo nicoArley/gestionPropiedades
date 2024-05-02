@@ -188,6 +188,87 @@ def insertarPropiedad(nuevaPropiedad):
         desconectarBD(cnxn, cursor)
         return False
 
+
+#VISUALIZAR MODULO PROPIEDAD (Propietario)
+
+# Esta funcion es la que se llama luego de presionar el boton de visualizar
+
+# PENDIENTE ver si existe en la base de datos 
+def visualizarPropiedades():
+    global cedulaUsuario
+    try:
+        tablaPropiedades = obtenerPropiedades(cedulaUsuario)
+        return tablaPropiedades
+    except: 
+        return []
+
+#usa Execute y llama a la base de datos usando el statement, lo guarda en una lista, esta misma funcion se puede usar
+# cuando hay que pasarle al sistema las propiedades disponibles para ese propietario
+def obtenerPropiedades():
+    global cedulaUsuario
+    cnxn = conectarBD()
+    cursor = cnxn.cursor()
+    statement = 'SELECT * FROM Propiedad WHERE cedulaPropietario = ?;'
+    cursor.execute(statement, cedulaUsuario) 
+    listaPropiedades = []
+    listaPropiedades = cursor.fetchall()
+    desconectarBD(cnxn, cursor)
+    return listaPropiedades
+
+#EDITAR MODULO PROPIEDAD(revisar si es asi) (Propietario)
+
+def obtenerPropiedad(idPropiedad): 
+    if(existePropiedad(idPropiedad)):
+        try:
+            cnxn = conectarBD()
+            cursor = cnxn.cursor()
+            statement = 'SELECT * FROM Propiedad WHERE idPropiedad = ?;'
+            cursor.execute(statement, idPropiedad) 
+            listaPropiedades = []
+            listaPropiedades = cursor.fetchall()
+            desconectarBD(cnxn, cursor)
+            return listaPropiedades
+        except: 
+            return []
+    else:
+        return []
+
+def editarPropiedad(idPropiedad, direccion, tipoPropiedad, numeroHabitaciones, tamanoMetros,cedulaPropietario,descripcion, estadoActual, precioAlquiler,gastosAdicionales):
+    try:
+        
+        cambiarPropiedadBD(idPropiedad, direccion, tipoPropiedad, numeroHabitaciones, tamanoMetros,descripcion, estadoActual, precioAlquiler,gastosAdicionales)
+        return True
+    except: 
+        return False      
+
+
+#Acá se hace la accion en la BD con el execute, hace el update   
+def cambiarPropiedadBD(idPropiedad, direccion, tipoPropiedad, numeroHabitaciones, tamanoMetros,descripcion, estadoActual, precioAlquiler,gastosAdicionales):
+    global cedulaUsuario
+    cnxn = conectarBD()
+    cursor = cnxn.cursor()
+    try:
+        statement = 'UPDATE Propiedad SET direccion = ?, tipoPropiedad= ?, numeroHabitaciones = ?, tamanoMetros = ?, descripcion = ?, estadoActual = ?, precioAlquiler = ?, gastosAdicionales = ? WHERE cedulaPropietario = ? AND idPropiedad = ? ;'
+        cursor.execute(statement, direccion,tipoPropiedad, numeroHabitaciones, tamanoMetros, descripcion, estadoActual, precioAlquiler, gastosAdicionales, cedulaUsuario, idPropiedad) 
+        desconectarBD(cnxn, cursor)
+        return True
+    except: 
+        desconectarBD(cnxn, cursor)
+        return False
+
+# ELIMINAR MODULO PROPIEDAD (Propietario)
+
+# Esta funcion es la que se llama luego de atrapar el id del sistema 
+def eliminarPropiedad(idPropiedad):
+    if(existePropiedad(idPropiedad)):
+        try:
+            #execute delete
+            return True
+        except: 
+            return False 
+    else:
+        return False
+
 #MODULO INQUILINOS (Propietario)
 #CREAR MODULO INQUILINOS (Propietario)
 
@@ -1081,8 +1162,8 @@ class VentanaMantenimiento(QMainWindow):
             QMessageBox.information(self, "Información", "No hay solicitudes para mostrar")
 
 
-if __name__ == '__main__':
-    app = QApplication(sys.argv)
-    ventana_inicio = VentanaInicio()
-    ventana_inicio.show()
-    sys.exit(app.exec_())
+# if __name__ == '__main__':
+#     app = QApplication(sys.argv)
+#     ventana_inicio = VentanaInicio()
+#     ventana_inicio.show()
+#     sys.exit(app.exec_())
