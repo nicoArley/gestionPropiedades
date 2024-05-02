@@ -117,7 +117,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>./Imagenes/menu.png</normaloff>./Imagenes/menu.png</iconset>
+          <normaloff>Imagenes/menu.png</normaloff>Imagenes/menu.png</iconset>
         </property>
        </widget>
       </widget>
@@ -175,7 +175,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>./Imagenes/recibidos.png</normaloff>./Imagenes/recibidos.png</iconset>
+          <normaloff>Imagenes/recibidos.png</normaloff>Imagenes/recibidos.png</iconset>
         </property>
        </widget>
        <widget class="QPushButton" name="btnEnviados">
@@ -198,7 +198,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>./Imagenes/enviados.png</normaloff>./Imagenes/enviados.png</iconset>
+          <normaloff>Imagenes/enviados.png</normaloff>Imagenes/enviados.png</iconset>
         </property>
        </widget>
        <widget class="QPushButton" name="btnVolver">
@@ -221,7 +221,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>./Imagenes/volver.png</normaloff>./Imagenes/volver.png</iconset>
+          <normaloff>Imagenes/volver.png</normaloff>Imagenes/volver.png</iconset>
         </property>
        </widget>
        <widget class="QPushButton" name="btnEnviar_2">
@@ -241,7 +241,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>./Imagenes/enviar.png</normaloff>./Imagenes/enviar.png</iconset>
+          <normaloff>Imagenes/enviar.png</normaloff>Imagenes/enviar.png</iconset>
         </property>
        </widget>
       </widget>
@@ -325,11 +325,6 @@ background-color:rgb(0, 101, 148);
             <height>161</height>
            </rect>
           </property>
-          <column>
-           <property name="text">
-            <string>ID del mensaje</string>
-           </property>
-          </column>
           <column>
            <property name="text">
             <string>Cedula del emisor</string>

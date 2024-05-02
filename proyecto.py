@@ -479,8 +479,7 @@ def enviarMensaje(cedulaReceptor,contenido):
 
 #Esta funcion utiliza el stament y manda el insert a la base de datos
 def agregarComunicacion(valores): 
-    global cursor
-    #cedulaUsuario
+    global cedulaUsuario
     cnxn = conectarBD()
     cursor = cnxn.cursor()
     try:
@@ -491,6 +490,79 @@ def agregarComunicacion(valores):
     except: 
         desconectarBD(cnxn, cursor)
         return False
+    
+def marcarMsjLeidos(): 
+    global cedulaUsuario
+    cnxn = conectarBD()
+    cursor = cnxn.cursor()
+    try:
+        statement = 'UPDATE Comunicacion SET estado = \'Leido\' WHERE cedulaReceptor = ?'
+        cursor.execute(statement, cedulaUsuario) 
+        desconectarBD(cnxn, cursor)
+        return True
+    except: 
+        desconectarBD(cnxn, cursor)
+        return False
+
+#RECIBIDOS MODULO COMUNICACION (Propietario, inquilino (es el mismo))
+
+# Esta funcion es la que se llama luego de presionar el boton de visualizar 
+def visualizarMsjRecibidos():
+    global cedulaUsuario
+    try:
+        tablaMsjRecibidos = obtenerMsjRecibidos()   
+        marcarMsjLeidos()
+        #enviar datos a la interfaz
+        return tablaMsjRecibidos
+    except: 
+        return []
+
+#Esta funcion utiliza el stament y manda el select con execute a la base de datos
+def obtenerMsjRecibidos(): 
+    global cedulaUsuario
+    try:
+        cnxn = conectarBD()
+        cursor = cnxn.cursor()
+        statement = 'SELECT cedulaEmisor, fechaMensaje, horaMensaje, contenido FROM Comunicacion WHERE cedulaReceptor = ?'
+        cursor.execute(statement, cedulaUsuario) 
+        listaMensajes = []
+        listaMensajes = cursor.fetchall()
+        for mensaje in listaMensajes:
+            mensaje[1] = mensaje[1].strftime("%Y/%m/%d")
+        desconectarBD(cnxn, cursor)
+        return listaMensajes
+    except: 
+        return []
+
+
+#ENVIADOs MODULO COMUNICACION (Propietario, inquilino (es el mismo))
+
+# Esta funcion es la que se llama luego de presionar el boton de visualizar 
+def visualizarMsjEnviados():
+    global cedulaUsuario
+    try:
+        tablaMsjEnviados = obtenerMsjEnviados()   
+        #enviar datos a la interfaz
+        return tablaMsjEnviados
+    except: 
+        return []
+
+#Esta funcion utiliza el stament y manda el select con execute a la base de datos
+def obtenerMsjEnviados():
+    global cedulaUsuario
+    try:
+        cnxn = conectarBD()
+        cursor = cnxn.cursor()
+        statement = 'SELECT cedulaReceptor, fechaMensaje, horaMensaje, contenido, estado FROM Comunicacion WHERE cedulaEmisor = ?'
+        cursor.execute(statement, cedulaUsuario) 
+        listaMensajes = []
+        listaMensajes = cursor.fetchall()
+        for mensaje in listaMensajes:
+            mensaje[1] = mensaje[1].strftime("%Y/%m/%d")
+        desconectarBD(cnxn, cursor)
+        return listaMensajes
+    except: 
+        return []
 
 #INQUILINOS MODULO PAGOS
  
@@ -536,6 +608,7 @@ def insertarPago(nuevoPago):
     except: 
         desconectarBD(cnxn, cursor)
         return False
+
 
 
 # INQUILINOS MODULO MANTENIMIENTO REGISTRAR
