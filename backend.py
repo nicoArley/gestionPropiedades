@@ -249,7 +249,8 @@ def crearInquilino(nombre, primerApellido, segundoApellido, cedula, telefono, co
                 try: 
                     insertarUsuario(nuevoUsuario)
                     insertarInquilino(cedula)
-                    insertarAlquiler(cedula,idPropiedad,fechaInicio, fechaFinal)
+                    nuevoAlquiler = (cedula,idPropiedad,fechaInicio, fechaFinal)
+                    insertarAlquiler(nuevoAlquiler)
                     actualizarPropiedadAlquiler(idPropiedad)
                     return True
                 except: 
@@ -258,10 +259,10 @@ def crearInquilino(nombre, primerApellido, segundoApellido, cedula, telefono, co
                 return False
         elif(existeInquilinoBD(cedula) == False):
             try: 
-                nuevoInquilino = (cedula)
-                insertarInquilino(nuevoInquilino)
+                insertarInquilino(cedula)
                 nuevoAlquiler = (cedula,idPropiedad,fechaInicio, fechaFinal)
                 insertarAlquiler(nuevoAlquiler)
+                actualizarPropiedadAlquiler(idPropiedad)
                 return True
             except: 
                 return False
@@ -299,19 +300,23 @@ def insertarInquilino(cedulaInquilino):
         desconectarBD(cnxn, cursor)
         return False
 
-def propiedadDisponible(idPropiedad): 
+def propiedadDisponible(idPropiedad, fechaInicio, fechaFinal): 
     global cursor
     cnxn = conectarBD()
     cursor = cnxn.cursor()
     try:
-        statement = 'SELECT * FROM Propiedad JOIN EstadosPermitidos ON Propiedad.estadoActual = EstadosPermitidos.idEstado WHERE estado = \'disponible\' and idPropiedad = ?; '
-        cursor.execute(statement, idPropiedad) 
-        desconectarBD(cnxn, cursor)
-        return True
+        statement = 'SELECT * FROM Alquiler WHERE (idPropiedad = ?) AND ((? BETWEEN fechaInicio AND fechaFin) OR (? BETWEEN fechaInicio AND fechaFin))'
+        cursor.execute(statement, idPropiedad, fechaInicio, fechaFinal ) 
+        checkInquilino = cursor.fetchone()
+        if (checkInquilino == None):
+            desconectarBD(cnxn, cursor)
+            return True
+        else:
+            desconectarBD(cnxn, cursor)
+            return False
     except: 
         desconectarBD(cnxn, cursor)
         return False
-
 
 def insertarAlquiler(nuevoAlquiler):
     global cursor
@@ -493,10 +498,8 @@ def mostrarReporte(periodo):
 # Revisa en la base de datos  que la tabla de pagos existan inquilinos relacionados con las propiedades del propietario (esta consulta es anidada y feita) en el periodo especifico
 def existenReportesPropietario(periodo):
     global cedulaUsuario 
-    
     cnxn = conectarBD()
     cursor = cnxn.cursor()
-
     fechaFinal = datetime.now()
     fechaInicial = definirFechaInicial(periodo)
     statement = 'SELECT * FROM Pagos JOIN Alquiler ON Pagos.cedulaInquilino = Alquiler.cedulaInquilino JOIN Propiedad ON Alquiler.idPropiedad = Propiedad.idPropiedad WHERE (Propiedad.cedulaPropietario = ?) AND (Pagos.fechaPago BETWEEN ? AND ?);'
@@ -550,22 +553,15 @@ def definirFechaInicial(periodo):
         fechaFinal = fechaActual - timedelta(days=365)
         return fechaFinal
 
-
-
-
 # Cuando es un inquilino revisa en la base de datos que el inquilino haya registrado reportes en el periodo solicitado
-def existeReportesInquilino(periodo):
-    global cedulaUsuario
+def existeReportesInquilino(cedulaUsuario,periodo):
+    #global cedulaUsuario
     cnxn = conectarBD()
     cursor = cnxn.cursor()
-    #---------------------
-    fechaInicial = datetime.now()
-    fechaFinal = fecha_final(periodo)
-
-    #-- hay que cambiar el statement utilizando los atributos que son de la tabla que es, hay que hacer un join por que lo que se usa es la cedula del inquilino entonces 
-    statement = 'SELECT * FROM SolicitudMantenimiento WHERE idPropiedad = ? AND fechaSolicitud BETWEEN ? AND ?'
-    cursor.execute(statement, (cedulaUsuario, ))
-    #---------------------
+    fechaFinal = datetime.now()
+    fechaInicial = definirFechaInicial(periodo)
+    statement = 'SELECT * FROM Pagos WHERE (Pagos.cedulaInquilino = ?) AND (Pagos.fechaPago BETWEEN ? AND ?);'
+    cursor.execute(statement, cedulaUsuario, fechaInicial, fechaFinal )
     checkReportesI = cursor.fetchone()
     if (checkReportesI == None):
         desconectarBD(cnxn, cursor)
