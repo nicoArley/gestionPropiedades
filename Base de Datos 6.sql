@@ -26,6 +26,7 @@ INSERT INTO TiposPagoPermitidos (idTipoPago, tipoPago) VALUES
 (2, 'servicios'),
 (3, 'mantenimiento');
 
+
 -- Tabla para los estados de pago permitidos
 CREATE TABLE EstadosPagoPermitidos (
     idEstadoPago INT PRIMARY KEY,
@@ -142,6 +143,13 @@ CREATE TABLE Proveedores (
     correo VARCHAR(100),
     telefono INT
 );
+
+INSERT INTO Proveedores (idProveedor, nombre, primerApellido, segundoApellido, correo, telefono, especialidad) VALUES
+(1, 'Juan', 'Perez', 'Garcia', 'juanperez@example.com', 123456789, 'Electricista'),
+(2, 'Maria', 'Gomez', 'Lopez', 'mariagomez@example.com', 987654321, 'Jardinero'),
+(3, 'Carlos', 'Martinez', 'Fernandez', 'carlosmartinez@example.com', 555666777, 'Carpintero'),
+(4, 'Ana', 'Ruiz', 'Sanchez', 'anaruiz@example.com', 111222333, 'Plomero'),
+(5, 'Pedro', 'Diaz', 'Gutierrez', 'pedrodiaz@example.com', 444555666, 'Pintor');
 
 -- Tabla para la entidad Solicitud de Mantenimiento
 CREATE TABLE SolicitudMantenimiento (
