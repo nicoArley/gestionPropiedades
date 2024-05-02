@@ -75,7 +75,7 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.039
        <widget class="QLabel" name="label">
         <property name="geometry">
          <rect>
-          <x>20</x>
+          <x>80</x>
           <y>10</y>
           <width>181</width>
           <height>21</height>
@@ -86,10 +86,10 @@ background-color: qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.039
 color: white;</string>
         </property>
         <property name="text">
-         <string>COMUNICACIÓN</string>
+         <string>PAGOS</string>
         </property>
        </widget>
-       <widget class="QPushButton" name="btnMenu">
+       <widget class="QPushButton" name="pushButton_5">
         <property name="geometry">
          <rect>
           <x>200</x>
@@ -117,7 +117,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
         </property>
         <property name="icon">
          <iconset>
-          <normaloff>./Imagenes/menu.png</normaloff>./Imagenes/menu.png</iconset>
+          <normaloff>../../../../OneDrive - Estudiantes ITCR/TEC/2024/I SEMESTRE/Bases de Datos/Proyectos/PROYECTO 1/Interfaz Grafica/Imagenes/menu.png</normaloff>../../../../OneDrive - Estudiantes ITCR/TEC/2024/I SEMESTRE/Bases de Datos/Proyectos/PROYECTO 1/Interfaz Grafica/Imagenes/menu.png</iconset>
         </property>
        </widget>
       </widget>
@@ -155,95 +155,6 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
        <property name="frameShadow">
         <enum>QFrame::Raised</enum>
        </property>
-       <widget class="QPushButton" name="btnRecibidos">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>110</y>
-          <width>161</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="layoutDirection">
-         <enum>Qt::RightToLeft</enum>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-        <property name="text">
-         <string>RECIBIDOS </string>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>./Imagenes/recibidos.png</normaloff>./Imagenes/recibidos.png</iconset>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="btnEnviados">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>170</y>
-          <width>161</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="layoutDirection">
-         <enum>Qt::RightToLeft</enum>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-        <property name="text">
-         <string>ENVIADOS </string>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>./Imagenes/enviados.png</normaloff>./Imagenes/enviados.png</iconset>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="btnVolver">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>230</y>
-          <width>161</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="layoutDirection">
-         <enum>Qt::RightToLeft</enum>
-        </property>
-        <property name="styleSheet">
-         <string notr="true"/>
-        </property>
-        <property name="text">
-         <string>VOLVER </string>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>./Imagenes/volver.png</normaloff>./Imagenes/volver.png</iconset>
-        </property>
-       </widget>
-       <widget class="QPushButton" name="btnENVIAR">
-        <property name="geometry">
-         <rect>
-          <x>30</x>
-          <y>50</y>
-          <width>161</width>
-          <height>41</height>
-         </rect>
-        </property>
-        <property name="layoutDirection">
-         <enum>Qt::RightToLeft</enum>
-        </property>
-        <property name="text">
-         <string>ENVIAR </string>
-        </property>
-        <property name="icon">
-         <iconset>
-          <normaloff>./Imagenes/enviar.png</normaloff>./Imagenes/enviar.png</iconset>
-        </property>
-       </widget>
       </widget>
       <widget class="QFrame" name="framePaginas">
        <property name="geometry">
@@ -263,79 +174,172 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
        <widget class="QStackedWidget" name="stackedWidget">
         <property name="geometry">
          <rect>
-          <x>0</x>
+          <x>-10</x>
           <y>0</y>
-          <width>681</width>
-          <height>451</height>
+          <width>661</width>
+          <height>461</height>
          </rect>
         </property>
         <property name="currentIndex">
          <number>0</number>
         </property>
-        <widget class="QWidget" name="pageEnviar">
+        <widget class="QWidget" name="pageRegistrarInq">
          <widget class="QLabel" name="label_2">
           <property name="geometry">
            <rect>
-            <x>270</x>
-            <y>40</y>
-            <width>301</width>
+            <x>260</x>
+            <y>30</y>
+            <width>411</width>
             <height>21</height>
            </rect>
           </property>
           <property name="styleSheet">
-           <string notr="true">font: 11pt &quot;Arial&quot;;</string>
+           <string notr="true">font: 12pt &quot;Arial&quot;;</string>
           </property>
           <property name="text">
-           <string>Enviar mensaje</string>
+           <string>Registrar pagos</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_3">
+          <property name="geometry">
+           <rect>
+            <x>90</x>
+            <y>80</y>
+            <width>121</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font: 9pt &quot;Arial&quot;;
+</string>
+          </property>
+          <property name="text">
+           <string>ID Pago:</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_4">
+          <property name="geometry">
+           <rect>
+            <x>390</x>
+            <y>80</y>
+            <width>151</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font: 9pt &quot;Arial&quot;;
+</string>
+          </property>
+          <property name="text">
+           <string>Monto:</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_5">
+          <property name="geometry">
+           <rect>
+            <x>90</x>
+            <y>140</y>
+            <width>151</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font: 9pt &quot;Arial&quot;;
+</string>
+          </property>
+          <property name="text">
+           <string>Tipo de pago:</string>
           </property>
          </widget>
          <widget class="QLabel" name="label_6">
           <property name="geometry">
            <rect>
-            <x>260</x>
-            <y>80</y>
+            <x>390</x>
+            <y>140</y>
             <width>131</width>
             <height>16</height>
            </rect>
           </property>
           <property name="styleSheet">
-           <string notr="true">font: 9pt &quot;Arial&quot;;</string>
+           <string notr="true">font: 9pt &quot;Arial&quot;;
+</string>
           </property>
           <property name="text">
-           <string>Cedula del receptor:</string>
+           <string>Estado de pago:</string>
           </property>
          </widget>
-         <widget class="QLabel" name="label_9">
+         <widget class="QLabel" name="label_8">
           <property name="geometry">
            <rect>
-            <x>70</x>
-            <y>150</y>
-            <width>191</width>
+            <x>90</x>
+            <y>220</y>
+            <width>121</width>
             <height>16</height>
            </rect>
           </property>
           <property name="styleSheet">
-           <string notr="true">font: 9pt &quot;Arial&quot;;</string>
+           <string notr="true">font: 9pt &quot;Arial&quot;;
+</string>
           </property>
           <property name="text">
-           <string>Contenido:</string>
+           <string>Metodo de pago:</string>
           </property>
          </widget>
-         <widget class="QLineEdit" name="txtReceptor">
+         <widget class="QLineEdit" name="txtIDpago">
           <property name="geometry">
            <rect>
-            <x>210</x>
-            <y>110</y>
-            <width>211</width>
-            <height>21</height>
+            <x>90</x>
+            <y>100</y>
+            <width>181</width>
+            <height>20</height>
            </rect>
           </property>
          </widget>
-         <widget class="QPushButton" name="btnEnviar">
+         <widget class="QLineEdit" name="txtMonto">
           <property name="geometry">
            <rect>
-            <x>280</x>
-            <y>310</y>
+            <x>390</x>
+            <y>100</y>
+            <width>181</width>
+            <height>20</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="txtTipoPago">
+          <property name="geometry">
+           <rect>
+            <x>90</x>
+            <y>160</y>
+            <width>181</width>
+            <height>20</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="txtEstadoPago">
+          <property name="geometry">
+           <rect>
+            <x>390</x>
+            <y>160</y>
+            <width>181</width>
+            <height>20</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLineEdit" name="txtMetodoPago">
+          <property name="geometry">
+           <rect>
+            <x>90</x>
+            <y>240</y>
+            <width>181</width>
+            <height>20</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QPushButton" name="btnRegistrar">
+          <property name="geometry">
+           <rect>
+            <x>310</x>
+            <y>300</y>
             <width>91</width>
             <height>31</height>
            </rect>
@@ -355,17 +359,41 @@ background-color:rgb(0, 101, 148);
 }</string>
           </property>
           <property name="text">
-           <string>Enviar</string>
+           <string>Registrar</string>
           </property>
          </widget>
-         <widget class="QLineEdit" name="txtContenido">
+         <widget class="QLabel" name="label_7">
           <property name="geometry">
            <rect>
-            <x>70</x>
-            <y>170</y>
-            <width>501</width>
-            <height>51</height>
+            <x>90</x>
+            <y>190</y>
+            <width>241</width>
+            <height>16</height>
            </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font: 9pt &quot;Arial&quot;;
+</string>
+          </property>
+          <property name="text">
+           <string>1: Alquiler   2: Servicios   3: Mantenimiento</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_16">
+          <property name="geometry">
+           <rect>
+            <x>390</x>
+            <y>190</y>
+            <width>241</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font: 9pt &quot;Arial&quot;;
+</string>
+          </property>
+          <property name="text">
+           <string>1: Pendiente   2: Realizado   3: Atrasado</string>
           </property>
          </widget>
         </widget>
