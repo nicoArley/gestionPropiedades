@@ -42,7 +42,7 @@ def ingresarSistema(rol, cedula):
             else: 
                 return False  
     else: 
-        return False  
+        return False
 
 #Esta es la funcion que llama la base de datos luego de atrapar los datos de la interfaz (en el login al crear un usurio para ingresar )
 #y se los pasa con esas variables
@@ -131,6 +131,180 @@ def existeInquilinoBD(cedulaInquilino):
     else:
         desconectarBD(cnxn, cursor)
         return True
+    
+#CREAR MODULO PROPIEDAD (Propietario)
+
+#Esta es la funcion que llama la base de datos luego de atrapar los datos de la interfaz (Al darle la opcion de crear propiedad)
+#y se los pasa con esas variables
+
+def crearPropiedad(idPropiedad, direccion, tipoPropiedad, numeroHabitaciones, tamanoMetros, descripcion, estadoActual, precioAlquiler, gastosAdicionales):
+    if(existePropiedad(idPropiedad) == False) :
+        nuevaPropiedad = (idPropiedad, direccion, tipoPropiedad, numeroHabitaciones, tamanoMetros, cedulaUsuario, descripcion, estadoActual, precioAlquiler, gastosAdicionales)
+        try: 
+            insertarPropiedad(nuevaPropiedad)
+            return True
+        except: 
+            return False
+    else: 
+        return False
+
+#valida que los datos tengan las caracteristicas necesarias
+def existePropiedad(idPropiedad):
+    cnxn = conectarBD()
+    cursor = cnxn.cursor()
+    cursor.execute('SELECT * FROM Propiedad WHERE idPropiedad=?', (idPropiedad))
+    checkPropiedad = cursor.fetchone()
+    if (checkPropiedad == None):
+        desconectarBD(cnxn, cursor)
+        return False
+    else:
+        desconectarBD(cnxn, cursor)
+        return True
+    
+def existePropiedadPropietario(idPropiedad):
+    global cedulaUsuario
+    cnxn = conectarBD()
+    cursor = cnxn.cursor()
+    cursor.execute('SELECT * FROM Propiedad WHERE idPropiedad=? AND cedulaPropietario=?', idPropiedad, cedulaUsuario)
+    checkPropiedad = cursor.fetchone()
+    if (checkPropiedad == None):
+        desconectarBD(cnxn, cursor)
+        return False
+    else:
+        desconectarBD(cnxn, cursor)
+        return True
+
+# usa el statement de insercion y execute para guardar el cambio en la base de datos
+def insertarPropiedad(nuevaPropiedad):
+    global cursor
+    cnxn = conectarBD()
+    cursor = cnxn.cursor()
+    try:
+        statement = 'INSERT INTO Propiedad (idPropiedad, direccion, tipoPropiedad, numeroHabitaciones, tamanoMetros, cedulaPropietario, descripcion, estadoActual, precioAlquiler, gastosAdicionales) VALUES (?,?,?,?,?,?,?,?,?,?)'
+        cursor.execute(statement, nuevaPropiedad) 
+        desconectarBD(cnxn, cursor)
+        return True
+    except: 
+        desconectarBD(cnxn, cursor)
+        return False
+
+#MODULO INQUILINOS (Propietario)
+#CREAR MODULO INQUILINOS (Propietario)
+
+#Esta es la funcion que llama la base de datos luego de atrapar los datos de la interfaz (Al darle la opcion de crear inquilino)
+#y se los pasa con esas variables
+#El idPropiedad debe ser mostrado los disponibles, preguntar como hacerlo si es necesario una tabla intermedia
+
+def crearInquilino(nombre, primerApellido, segundoApellido, cedula, telefono, correo,idPropiedad, fechaInicio, fechaFinal): 
+    if(existePropiedadPropietario(idPropiedad) == True and propiedadDisponible(idPropiedad, fechaInicio, fechaFinal) == True):
+        if(existeUsuario(cedula) == False):
+            if (existeInquilinoBD(cedula) == False) :
+                nuevoUsuario = (cedula, nombre, primerApellido, segundoApellido, telefono,correo)
+                try: 
+                    insertarUsuario(nuevoUsuario)
+                    insertarInquilino(cedula)
+                    nuevoAlquiler = (cedula,idPropiedad,fechaInicio, fechaFinal)
+                    insertarAlquiler(nuevoAlquiler)
+                    actualizarPropiedadAlquiler(idPropiedad)
+                    return True
+                except: 
+                    return False
+            else: 
+                return False
+        elif(existeInquilinoBD(cedula) == False):
+            try: 
+                insertarInquilino(cedula)
+                nuevoAlquiler = (cedula,idPropiedad,fechaInicio, fechaFinal)
+                insertarAlquiler(nuevoAlquiler)
+                actualizarPropiedadAlquiler(idPropiedad)
+                return True
+            except: 
+                return False
+        elif(existeUsuario(cedula) == True and existeInquilinoBD(cedula) == True):
+            try: 
+                nuevoAlquiler = (cedula,idPropiedad,fechaInicio, fechaFinal)
+                insertarAlquiler(nuevoAlquiler)
+                actualizarPropiedadAlquiler(idPropiedad)
+                return True
+            except: 
+                return False
+        else: 
+            return False
+    else: 
+        False
+
+
+#Ver que no exista ningun otro inquilino con esa cédula
+def existeInquilinoBD(cedulaInquilino):
+    cnxn = conectarBD()
+    cursor = cnxn.cursor()
+    cursor.execute('SELECT * FROM Inquilino WHERE cedula=?', (cedulaInquilino))
+    checkInquilino = cursor.fetchone()
+    if (checkInquilino == None):
+        desconectarBD(cnxn, cursor)
+        return False
+    else:
+        desconectarBD(cnxn, cursor)
+        return True
+
+
+# usa el statement de insercion y execute para guardar el cambio en la base de datos
+def insertarInquilino(cedulaInquilino):
+    global cursor
+    cnxn = conectarBD()
+    cursor = cnxn.cursor()
+    try:
+        statement = 'INSERT INTO Inquilino (cedula) VALUES (?)'
+        cursor.execute(statement, cedulaInquilino) 
+        desconectarBD(cnxn, cursor)
+        return True
+    except: 
+        desconectarBD(cnxn, cursor)
+        return False
+
+def propiedadDisponible(idPropiedad, fechaInicio, fechaFinal): 
+    global cursor
+    cnxn = conectarBD()
+    cursor = cnxn.cursor()
+    try:
+        statement = 'SELECT * FROM Alquiler WHERE (idPropiedad = ?) AND ((? BETWEEN fechaInicio AND fechaFin) OR (? BETWEEN fechaInicio AND fechaFin))'
+        cursor.execute(statement, idPropiedad, fechaInicio, fechaFinal ) 
+        checkInquilino = cursor.fetchone()
+        if (checkInquilino == None):
+            desconectarBD(cnxn, cursor)
+            return True
+        else:
+            desconectarBD(cnxn, cursor)
+            return False
+    except: 
+        desconectarBD(cnxn, cursor)
+        return False
+
+def insertarAlquiler(nuevoAlquiler):
+    global cursor
+    cnxn = conectarBD()
+    cursor = cnxn.cursor()
+    try:
+        statement = 'INSERT INTO Alquiler (cedulaInquilino,idPropiedad,fechaInicio,fechaFin) VALUES (?,?,?,?)'
+        cursor.execute(statement, nuevoAlquiler) 
+        desconectarBD(cnxn, cursor)
+        return True
+    except: 
+        desconectarBD(cnxn, cursor)
+        return False
+
+def actualizarPropiedadAlquiler(idPropiedad):
+    global cursor
+    cnxn = conectarBD()
+    cursor = cnxn.cursor()
+    try:
+        statement = 'UPDATE Propiedad SET estadoActual = 2 WHERE idPropiedad = ?;'
+        cursor.execute(statement, idPropiedad) 
+        desconectarBD(cnxn, cursor)
+        return True
+    except: 
+        desconectarBD(cnxn, cursor)
+        return False
 
 #-----------------------------------------FRONTEND-------------------------------------------------#
 
@@ -521,11 +695,11 @@ class VentanaRegistrarPropiedades(QMainWindow):
         loadUi('InterfazGrafica/ventanaRegistrarPropiedades.ui', self)
 
         # Conectar los botones a los métodos correspondientes
-        self.btnRegistrar.clicked.connect(self.validar_registro)
+        self.btnREGISTRAR.clicked.connect(self.validar_registro)
 
    def validar_registro(self):
         # Obtener los valores de los campos
-        idpropiedad = self.txtIDpropiedad.text()
+        idPropiedad = self.txtIDpropiedad.text()
         precioAlquiler = self.txtPrecioAlquiler.text()
         numeroHabitaciones = self.txtNumHabitaciones.text()
         tamanoMetros = self.txtTamPropiedad.text()
@@ -536,17 +710,17 @@ class VentanaRegistrarPropiedades(QMainWindow):
         descripcion = self.txtDesPropiedad.text()
 
         # Verifica que ningún campo esté vacío
-        if not idpropiedad or not precioAlquiler or not numeroHabitaciones or not tamanoMetros or not gastosAdicionales or not estadoActual or not direccion or not tipoPropiedad or not descripcion:
+        if not idPropiedad or not precioAlquiler or not numeroHabitaciones or not tamanoMetros or not gastosAdicionales or not estadoActual or not direccion or not tipoPropiedad or not descripcion:
             QMessageBox.critical(self, "Error", "Complete todos los campos")
             return
 
         # Verifica que los campos numéricos solo contengan números
-        if not idpropiedad.isnumeric() or not precioAlquiler.isnumeric() or not numeroHabitaciones.isnumeric() or not tamanoMetros.isnumeric() or not gastos.isnumeric() or not gastosAdicionales.isnumeric():
+        if not idPropiedad.isnumeric() or not precioAlquiler.isnumeric() or not numeroHabitaciones.isnumeric() or not tamanoMetros.isnumeric() or not gastosAdicionales.isnumeric():
             QMessageBox.critical(self, "Error", "Los campos numéricos solo pueden contener números")
             return
 
         # Llama a la función crearPropiedad con los datos ingresados
-        if crearPropiedad(idpropiedad, direccion, tipoPropiedad, numeroHabitaciones, tamanoMetros, descripcion, estadoActual, precioAlquiler, gastos):
+        if crearPropiedad(idPropiedad, direccion, tipoPropiedad, numeroHabitaciones, tamanoMetros, descripcion, estadoActual, precioAlquiler, gastosAdicionales):
             QMessageBox.information(self, "Éxito", "La propiedad se registró correctamente")
         else:
             QMessageBox.critical(self, "Error", "No se pudo registrar la propiedad")
@@ -659,7 +833,7 @@ class VentanaRegistrarInquilino(QMainWindow):
         loadUi('InterfazGrafica/ventanaRegistrarInquilino.ui', self)
 
         # Conectar los botones a los métodos correspondientes
-        self.btnRegistrar.clicked.connect(self.validar_registro)
+        self.btnREGISTRAR.clicked.connect(self.validar_registro)
         self.btnVisualizar.clicked.connect(self.abrir_ventana_Registrar)
         self.btnEditar.clicked.connect(self.abrir_ventana_Registrar)
         self.btnVolver.clicked.connect(self.abrir_ventana_Registrar)
@@ -671,21 +845,24 @@ class VentanaRegistrarInquilino(QMainWindow):
         primerApellido = self.txtApellido1.text()
         segundoApellido = self.txtApellido2.text()
         cedula = self.txtCedInquilino.text()
-        telefono = self.txtTelefono.text()
+        telefono = self.txtTelefono_2.text()
         correo = self.txtCorreo.text()
+        idPropiedad = self.txtIDpropiedad.text()
+        fechaInicio = self.dateEdit.text()
+        fechaFinal = self.dateEdit_2.text()
 
         # Valida que los campos no estén vacíos y que cumplan con los requisitos
-        if not idInquilino or not nombre or not primerApellido or not segundoApellido or not cedula or not telefono or not correo:
+        if not idInquilino or not nombre or not primerApellido or not segundoApellido or not cedula or not telefono or not correo or not idPropiedad or not fechaInicio or not fechaFinal:
             QMessageBox.critical(self, "Error", "Complete todos los campos")
             return
 
         # Valida que los campos que deben contener solo números contengan solo números
-        if not cedula.isnumeric() or not telefono.isnumeric():
+        if not cedula.isnumeric() or not telefono.isnumeric() or not idPropiedad.isnumeric():
             QMessageBox.critical(self, "Error", "Los campos de cédula y teléfono deben contener solo números")
             return
 
         # Llama a la función para crear el inquilino
-        if crearInquilino(idInquilino, nombre, primerApellido, segundoApellido, cedula, telefono, correo):
+        if crearInquilino(nombre, primerApellido, segundoApellido, cedula, telefono, correo, idPropiedad, fechaInicio, fechaFinal):
             QMessageBox.information(self, "Éxito", "El inquilino se registró correctamente")
         else:
             QMessageBox.critical(self, "Error", "No se pudo registrar el inquilino")

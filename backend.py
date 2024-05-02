@@ -127,7 +127,7 @@ def insertarUsuario(nuevoUsuario):
 #y se los pasa con esas variables
 
 
-def crearPropiedad(idPropiedad, direccion, tipoPropiedad, numeroHabitaciones, tamanoMetros,descripcion, estadoActual, precioAlquiler,gastosAdicionales): 
+def crearPropiedad(idPropiedad, direccion, tipoPropiedad, numeroHabitaciones, tamanoMetros, descripcion, estadoActual, precioAlquiler, gastosAdicionales): 
     
     if(existePropiedad(idPropiedad) == False) :
         nuevaPropiedad = (idPropiedad, direccion, tipoPropiedad, numeroHabitaciones, tamanoMetros, cedulaUsuario, descripcion, estadoActual, precioAlquiler, gastosAdicionales)
@@ -241,7 +241,7 @@ def eliminarPropiedad(idPropiedad):
 #y se los pasa con esas variables
 #El idPropiedad debe ser mostrado los disponibles, preguntar como hacerlo si es necesario una tabla intermedia
 
-def crearInquilino(nombre, primerApellido, segundoApellido, cedula, telefono, correo,idPropiedad, fechaInicio, fechaFinal): 
+def crearInquilino(nombre, primerApellido, segundoApellido, cedula, telefono, correo, idPropiedad, fechaInicio, fechaFinal): 
     if(existePropiedad(idPropiedad) == True and propiedadDisponible(idPropiedad) == True):
         if(existeUsuario(cedula) == False):
             if (existeInquilinoBD(cedula) == False) :
@@ -799,13 +799,12 @@ def visualizarSolicitudesI(cedulaInquilino):
         return[]
 
 #Valida que existan solicitudes en sus propiedades con la cedula del propietario (el metodo debe ser diferente para propietario e inquilino)
-def existeSolicitudesInquilino(cedulaInquilino):
+def existeSolicitudesInquilino():
+    global cedulaUsuario
     cnxn = conectarBD()
     cursor = cnxn.cursor()
-    #---------------------
     statement = 'SELECT * FROM SolicitudMantenimiento JOIN Alquiler ON Alquiler.idPropiedad = SolicitudMantenimiento.idPropiedad WHERE Alquiler.cedulaInquilino = ?; '
-    cursor.execute(statement, cedulaInquilino)
-    #---------------------
+    cursor.execute(statement, cedulaUsuario)
     checkSolicitudI = cursor.fetchone()
     if (checkSolicitudI == None):
         desconectarBD(cnxn, cursor)
@@ -813,7 +812,6 @@ def existeSolicitudesInquilino(cedulaInquilino):
     else:
         desconectarBD(cnxn, cursor)
         return True 
-
 
 #usa Execute y llama a la base de datos usando el statement, lo guarda en una lista, esta misma funcion se puede usar
 def obtenerSolicitudesI(cedulaPropietario):

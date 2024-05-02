@@ -427,7 +427,7 @@ background-color:qlineargradient(spread:pad, x1:0, y1:0, x2:1, y2:0, stop:0.0395
          <widget class="QPushButton" name="btnREGISTRAR">
           <property name="geometry">
            <rect>
-            <x>290</x>
+            <x>390</x>
             <y>350</y>
             <width>91</width>
             <height>31</height>
@@ -503,6 +503,60 @@ background-color:rgb(0, 101, 148);
           </property>
           <property name="text">
            <string>Télefono:</string>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_12">
+          <property name="geometry">
+           <rect>
+            <x>360</x>
+            <y>270</y>
+            <width>161</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font: 9pt &quot;Arial&quot;;
+</string>
+          </property>
+          <property name="text">
+           <string>Fecha inicio:</string>
+          </property>
+         </widget>
+         <widget class="QDateEdit" name="dateEdit">
+          <property name="geometry">
+           <rect>
+            <x>360</x>
+            <y>290</y>
+            <width>181</width>
+            <height>22</height>
+           </rect>
+          </property>
+         </widget>
+         <widget class="QLabel" name="label_13">
+          <property name="geometry">
+           <rect>
+            <x>140</x>
+            <y>330</y>
+            <width>161</width>
+            <height>16</height>
+           </rect>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">font: 9pt &quot;Arial&quot;;
+</string>
+          </property>
+          <property name="text">
+           <string>Fecha fin:</string>
+          </property>
+         </widget>
+         <widget class="QDateEdit" name="dateEdit_2">
+          <property name="geometry">
+           <rect>
+            <x>140</x>
+            <y>350</y>
+            <width>181</width>
+            <height>22</height>
+           </rect>
           </property>
          </widget>
         </widget>
