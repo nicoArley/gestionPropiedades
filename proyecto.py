@@ -1204,15 +1204,21 @@ class VentanaReportePagos(QMainWindow):
         self.btnVOLVER.clicked.connect(self.abrir_ventana_visualizar_pago)
 
     def abrir_ventana_visualizar_pago(self):
+        global periodo
         # Aquí se abre la ventana 'ventanaVisualizarPago' dependiendo del botón que se haya presionado
         sender_button = self.sender()  # Obtener el botón que envió la señal
         if sender_button == self.btnMensual:
+            periodo = 'Mensual'
             # Abre ventana para mostrar pagos mensuales
             ventana_visualizar_pago = VentanaVisualizarPago(self)
+            ventana_visualizar_pago.show()
         elif sender_button == self.btnTrimestral:
+            periodo = 'Trimestral'
             # Abre ventana para mostrar pagos trimestrales
             ventana_visualizar_pago = VentanaVisualizarPago(self)
+            ventana_visualizar_pago.show()
         elif sender_button == self.btnAnual:
+            periodo = 'anual'
             # Abre ventana para mostrar pagos anuales
             ventana_visualizar_pago = VentanaVisualizarPago(self)
             ventana_visualizar_pago.show()
