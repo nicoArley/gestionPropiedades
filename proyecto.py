@@ -267,8 +267,8 @@ def crearInquilino(nombre, primerApellido, segundoApellido, cedula, telefono, co
     if(existePropiedadPropietario(idPropiedad) == True and propiedadDisponible(idPropiedad, fechaInicio, fechaFinal) == True):
         if(existeUsuario(cedula) == False):
             if (existeInquilinoBD(cedula) == False) :
-                nuevoUsuario = (cedula, nombre, primerApellido, segundoApellido, telefono,correo)
-                try: 
+                nuevoUsuario = (cedula, nombre, primerApellido, segundoApellido, telefono, correo)
+                try:
                     insertarUsuario(nuevoUsuario)
                     insertarInquilino(cedula)
                     nuevoAlquiler = (cedula,idPropiedad,fechaInicio, fechaFinal)
@@ -499,7 +499,7 @@ def obtenerSolicitudesP():
     global cedulaUsuario
     cnxn = conectarBD()
     cursor = cnxn.cursor()
-    statement = 'SELECT idSolicitud, Propiedad.idPropiedad, descripcionProblema, fechaSolicitud, estado, prioridad, nombre, primerApellido, segundoApellido, especialidad, telefono FROM SolicitudMantenimiento JOIN Propiedad ON SolicitudMantenimiento.idPropiedad = Propiedad.idPropiedad JOIN PrioridadesPermitidas ON SolicitudMantenimiento.idPrioridad = PrioridadesPermitidas.idPrioridad JOIN Proveedores ON SolicitudMantenimiento.idProveedor = Proveedores.idProveedor WHERE Propiedad.cedulaPropietario = ?'
+    statement = 'SELECT idSolicitud, Propiedad.idPropiedad, descripcionProblema, fechaSolicitud, estadoMantenimiento, prioridad, Proveedores.idProveedor, nombre, primerApellido, segundoApellido, especialidad, telefono FROM SolicitudMantenimiento JOIN Propiedad ON SolicitudMantenimiento.idPropiedad = Propiedad.idPropiedad JOIN PrioridadesPermitidas ON SolicitudMantenimiento.idPrioridad = PrioridadesPermitidas.idPrioridad JOIN Proveedores ON SolicitudMantenimiento.idProveedor = Proveedores.idProveedor JOIN EstadosMantenimientoPermitidos ON idEstadoMantenimiento = SolicitudMantenimiento.estado WHERE Propiedad.cedulaPropietario = ?'
     cursor.execute(statement, cedulaUsuario) 
     listaSolicitudes = []
     listaSolicitudes = cursor.fetchall()
@@ -1100,6 +1100,7 @@ class VentanaRecibidos(QMainWindow):
 
 #PARA AGREGAR INFORMACIÓN A TODAS LAS TABLAS HECHAS DE DUPLAS
 def agregar_filas_a_tabla(table_widget, data):
+    table_widget.setRowCount(0)
     for row_data in data:
         current_row = table_widget.rowCount()
         table_widget.insertRow(current_row)
@@ -1133,6 +1134,7 @@ class VentanaMantenimientoInq(QMainWindow):
 
         # Conectar los botones a los métodos correspondientes
         self.btnVolver.clicked.connect(self.abrir_ventana_visualizar_mante)
+        self.btnRegistrar.clicked.connect(self.validar_registro_solicitud)
 
     def abrir_ventana_visualizar_mante(self):
         # Aquí se abre la ventana 'ventanaVisualizarPago' dependiendo del botón que se haya presionado
@@ -1157,8 +1159,12 @@ class VentanaMantenimientoInq(QMainWindow):
             QMessageBox.critical(self, "Error", "Los campos ID Solicitud, ID Propiedad, Prioridad y Estado deben ser numéricos")
             return
         
-        if int(idProveedor) > 5 and int(idProveedor) < 1:
+        if int(idProveedor) > 5 or int(idProveedor) < 1:
             QMessageBox.critical(self, "Error", "El proveedor no existe")
+            return
+        
+        if int(prioridad) > 3 or int(prioridad) < 1:
+            QMessageBox.critical(self, "Error", "La prioridad no existe")
             return
             
         # Llama a la función para registrar el mantenimiento
@@ -1181,9 +1187,22 @@ class VentanaRegistrarPago(QMainWindow):
         estadoPago = self.txtEstadoPago.text()
         metodoPago = self.txtMetodoPago.text()
 
+        # Verificar que ningún campo esté vacío
+        if not idPago or not monto or not tipoPago or not estadoPago or not metodoPago:
+            QMessageBox.critical(self, "Error", "Complete todos los campos")
+            return
+
         # Valida que los campos sean numéricos y no estén vacíos
-        if not idPago.isnumeric() or not monto.isnumeric()  or not tipoPago.isnumeric() or not estadoPago.isnumeric()  or not metodoPago:
+        if not idPago.isnumeric() or not monto.isnumeric()  or not tipoPago.isnumeric() or not estadoPago.isnumeric():
             QMessageBox.critical(self, "Error", "Verifique que todos los campos se encuentren completos")
+            return
+        
+        if int(tipoPago) > 3 or int(tipoPago) < 1:
+            QMessageBox.critical(self, "Error", "El tipo de pago no existe")
+            return
+        
+        if int(estadoPago) > 3 or int(estadoPago) < 1:
+            QMessageBox.critical(self, "Error", "El estado no existe")
             return
 
         # Llama a la función enviarMensaje con los datos de los campos
@@ -1356,8 +1375,12 @@ class VentanaRegistrarPropiedades(QMainWindow):
             return
 
         # Verifica que los campos numéricos solo contengan números
-        if not idPropiedad.isnumeric() or not precioAlquiler.isnumeric() or not numeroHabitaciones.isnumeric() or not tamanoMetros.isnumeric() or not gastosAdicionales.isnumeric():
+        if not idPropiedad.isnumeric() or not precioAlquiler.isnumeric() or not numeroHabitaciones.isnumeric() or not tamanoMetros.isnumeric() or not gastosAdicionales.isnumeric() or not estadoActual.isnumeric():
             QMessageBox.critical(self, "Error", "Los campos numéricos solo pueden contener números")
+            return
+        
+        if int(estadoActual) < 1 or int(estadoActual) > 3:
+            QMessageBox.critical(self, "Error", "El estado ingresado no existe")
             return
 
         # Llama a la función crearPropiedad con los datos ingresados
@@ -1436,6 +1459,14 @@ class VentanaEditarPropiedades(QMainWindow):
             QMessageBox.critical(self, "Error", "Complete todos los campos")
             return
 
+        if not idPropiedad.isnumeric() or not precioAlquiler.isnumeric() or not numeroHabitaciones.isnumeric() or not tamanoMetros.isnumeric() or not gastosAdicionales.isnumeric() or not estadoActual.isnumeric():
+            QMessageBox.critical(self, "Error", "Los campos numéricos solo pueden contener números")
+            return
+
+        if int(estadoActual) < 1 or int(estadoActual) > 3:
+            QMessageBox.critical(self, "Error", "El estado ingresado no existe")
+            return
+        
         # Llamar a la función editarPropiedad para guardar los cambios
         if editarPropiedad(idPropiedad, direccion, tipoPropiedad, numeroHabitaciones, tamanoMetros, descripcion, estadoActual, precioAlquiler, gastosAdicionales):
             QMessageBox.information(self, "Éxito", "Los cambios se guardaron correctamente")
@@ -1477,7 +1508,7 @@ class VentanaRegistrarInquilino(QMainWindow):
 
         # Valida que los campos que deben contener solo números contengan solo números
         if not cedula.isnumeric() or not telefono.isnumeric() or not idPropiedad.isnumeric():
-            QMessageBox.critical(self, "Error", "Los campos de cédula y teléfono deben contener solo números")
+            QMessageBox.critical(self, "Error", "Los campos de cédula, teléfono e idPropiedad deben contener solo números")
             return
 
         # Llama a la función para crear el inquilino
@@ -1560,6 +1591,10 @@ class VentanaEditar(QMainWindow):
         if not nombre or not apellido1 or not apellido2 or not telefono or not correo or not cedulaInquilino:
             QMessageBox.critical(self, "Error", "Complete todos los campos")
             return
+        
+        if not telefono.isnumeric():
+            QMessageBox.critical(self, "Error", "El campo de teléfono debe contener solo números")
+            return
 
         # Llamar a la función editarPropiedad para guardar los cambios
         if editarInquilino(cedulaInquilino, nombre, apellido1, apellido2, telefono, correo):
@@ -1591,16 +1626,18 @@ class VentanaMantenimiento(QMainWindow):
        idsolicitud = self.txtIDsolicitud.text()
        estado = self.txtEstado.text()
 
-
-       if not idsolicitud.isnumeric() or not estado.isnumeric():
-             QMessageBox.critical(self, "Error", "Los campos ID Solicitud y Estado deben ser numéricos")
-             return
-
        if not idsolicitud or not estado:
               QMessageBox.critical(self, "Error", "Complete todos los campos")
               return
 
-       cedula_propietario = '...'  # Aquí deberías obtener la cédula del propietario
+       if not idsolicitud.isnumeric() or not estado.isnumeric():
+             QMessageBox.critical(self, "Error", "Los campos ID Solicitud y Estado deben ser numéricos")
+             return
+       
+       if int(estado) < 1 or int(estado) > 3:
+            QMessageBox.critical(self, "Error", "El estado ingresado no existe")
+            return
+
        if actualizarSolicitud(idsolicitud, estado):
            QMessageBox.information(self, "Éxito", "La solicitud se actualizó correctamente")
        else:
