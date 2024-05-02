@@ -1250,7 +1250,7 @@ class VentanaRegistrarInquilino(QMainWindow):
         primerApellido = self.txtApellido1.text()
         segundoApellido = self.txtApellido2.text()
         cedula = self.txtCedInquilino.text()
-        telefono = self.txtTelefono_2.text()
+        telefono = self.txtTelefono.text()
         correo = self.txtCorreo.text()
         idPropiedad = self.txtIDpropiedad.text()
         fechaInicio = self.txtFechaInicio.text()
