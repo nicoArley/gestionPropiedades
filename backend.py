@@ -249,6 +249,7 @@ def crearInquilino(nombre, primerApellido, segundoApellido, cedula, telefono, co
                     insertarUsuario(nuevoUsuario)
                     insertarInquilino(cedula)
                     insertarAlquiler(cedula,idPropiedad,fechaInicio, fechaFinal)
+                    actualizarPropiedadAlquiler(idPropiedad)
                     return True
                 except: 
                     return False
@@ -318,6 +319,19 @@ def insertarAlquiler(nuevoAlquiler):
     try:
         statement = 'INSERT INTO Alquiler (cedulaInquilino,idPropiedad,fechaInicio,fechaFin) VALUES (?,?,?,?)'
         cursor.execute(statement, nuevoAlquiler) 
+        desconectarBD(cnxn, cursor)
+        return True
+    except: 
+        desconectarBD(cnxn, cursor)
+        return False
+
+def actualizarPropiedadAlquiler(idPropiedad):
+    global cursor
+    cnxn = conectarBD()
+    cursor = cnxn.cursor()
+    try:
+        statement = 'UPDATE Propiedad SET estadoActual = 2 WHERE idPropiedad = ?;'
+        cursor.execute(statement, idPropiedad) 
         desconectarBD(cnxn, cursor)
         return True
     except: 
