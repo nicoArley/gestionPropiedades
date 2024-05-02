@@ -392,9 +392,8 @@ def registrarMantenimiento(idSolicitud,idPropiedad,descripcionProblema,idProveed
             try: 
                 fechaSolicitud = datetime.now()
                 estado = 1
-                mantenimiento = (idSolicitud,idPropiedad,descripcionProblema,idProveedor,fechaSolicitud, estado, idPrioridad)
-                insertarMantenimiento(mantenimiento)
-                return True
+                mantenimiento = (idSolicitud, idPropiedad, descripcionProblema, idProveedor, fechaSolicitud, estado, idPrioridad)
+                return insertarMantenimiento(mantenimiento)
             except: 
                 return False
         else: 
@@ -432,12 +431,12 @@ def existeAlquiler(idPropiedad):
 
 #usa el statement de insercion y execute para guardar el cambio en la base de datos
 def insertarMantenimiento(mantenimiento):
-    global cursor,cedulaUsuario
+    global cedulaUsuario
     cnxn = conectarBD()
     cursor = cnxn.cursor()
     try:
         statement = 'INSERT INTO SolicitudMantenimiento (idSolicitud, idPropiedad, descripcionProblema, idProveedor, fechaSolicitud, estado, idPrioridad) VALUES (?,?,?,?,?,?,?)'
-        cursor.execute(statement, mantenimiento,) 
+        cursor.execute(statement, mantenimiento)
         desconectarBD(cnxn, cursor)
         return True
     except: 
@@ -658,8 +657,8 @@ class VentanaMantenimientoInq(QMainWindow):
         idSolicitud = self.txtIDSolicitudMante.text()
         idPropiedad = self.txtIDPropMante.text()
         prioridad = self.txtPrioridad.text()
-        descripcionProblema = self.txtDesProblema.toPlainText()
-        comentarios = self.txtComentariosMante.toPlainText()
+        descripcionProblema = self.txtDesProblema.text()
+        comentarios = self.txtComentariosMante.text()
         idProveedor = self.txtProveedor.text()  
 
         # Verificar que ningún campo esté vacío
@@ -670,20 +669,16 @@ class VentanaMantenimientoInq(QMainWindow):
         if not idSolicitud.isnumeric() or not idPropiedad.isnumeric() or not prioridad.isnumeric() or not idProveedor.isnumeric():
             QMessageBox.critical(self, "Error", "Los campos ID Solicitud, ID Propiedad, Prioridad y Estado deben ser numéricos")
             return
-
-        if not self.validar_radio_buttons():
+        
+        if int(idProveedor) > 5 and int(idProveedor) < 1:
+            QMessageBox.critical(self, "Error", "El proveedor no existe")
             return
+            
         # Llama a la función para registrar el mantenimiento
         if registrarMantenimiento(idSolicitud, idPropiedad, descripcionProblema, idProveedor, prioridad):
             QMessageBox.information(self, "Éxito", "Mantenimiento registrado correctamente")
         else:
             QMessageBox.critical(self, "Error", "No se pudo registrar el mantenimiento")
-
-    def validar_radio_buttons(self):
-        if not self.rbElectricista.isChecked() and not self.rbJardinero.isChecked() and not self.rbPintor.isChecked() and not self.rbPlomero.isChecked() and not self.rbCarpintero.isChecked():
-            QMessageBox.critical(self, "Error", "Seleccione al menos un tipo de proveedor")
-            return False
-        return True
 
 class VentanaRegistrarMante(QMainWindow):
     def __init__(self, parent):
