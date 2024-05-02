@@ -1,7 +1,6 @@
 
 import pyodbc
-from datetime import datetime, timedelta
-
+from datetime import datetime
 
 
 
@@ -23,7 +22,7 @@ def desconectarBD(cnxn, cursor):
 cedulaUsuario = ''
 rolUsuario = ''
 
-
+#--Terminada
 def ingresarSistema(rol, cedula):
     global cedulaUsuario, rolUsuario
 
@@ -66,7 +65,8 @@ def crearPropietario(cedula, nombre, apellido1, apellido2, telefono,correo):
             return False
     else: 
         return False
-
+    
+#--Terminada
 def existeUsuario(cedula):
     cnxn = conectarBD()
     cursor = cnxn.cursor()
@@ -98,7 +98,7 @@ def insertarPropietario(cedulaPropietario):
     cnxn = conectarBD()
     cursor = cnxn.cursor()
     try:
-        statement_insertar_usuario = 'INSERT INTO Propietario (cedula) VALUES (?);'
+        statement_insertar_usuario = 'INSERT INTO Propietario (idPropietario) VALUES (?);'
         cursor.execute(statement_insertar_usuario, cedulaPropietario) 
         desconectarBD(cnxn, cursor)
         return True
@@ -157,14 +157,14 @@ def existePropiedad(idPropiedad):
 
 
 # usa el statement de insercion y execute para guardar el cambio en la base de datos
-def insertarPropiedad(nuevaPropiedad):
+def insertarPropiedad(nuevoPropiedad):
     global cursor
     cnxn = conectarBD()
     cursor = cnxn.cursor()
     try:
         
-        statement = 'INSERT INTO Propiedad (idPropiedad, direccion, tipoPropiedad, numeroHabitaciones, tamanoMetros, cedulaPropietario, descripcion, estadoActual, precioAlquiler, gastosAdicionales) VALUES (?,?,?,?,?,?,?,?,?,?)'
-        cursor.execute(statement, nuevaPropiedad) 
+        statement = 'INSERT INTO Propiedad (idPropiedad, direccion, tipoPropiedad, numeroHabitaciones, tamanoMetros, cedulaPropietario, descripcion, estadoActual, precioAlquiler, gastosAdicionales) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?)'
+        cursor.execute(statement, nuevoPropiedad) 
         desconectarBD(cnxn, cursor)
         return True
     except: 
@@ -190,22 +190,16 @@ def obtenerPropiedades(cedulaPropietario):
     #debe retornar una []
     pass
 
+    # statement = """
+    #     SELECT * 
+    #     FROM Propiedad 
+    #     WHERE cedulaPropietario = ?
+    # """
 
 #EDITAR MODULO PROPIEDAD(revisar si es asi) (Propietario)
 
-def obtenerPropiedad(idPropiedad): 
-    if(existePropiedad(idPropiedad)):
-        try:
-            #informacion = execute.... 
-            return #informacion
-        except: 
-            return []
-    else:
-        return []
-
-
 def editarPropiedad(idPropiedad, direccion, tipoPropiedad, numeroHabitaciones, tamanoMetros,cedulaPropietario,descripcion, estadoActual, precioAlquiler,gastosAdicionales):
-
+    
     try:
         nuevosDatos = (direccion, tipoPropiedad, numeroHabitaciones, tamanoMetros,cedulaPropietario,descripcion, estadoActual, precioAlquiler,gastosAdicionales)
         cambiarPropiedadBD(nuevosDatos)
@@ -214,7 +208,7 @@ def editarPropiedad(idPropiedad, direccion, tipoPropiedad, numeroHabitaciones, t
         return False      
 
 
-#Acá se hace la accion en la BD con el execute, hace el update   
+#Acá se hace la accion en la BD con el execute  
 def cambiarPropiedadBD(nuevosDatos):
     pass
 
@@ -225,7 +219,7 @@ def cambiarPropiedadBD(nuevosDatos):
 def eliminarPropiedad(idPropiedad):
     if(existePropiedad(idPropiedad)):
         try:
-            #execute delete
+            #execute 
             return True
         except: 
             return False 
@@ -241,36 +235,30 @@ def eliminarPropiedad(idPropiedad):
 #y se los pasa con esas variables
 #El idPropiedad debe ser mostrado los disponibles, preguntar como hacerlo si es necesario una tabla intermedia
 
-def crearInquilino(nombre, primerApellido, segundoApellido, cedula, telefono, correo,idPropiedad, fechaInicio, fechaFinal): 
-    if(existePropiedad(idPropiedad) == True and propiedadDisponible(idPropiedad) == True):
-        if(existeUsuario(cedula) == False):
-            if (existeInquilinoBD(cedula) == False) :
-                nuevoUsuario = (cedula, nombre, primerApellido, segundoApellido, telefono,correo)
-                try: 
-                    insertarUsuario(nuevoUsuario)
-                    insertarInquilino(cedula)
-                    insertarAlquiler(cedula,idPropiedad,fechaInicio, fechaFinal)
-                    actualizarPropiedadAlquiler(idPropiedad)
-                    return True
-                except: 
-                    return False
-            else: 
-                return False
-        elif(existeInquilinoBD(cedula) == False):
+def crearInquilino(idInquilino, nombre, primerApellido, segundoApellido, cedula, telefono, correo): 
+    if(existeUsuario(cedula) == False):
+        if (existeInquilinoBD(idInquilino) == False) :
+            
+            nuevoUsuario = (cedula, nombre, primerApellido, segundoApellido, telefono,correo)
             try: 
-                nuevoInquilino = (cedula)
-                insertarInquilino(nuevoInquilino)
-                nuevoAlquiler = (cedula,idPropiedad,fechaInicio, fechaFinal)
-                insertarAlquiler(nuevoAlquiler)
+                insertarUsuario(nuevoUsuario)
+                insertarInquilino(cedula)
                 return True
             except: 
                 return False
         else: 
             return False
+    elif(existeInquilinoBD(idInquilino) == False):
+        try: 
+            nuevoInquilino = (cedula)
+            insertarInquilino(nuevoInquilino)
+            return True
+        except: 
+            return False
     else: 
-        False
+        return False
 
-
+#--Terminada
 #Ver que no exista ningun otro inquilino con esa cédula
 def existeInquilinoBD(cedulaInquilino):
     cnxn = conectarBD()
@@ -299,45 +287,6 @@ def insertarInquilino(cedulaInquilino):
         desconectarBD(cnxn, cursor)
         return False
 
-def propiedadDisponible(idPropiedad): 
-    global cursor
-    cnxn = conectarBD()
-    cursor = cnxn.cursor()
-    try:
-        statement = 'SELECT * FROM Propiedad JOIN EstadosPermitidos ON Propiedad.estadoActual = EstadosPermitidos.idEstado WHERE estado = \'disponible\' and idPropiedad = ?; '
-        cursor.execute(statement, idPropiedad) 
-        desconectarBD(cnxn, cursor)
-        return True
-    except: 
-        desconectarBD(cnxn, cursor)
-        return False
-
-
-def insertarAlquiler(nuevoAlquiler):
-    global cursor
-    cnxn = conectarBD()
-    cursor = cnxn.cursor()
-    try:
-        statement = 'INSERT INTO Alquiler (cedulaInquilino,idPropiedad,fechaInicio,fechaFin) VALUES (?,?,?,?)'
-        cursor.execute(statement, nuevoAlquiler) 
-        desconectarBD(cnxn, cursor)
-        return True
-    except: 
-        desconectarBD(cnxn, cursor)
-        return False
-
-def actualizarPropiedadAlquiler(idPropiedad):
-    global cursor
-    cnxn = conectarBD()
-    cursor = cnxn.cursor()
-    try:
-        statement = 'UPDATE Propiedad SET estadoActual = 2 WHERE idPropiedad = ?;'
-        cursor.execute(statement, idPropiedad) 
-        desconectarBD(cnxn, cursor)
-        return True
-    except: 
-        desconectarBD(cnxn, cursor)
-        return False
 
 
 #VISUALIZAR MODULO INQUILINOS (Propietario)
@@ -362,7 +311,7 @@ def existeInquilinosPropietario():
     cnxn = conectarBD()
     cursor = cnxn.cursor()
     #---------------------
-    statement = 'SELECT COUNT(*) FROM Propiedad p JOIN Inquilino i ON p.cedulaPropietario = ?'
+    statement = 'SELECT COUNT(*) FROM Propiedad p JOIN Inquilino i ON p.cedulaPropietario = ?'#listo
     cursor.execute(statement, (cedulaUsuario))
     checkInquilinoP = cursor.fetchone()[0]
     if (checkInquilinoP == None):
@@ -377,6 +326,15 @@ def existeInquilinosPropietario():
 # cuando hay que pasarle al sistema las propiedades disponibles para ese propietario
 def obtenerInquilinos(cedulaPropietario):
     pass
+
+    #   statement = """
+    #     SELECT DISTINCT i.*
+    #     FROM Inquilino i
+    #     INNER JOIN Alquiler a ON i.cedula = a.cedulaInquilino
+    #     INNER JOIN Propiedad p ON a.idPropiedad = p.idPropiedad
+    #     WHERE p.cedulaPropietario = ?
+    # """
+    #probado
 
 #ELIMINAR MODULO INQUILINOS (Propietario)
 
@@ -410,16 +368,16 @@ def visualizarSolicitudesP(cedulaPropietario):
             return[]
     else: 
         return[]
-
-
+#--Pendiente
 #Valida que existan solicitudes en sus propiedades con la cedula del propietario 
 def existeSolicitudesPropietario(cedulaUsuario):
     # global cedulaUsuario
     cnxn = conectarBD()
     cursor = cnxn.cursor()
     
-    statement = 'SELECT * FROM SolicitudMantenimiento JOIN Propiedad ON Propiedad.idPropiedad = SolicitudMantenimiento.idPropiedad WHERE cedulaPropietario = ?;'
+    statement = 'SELECT * FROM SolicitudMantenimiento JOIN Propiedad ON Propiedad.idPropiedad = SolicitudMantenimiento.idPropiedad WHERE cedulaPropietario = ?; ' #revisada
     cursor.execute(statement, cedulaUsuario)
+    #---------------------
     checkSolicitudesP = cursor.fetchone()
     if (checkSolicitudesP == None):
         desconectarBD(cnxn, cursor)
@@ -428,10 +386,15 @@ def existeSolicitudesPropietario(cedulaUsuario):
         desconectarBD(cnxn, cursor)
         return True
 
+
 #usa Execute y llama a la base de datos usando el statement, lo guarda en una lista, esta misma funcion se puede usar
 def obtenerSolicitudesP():
     global cedulaUsuario
     pass
+
+    #statement = 'SELECT * FROM SolicitudMantenimiento WHERE idPropiedad IN (SELECT idPropiedad FROM Propiedad WHERE cedulaPropietario = ?)'
+    #revisada
+
 
 #MODULO MANTENIMIENTO ACTUALIZAR ESTADO SOLICITUD (Propietario e Inquilino)
 
@@ -440,7 +403,7 @@ def actualizarSolicitud(idSolicitud, estado, comentario,cedulaPropietario):
         if(existeSolicitud(idSolicitud)):
             try:
                 solicitud = obtenerSolicitud(idSolicitud)
-                cambiarEstadoSolicitud(solicitud,idSolicitud,estado,comentario)
+                cambiarEstado(solicitud,idSolicitud,estado,comentario)
                 return True
             except: 
                 return False 
@@ -451,6 +414,9 @@ def actualizarSolicitud(idSolicitud, estado, comentario,cedulaPropietario):
 def obtenerSolicitud(idSolicitud):
     pass
 
+    # statement = 'SELECT * FROM SolicitudMantenimiento WHERE idSolicitud = ?'
+    # cursor.execute(statement, (idSolicitud,))
+    #probada
 
 #comprueba que el id si exista en la base de datos y que pertenezca a una propiedad del propietario
 def existeSolicitud(idSolicitud):
@@ -466,9 +432,14 @@ def existeSolicitud(idSolicitud):
         return True
 
 
+
 #Acá se hace la accion en la BD con el execute  
-def cambiarEstadoSolicitud(solicitud, idSolicitud, estado, comentario):
+def cambiarEstado(solicitud, idSolicitud, estado, comentario):
     pass
+
+    # statement = 'UPDATE SolicitudMantenimiento SET estado = ? WHERE idSolicitud = ?'
+    # cursor.execute(statement, (estado, idSolicitud))
+    #Revisado 
 
 #MODULO DE REPORTES (Propietario, inquilino (es el mismo))
 
@@ -477,7 +448,8 @@ def mostrarReporte(periodo):
     if(rolUsuario == "Propietario"):
         if(existeInquilinosPropietario() == True and existenReportesPropietario(periodo) == True):
                 try:
-                    reportes = obtenerReportesPropietario(periodo)
+                    inquilinos = obtenerIdsInquilinos(cedulaUsuario)
+                    reportes = obtenerReportesPropietario(inquilinos,periodo)
                     return reportes
                 except:
                     return []
@@ -497,11 +469,10 @@ def existenReportesPropietario(periodo):
     cnxn = conectarBD()
     cursor = cnxn.cursor()
 
-    fechaFinal = datetime.now()
-    fechaInicial = definirFechaInicial(periodo)
-    statement = 'SELECT * FROM Pagos JOIN Alquiler ON Pagos.cedulaInquilino = Alquiler.cedulaInquilino JOIN Propiedad ON Alquiler.idPropiedad = Propiedad.idPropiedad WHERE (Propiedad.cedulaPropietario = ?) AND (Pagos.fechaPago BETWEEN ? AND ?);'
-    cursor.execute(statement, cedulaUsuario, fechaInicial, fechaFinal )
-
+    #---------------------
+    statement = "SELECT COUNT(*) FROM Pagos p JOIN Alquiler a ON p.cedulaInquilino = a.cedulaInquilino JOIN Propiedad_Propietario pp ON a.idPropiedad = pp.idPropiedad WHERE pp.cedulaPropietario = ?" #agregada
+    cursor.execute(statement, (cedulaUsuario))
+    #---------------------
     checkReportesP = cursor.fetchone()
     if (checkReportesP == None):
         desconectarBD(cnxn, cursor)
@@ -514,41 +485,52 @@ def existenReportesPropietario(periodo):
 def obtenerIdsInquilinos(cedulaPropietario):
     pass
 
+    # statement = "SELECT cedulaInquilino FROM Alquiler WHERE idPropiedad IN (SELECT idPropiedad FROM Propiedad_Propietario WHERE cedulaPropietario = ?)"
+    # cursor.execute(statement, (cedulaPropietario,))
+
+
 # compara los inquilinos  tomados del metodo obtenerIdsInquilinos(cedulaPropietario) con los reportes existentes para mostrar solo los que cumplen,
 # puede ser un select con un Where cedula IN (SELECT cedula ....)
 # luego obtiene por medio de uan consulta a la en la base de datos las tuplas
+def obtenerReportesPropietario(inquilinos):
+    pass
 
-def obtenerReportesPropietario(periodo):
-    global cedulaUsuario
-    cnxn = conectarBD()
-    cursor = cnxn.cursor()
+    # statment = """
+    #             SELECT SM.*
+    #             FROM SolicitudMantenimiento SM
+    #             INNER JOIN Propiedad P ON SM.idPropiedad = P.idPropiedad
+    #             INNER JOIN Propietario O ON P.cedulaPropietario = O.cedula
+    #             """
+   
 
-    fechaFinal = datetime.now()
-    fechaInicial = definirFechaInicial(periodo)
-    statement = 'SELECT idPago, Alquiler.cedulaInquilino, Pagos.fechaPago, Pagos.monto, TiposPagoPermitidos.tipoPago, EstadosPagoPermitidos.estadoPago, Pagos.metodoPago FROM Pagos JOIN TiposPagoPermitidos ON Pagos.tipoPago = TiposPagoPermitidos.idTipoPago JOIN EstadosPagoPermitidos ON EstadosPagoPermitidos.idEstadoPago  = Pagos.estadoPago JOIN Alquiler ON Pagos.cedulaInquilino = Alquiler.cedulaInquilino JOIN Propiedad ON Alquiler.idPropiedad = Propiedad.idPropiedad  WHERE (Propiedad.cedulaPropietario = ?) AND (Pagos.fechaPago BETWEEN ? AND ?);'
-    cursor.execute(statement, cedulaUsuario, fechaInicial, fechaFinal ) 
-    listaReportes = []
-    listaReportes = cursor.fetchall()
-    for reporte in listaReportes:
-        reporte[2] = reporte[2].strftime("%Y/%m/%d")
-    desconectarBD(cnxn, cursor)
-    return listaReportes
+def definirTiempo(periodo):
+    fechaInicial = datetime.now()
+    if (periodo == 'mensual'):
+        fechaInicial = datetime.now()
 
+from datetime import datetime, timedelta
 
-def definirFechaInicial(periodo):
+def fecha_final(periodo):
     fechaActual = datetime.now()
     if (periodo == 'trimestral'):
         # Suma 3 meses a la fecha actual para obtener la fecha final del trimestre
-        fechaFinal = fechaActual - timedelta(days=90)
+        fechaFinal = fechaActual + timedelta(days=90)
         return fechaFinal
     elif (periodo == 'mensual'):
         # Suma 1 mes a la fecha actual para obtener la fecha final del mes siguiente
-        fechaFinal = fechaActual - timedelta(days=30)
+        fechaFinal = fechaActual + timedelta(days=30)
         return fechaFinal
     else:
         # Suma 1 año a la fecha actual para obtener la fecha final del año siguiente
-        fechaFinal = fechaActual - timedelta(days=365)
+        fechaFinal = fechaActual + timedelta(days=365)
         return fechaFinal
+
+
+
+# Ejemplo de uso
+# print("Fecha final trimestral:", fecha_final('trimestral'))
+# print("Fecha final mensual:", fecha_final('mensual'))
+# print("Fecha final anual:", fecha_final('anual'))
 
 
 
@@ -563,8 +545,15 @@ def existeReportesInquilino(periodo):
     fechaFinal = fecha_final(periodo)
 
     #-- hay que cambiar el statement utilizando los atributos que son de la tabla que es, hay que hacer un join por que lo que se usa es la cedula del inquilino entonces 
-    statement = 'SELECT * FROM SolicitudMantenimiento WHERE idPropiedad = ? AND fechaSolicitud BETWEEN ? AND ?'
-    cursor.execute(statement, (cedulaUsuario, ))
+    # statement = """
+    #             SELECT * 
+    #             FROM SolicitudMantenimiento sm
+    #             JOIN Alquiler a ON sm.idPropiedad = a.idPropiedad                    
+    #             WHERE a.cedulaInquilino = ? 
+    #             AND sm.fechaSolicitud BETWEEN ? AND ?
+    #         """      
+            #probada  
+    #cursor.execute(statement, (cedulaUsuario, ))
     #---------------------
     checkReportesI = cursor.fetchone()
     if (checkReportesI == None):
@@ -578,6 +567,29 @@ def existeReportesInquilino(periodo):
 def obtenerReportesInquilino(periodo):
     global cedulaUsuario
     pass
+
+    # statment = '''
+    #         SELECT 
+    #             Usuario.cedula,
+    #             Usuario.nombre,
+    #             Usuario.apellido1,
+    #             Usuario.apellido2,
+    #             Usuario.telefono,
+    #             Usuario.correo,
+    #             Propiedad.idPropiedad,
+    #             Propiedad.direccion,
+    #             Alquiler.fechaInicio,
+    #             Alquiler.fechaFin
+    #         FROM 
+    #             Usuario
+    #         INNER JOIN 
+    #             Inquilino ON Usuario.cedula = Inquilino.cedula
+    #         INNER JOIN 
+    #             Alquiler ON Inquilino.cedula = Alquiler.cedulaInquilino
+    #         INNER JOIN 
+    #             Propiedad ON Alquiler.idPropiedad = Propiedad.idPropiedad
+    #         '''
+
 
 # INQUILINOS
 
@@ -636,8 +648,13 @@ def existeMsjRecibidos():
     global cedulaUsuario
     cnxn = conectarBD()
     cursor = cnxn.cursor()
-    statement = 'SELECT * FROM Comunicacion WHERE cedulaReceptor = ?'
-    cursor.execute(statement, cedulaUsuario)
+    statement = """
+        SELECT * 
+        FROM Comunicacion 
+        WHERE cedulaReceptor = (SELECT cedula FROM Usuario WHERE cedula = ?)
+    """
+    cursor.execute(statement, (cedulaUsuario))
+    #revisada
     checkReportesP = cursor.fetchone()
     if (checkReportesP == None):
         desconectarBD(cnxn, cursor)
@@ -651,6 +668,20 @@ def existeMsjRecibidos():
 def obtenerMsjRecibidos(): 
     global cedulaUsuario, rolUsuario
     pass
+# Ejecutar la consulta para obtener los mensajes recibidos
+    statment = '''
+            SELECT 
+                idMensaje,
+                fechaMensaje,
+                horaMensaje,
+                contenido
+            FROM 
+                Comunicacion
+            WHERE 
+                cedulaReceptor = ?
+            '''
+
+    cursor.execute(statment, (cedulaUsuario,))
 
 #ENVIADOs MODULO COMUNICACION (Propietario, inquilino (es el mismo))
 
@@ -673,7 +704,11 @@ def existeMsjEnviados():
     cnxn = conectarBD()
     cursor = cnxn.cursor()
     #---------------------
-    statement = 'SELECT * FROM Comunicacion WHERE cedulaEmisor = ?'
+    statement = """
+        SELECT * 
+        FROM Comunicacion 
+        WHERE cedulaEmisor = (SELECT cedula FROM Usuario WHERE cedula = ?)
+    """
     cursor.execute(statement, (cedulaUsuario))
     #---------------------
     checkMsjE = cursor.fetchone()
@@ -689,6 +724,9 @@ def existeMsjEnviados():
 def obtenerMsjEnviados():
     global cedulaUsuario
     pass
+
+    statement = 'SELECT * FROM Comunicacion WHERE cedulaEmisor = ?'
+    cursor.execute(statement, (cedulaUsuario,))
 
 #INQUILINOS 
 
@@ -746,7 +784,7 @@ def insertarPago(idPago, monto, tipoPago, estadoPago, metodoPago):
 # INQUILINOS MODULO MANTENIMIENTO REGISTRAR
 
 def registrarMantenimiento(idSolicitud,idPropiedad,descripcionProblema,idProveedor):
-    if(existeSolicitud(idSolicitud) == False):
+    if(existeIdSolicitud(idSolicitud) == False):
         if(existeAlquiler(idPropiedad)):
             try: 
 
@@ -764,7 +802,17 @@ def registrarMantenimiento(idSolicitud,idPropiedad,descripcionProblema,idProveed
         return False
 #--Terminada
 # Busca que en la base de datos no exista una solicitud con ese id ya 
-
+def existeIdSolicitud(idSolicitud): 
+    cnxn = conectarBD()
+    cursor = cnxn.cursor()
+    cursor.execute('SELECT * FROM Inquilino WHERE cedulaPropietario=?', (idSolicitud))
+    checkSolicitud = cursor.fetchone()
+    if (checkSolicitud == None):
+        desconectarBD(cnxn, cursor)
+        return False
+    else:
+        desconectarBD(cnxn, cursor)
+        return True
 
 #Terminada
 #Comprueba que el usuario se refiera a una propiedad que alquila, no puede solicitar mantenimiento para una propiedad que no alquile
@@ -817,8 +865,12 @@ def existeSolicitudesInquilino(cedulaInquilino):
     cnxn = conectarBD()
     cursor = cnxn.cursor()
     #---------------------
-    statement = 'SELECT * FROM SolicitudMantenimiento JOIN Alquiler ON Alquiler.idPropiedad = SolicitudMantenimiento.idPropiedad WHERE Alquiler.cedulaInquilino = ?; '
-    cursor.execute(statement, cedulaInquilino)
+    statement = '''
+                    SELECT * 
+                FROM SolicitudMantenimiento 
+                JOIN Alquiler ON Alquiler.idPropiedad = SolicitudMantenimiento.idPropiedad 
+                WHERE Alquiler.cedulaInquilino = ?;
+                '''
     #---------------------
     checkSolicitudI = cursor.fetchone()
     if (checkSolicitudI == None):
@@ -832,5 +884,7 @@ def existeSolicitudesInquilino(cedulaInquilino):
 def obtenerSolicitudesI(cedulaPropietario):
     pass
 
+    statement = 'SELECT * FROM SolicitudMantenimiento'
+    cursor.execute(statement)
 
 
