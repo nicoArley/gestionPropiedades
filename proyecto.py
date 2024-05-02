@@ -233,7 +233,6 @@ def crearInquilino(nombre, primerApellido, segundoApellido, cedula, telefono, co
     else: 
         False
 
-
 #Ver que no exista ningun otro inquilino con esa cédula
 def existeInquilinoBD(cedulaInquilino):
     cnxn = conectarBD()
@@ -246,7 +245,6 @@ def existeInquilinoBD(cedulaInquilino):
     else:
         desconectarBD(cnxn, cursor)
         return True
-
 
 # usa el statement de insercion y execute para guardar el cambio en la base de datos
 def insertarInquilino(cedulaInquilino):
@@ -300,6 +298,146 @@ def actualizarPropiedadAlquiler(idPropiedad):
     try:
         statement = 'UPDATE Propiedad SET estadoActual = 2 WHERE idPropiedad = ?;'
         cursor.execute(statement, idPropiedad) 
+        desconectarBD(cnxn, cursor)
+        return True
+    except: 
+        desconectarBD(cnxn, cursor)
+        return False
+    
+#MODULO COMUNICACION (Propietario, inquilino (es el mismo))
+
+#ENVIAR MODULO COMUNICACION (Propietario, inquilino (es el mismo))
+#Esta es la funcion que la interfaz llama luego de validar los datos atrapados y asignarlos a variables 
+def enviarMensaje(cedulaReceptor,contenido):
+    global cedulaUsuario
+    if(existeUsuario(cedulaReceptor)): 
+        try:
+            estado = 'No Leido'
+            fechaMensaje = datetime.now().date()
+            horaMensaje = datetime.now().time()
+            valores = (cedulaUsuario,cedulaReceptor,fechaMensaje,horaMensaje,contenido, estado)
+            agregarComunicacion(valores)
+            return True
+        except:
+            return False
+    else: 
+        return False
+
+#Esta funcion utiliza el stament y manda el insert a la base de datos
+def agregarComunicacion(valores): 
+    global cursor
+    #cedulaUsuario
+    cnxn = conectarBD()
+    cursor = cnxn.cursor()
+    try:
+        statement = 'INSERT INTO Comunicacion (cedulaEmisor, cedulaReceptor, fechaMensaje, horaMensaje, contenido, estado) VALUES (?,?,?,?,?,?)'
+        cursor.execute(statement, valores) 
+        desconectarBD(cnxn, cursor)
+        return True
+    except: 
+        desconectarBD(cnxn, cursor)
+        return False
+
+#INQUILINOS MODULO PAGOS
+ 
+#INQUILINOS MODULO PAGOS REGISTRAR PAGOS 
+
+def registrarPago(idPago, monto, tipoPago, estadoPago, metodoPago): 
+    global cedulaUsuario
+    if(existePagoId(idPago) == False):
+        fechaPago = datetime.now()
+        nuevoPago = (idPago,cedulaUsuario, fechaPago, monto, tipoPago, estadoPago, metodoPago)
+        try: 
+            insertarPago(nuevoPago)
+            return True
+        except: 
+            return False
+    else: 
+        return False
+
+#--Terminada
+#valida que no exista ya un pago con ese id
+def existePagoId(idPago):
+    cnxn = conectarBD()
+    cursor = cnxn.cursor()
+    cursor.execute('SELECT * FROM Pagos WHERE idPago=?', (idPago))
+    checkPago = cursor.fetchone()
+    if (checkPago == None):
+        desconectarBD(cnxn, cursor)
+        return False
+    else:
+        desconectarBD(cnxn, cursor)
+        return True
+
+# usa el statement de insercion y execute para guardar el cambio en la base de datos
+def insertarPago(nuevoPago):
+    global cursor,cedulaUsuario
+    cnxn = conectarBD()
+    cursor = cnxn.cursor()
+    try:
+        statement = 'INSERT INTO Pagos (idPago,cedulaInquilino,fechaPago,monto,tipoPago,estadoPago, metodoPago) VALUES (?,?,?,?,?,?,?)'
+        cursor.execute(statement, nuevoPago,) 
+        desconectarBD(cnxn, cursor)
+        return True
+    except: 
+        desconectarBD(cnxn, cursor)
+        return False
+
+
+# INQUILINOS MODULO MANTENIMIENTO REGISTRAR
+
+def registrarMantenimiento(idSolicitud,idPropiedad,descripcionProblema,idProveedor,idPrioridad):
+    if(existeSolicitud(idSolicitud) == False):
+        if(existeAlquiler(idPropiedad)):
+            try: 
+                fechaSolicitud = datetime.now()
+                estado = 1
+                mantenimiento = (idSolicitud,idPropiedad,descripcionProblema,idProveedor,fechaSolicitud, estado, idPrioridad)
+                insertarMantenimiento(mantenimiento)
+                return True
+            except: 
+                return False
+        else: 
+            return False
+    else: 
+        return False
+
+#comprueba que el id si exista en la base de datos y que pertenezca a una propiedad del propietario
+def existeSolicitud(idSolicitud):
+    cnxn = conectarBD()
+    cursor = cnxn.cursor()
+    cursor.execute('SELECT * FROM SolicitudMantenimiento WHERE idSolicitud=?', (idSolicitud))
+    checkSolicitudesP = cursor.fetchone()
+    if (checkSolicitudesP == None):
+        desconectarBD(cnxn, cursor)
+        return False
+    else:
+        desconectarBD(cnxn, cursor)
+        return True
+
+#Comprueba que el usuario se refiera a una propiedad que alquila, no puede solicitar mantenimiento para una propiedad que no alquile
+def existeAlquiler(idPropiedad):
+    global cedulaUsuario
+    cnxn = conectarBD()
+    cursor = cnxn.cursor()
+    cursor.execute('SELECT * FROM Alquiler WHERE idPropiedad=? AND cedulaInquilino = ?', idPropiedad, cedulaUsuario)
+    checkAlquiler = cursor.fetchone()
+    if (checkAlquiler == None):
+        desconectarBD(cnxn, cursor)
+        return False
+    else:
+        desconectarBD(cnxn, cursor)
+        return True
+
+
+#usa el statement de insercion y execute para guardar el cambio en la base de datos
+def insertarMantenimiento(mantenimiento):
+    global cursor,cedulaUsuario
+    cnxn = conectarBD()
+    cursor = cnxn.cursor()
+    try:
+        statement = 'INSERT INTO SolicitudMantenimiento (idSolicitud, idPropiedad, descripcionProblema, idProveedor, fechaSolicitud, estado, idPrioridad) VALUES (?,?,?,?,?,?,?)'
+        cursor.execute(statement, mantenimiento,) 
         desconectarBD(cnxn, cursor)
         return True
     except: 
@@ -453,28 +591,23 @@ class VentanaComunicacionInq(QMainWindow):
              self.close()
    
 class VentanaEnviar(QMainWindow):
-    def __init__(self, parent):
-        super().__init__()
-        self.parent = parent
-        loadUi('InterfazGrafica/ventanaEnviarMjs.ui', self.parent)
-        self.parent.show()
-
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        loadUi('InterfazGrafica/ventanaEnviarMjs.ui', self)
+        
         self.btnEnviar.clicked.connect(self.enviar_mensaje)
 
     def enviar_mensaje(self):
-        idMensaje = self.txtIDmjs.text()
         cedulaReceptor = self.txtReceptor.text()
         contenido = self.txtContenido.text()
-        fecha = self.dtFecha.text()
-        hora = self.tmHora.text()
 
         # Valida que los campos sean numéricos y no estén vacíos
-        if not idMensaje.isnumeric() or not cedulaReceptor.isnumeric() or not contenido:
+        if not cedulaReceptor.isnumeric() or not contenido:
             QMessageBox.critical(self, "Error", "Los campos ID Mensaje, Receptor y Contenido son obligatorios y deben ser numéricos")
             return
 
         # Llama a la función enviarMensaje con los datos de los campos
-        if enviarMensaje(idMensaje, cedulaReceptor, fecha, contenido, hora):
+        if enviarMensaje(cedulaReceptor, contenido):
             QMessageBox.information(self, "Éxito", "Mensaje enviado correctamente")
         else:
             QMessageBox.critical(self, "Error", "Error al enviar el mensaje")
@@ -506,7 +639,7 @@ class VentanaMantenimientoInq(QMainWindow):
 
         # Conectar los botones a los métodos correspondientes
         self.btnVizualizarSolicitud.clicked.connect(self.abrir_ventana_visualizar_mante)
-        self.btnRegisSolicitud.clicked.connect(self.validar_registro_solicitud)
+        self.btnRegistrar.clicked.connect(self.validar_registro_solicitud)
         self.btnVolver.clicked.connect(self.abrir_ventana_visualizar_mante)
 
     def abrir_ventana_visualizar_mante(self):
@@ -522,26 +655,26 @@ class VentanaMantenimientoInq(QMainWindow):
             self.close()
 
     def validar_registro_solicitud(self):
-        idsolicitud = self.txtIDSolicitudMante.text()
-        idpropiedad = self.txtIDPropMante.text()
+        idSolicitud = self.txtIDSolicitudMante.text()
+        idPropiedad = self.txtIDPropMante.text()
         prioridad = self.txtPrioridad.text()
-        estado = self.txtEstado.text()
-        fechaSolicitud = self.date.get()
         descripcionProblema = self.txtDesProblema.toPlainText()
         comentarios = self.txtComentariosMante.toPlainText()
+        idProveedor = self.txtProveedor.text()  
 
-        if not idsolicitud.isnumeric() or not idpropiedad.isnumeric() or not prioridad.isnumeric() or not estado.isnumeric():
-            QMessageBox.critical(self, "Error", "Los campos ID Solicitud, ID Propiedad, Prioridad y Estado deben ser numéricos")
-            return
         # Verificar que ningún campo esté vacío
-        if not idsolicitud or not idpropiedad or not prioridad or not estado or not descripcionProblema or not comentarios:
+        if not idSolicitud or not idPropiedad or not prioridad or not descripcionProblema or not comentarios or not idProveedor:
             QMessageBox.critical(self, "Error", "Complete todos los campos")
+            return
+
+        if not idSolicitud.isnumeric() or not idPropiedad.isnumeric() or not prioridad.isnumeric() or not idProveedor.isnumeric():
+            QMessageBox.critical(self, "Error", "Los campos ID Solicitud, ID Propiedad, Prioridad y Estado deben ser numéricos")
             return
 
         if not self.validar_radio_buttons():
             return
         # Llama a la función para registrar el mantenimiento
-        if self.registrar_mantenimiento(idsolicitud, idpropiedad, descripcionProblema, fechaSolicitud):
+        if registrarMantenimiento(idSolicitud, idPropiedad, descripcionProblema, idProveedor, prioridad):
             QMessageBox.information(self, "Éxito", "Mantenimiento registrado correctamente")
         else:
             QMessageBox.critical(self, "Error", "No se pudo registrar el mantenimiento")
@@ -690,14 +823,14 @@ class VentanaVisualizarReporte(QMainWindow):
 
 #-- VENTANA PROPIEDADES
 class VentanaRegistrarPropiedades(QMainWindow):
-   def __init__(self, parent=None):
+    def __init__(self, parent=None):
         super().__init__(parent)
         loadUi('InterfazGrafica/ventanaRegistrarPropiedades.ui', self)
 
         # Conectar los botones a los métodos correspondientes
         self.btnREGISTRAR.clicked.connect(self.validar_registro)
 
-   def validar_registro(self):
+    def validar_registro(self):
         # Obtener los valores de los campos
         idPropiedad = self.txtIDpropiedad.text()
         precioAlquiler = self.txtPrecioAlquiler.text()
@@ -848,8 +981,8 @@ class VentanaRegistrarInquilino(QMainWindow):
         telefono = self.txtTelefono_2.text()
         correo = self.txtCorreo.text()
         idPropiedad = self.txtIDpropiedad.text()
-        fechaInicio = self.dateEdit.text()
-        fechaFinal = self.dateEdit_2.text()
+        fechaInicio = self.txtFechaInicio.text()
+        fechaFinal = self.txtFechaFin.text()
 
         # Valida que los campos no estén vacíos y que cumplan con los requisitos
         if not idInquilino or not nombre or not primerApellido or not segundoApellido or not cedula or not telefono or not correo or not idPropiedad or not fechaInicio or not fechaFinal:
