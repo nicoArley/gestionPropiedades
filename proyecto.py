@@ -234,8 +234,7 @@ def obtenerPropiedad(idPropiedad):
         return []
 
 def editarPropiedad(idPropiedad, direccion, tipoPropiedad, numeroHabitaciones, tamanoMetros,cedulaPropietario,descripcion, estadoActual, precioAlquiler,gastosAdicionales):
-    try:
-        
+    try: 
         cambiarPropiedadBD(idPropiedad, direccion, tipoPropiedad, numeroHabitaciones, tamanoMetros,descripcion, estadoActual, precioAlquiler,gastosAdicionales)
         return True
     except: 
